@@ -1,4 +1,4 @@
-# Autonomous VTOL for avalanche buried searching Avionics
+# Autonomous VTOL for avalanche buried searching: Avionics
 
 **Matteo Ragni**
 
