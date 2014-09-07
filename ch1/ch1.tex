@@ -1,0 +1,228 @@
+% CHAPTER 1
+
+\begin{fullwidth}
+\chapter{Introduction to the Mountain Rescue \label{ch:chapter1}}
+\end{fullwidth}
+\minitoc
+
+Many people in the last few year have re-discovered a passion for winter mountain sports. Some of them have decided to explore the extreme version of this sports, like winter climbing or free-riding.
+
+The increase of population in extreme snow condition facilitates the avalanche detach. Mountain Rescue Team is often called for search probable buried victims, constrained to operate in an environment with an high residual risk. To facilitate the research, national and regional laws\cite{ARTVAobbligationLaw} have imposed the use of ARTVA\marginnote{ARTVA: from the Italian \emph{Apparecchio Ricerca Travolti VAlanga}} transmitter, also called \emph{Avalanche Beacons}, for hikers that ride on non-equipped trails.
+
+\section{Some data about the avalanche accidents}
+
+During the year 2000, alpine country decided to start an on line Database of mountain victims, with the participation by the Italian council called \emph{A.I.NE.VA.}\marginnote{A.I.NE.VA: from the Italian \emph{Associazione Interregionale NEve e VAlanghe}}. The statistics show a mean of 18 victims per year in Italy. The number of accident is clearly related to the higher number of avalanche phenomena. One of the factor identified is the increment of person that are using snowboard. 
+
+A deeper analysis of the data shows that the 40\% of the accidents have victims. Also, the number of buried was analyzed. Statistically:
+\begin{itemize}
+\item 60\% of the accidents have only one buried person
+\item 34\% of the accidents have 2--3 buried persons
+\item 16\% of the accidents have 4 persons or more buried
+\end{itemize}
+
+Another important factor is the position of the overwhelms hikers:
+\begin{itemize}
+\item 37\% remain on the surface of the avalanche
+\item 28\% are only partially buried
+\item 35\% are completely buried
+\end{itemize}
+
+The survival curve, because of frostbite and hypothermia and without considerable traumas, has an upper limit of 15--18 minutes. Here the auto-rescue makes the real difference\cite{ManualeSciAlpinismo}.
+
+One last important factor is the number of hikers found with the ARTVA. Considering the fact that the statistics do not take into account the episode of auto-rescue, the 7\% of the buried are found by the use of the receivers, a very small amount of the total. This data should be revised in the light of the advent of new digital ARTVA receivers, that simplify the searching method, and reduce the searching time \citep{hereforddigital}. 
+
+As reported in \citep{Brugger2007}, within Europe and North America, avalanche airbags and avalanche transceiver reduce mortality, and companion rescue reduces incredibly the median duration of burial, remarking the extreme importance of those device for all 
+
+\section{Avalanche Beacons}
+
+There are two main typologies of avalanche transceiver. The differences are mostly in the user interface during receiving. We can divide in \emph{analog} and \emph{digital} ARTVA. Both device are equal for what concerns transmission. 
+
+\subsection{Transmission Mode}
+
+During transmission, beacons transmit a so-called \emph{wild-life tag}, or more simply, an intermittent signal at defined frequency, as stated in normative\cite{NormativaARVA}. From the normative, it is possible to extract some more informations about the transmitted signal:
+\begin{itemize}
+\item A1A Signal:
+	\begin{itemize}
+	\item amplitude modulated signal
+	\item digital information (keying)
+	\item carrier frequency: \num{457}\si{\kilo\hertz}
+	\item no auxiliary carrier
+	\item frequency error shall not exceed $\pm$\num{80}\si{\hertz}
+	\end{itemize}
+\item carrier keying characteristics:
+	\begin{itemize}
+	\item on-time: \num{70}\si{\milli\second} minimum
+	\item off-time: \num{400}\si{\milli\second} minimum
+	\item period: \num{1000}\si{\milli\second} $\pm$ \num{300}\si{\milli\second}
+	\end{itemize}
+\item H--field peak at \num{10}\si{\meter}
+	\begin{itemize}
+	\item must be greater than \num{0.5}\si{\micro\ampere\per\meter}
+	\item must be lower than \num{2.23}\si{\micro\ampere\per\meter}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Receiving Mode}
+
+The normative states for receiver:
+\begin{itemize}
+	\item the $(S+N)/N$ ratio of \num{6}\si{\decibel} at the terminal of electro--acoustic transducer
+	\item a clear optical indication of direction for beacon with optical signal indication of direction
+\end{itemize}
+
+\myparagraph{Analog Beacons}
+The analog beacon uses a cascade of filters and an identification circuit to extract the strength information of received signal. The strength is thus used as gain command for a sound generator, that rescuer uses to identify the direction of arrival. Typically, those ARTVA have a volume knob to perform a fine search. The main drawback is due to the extreme difficulty to perform a fast search, that requires an experienced user. Quoting \citep{457andfuture}: \emph{a better term for analog beacon would be \textbf{audible--based}}
+
+\myparagraph{Digital Beacons}
+Those beacons implements an user interface that indicates \emph{the field line direction and an artificial distance to the center of the field}. This simplicity makes those beacons perfect for unexperienced user and auto-rescue: those device \textbf{are strongly advised by the mountain rescue for all hikers, experienced or not}.
+
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=4cm]{ch1/img/digital_baecon}
+	\caption{Tracker DTS Avalanche Transceiver, a digital beacon}
+\end{marginfigure}
+
+Must be noted that the algorithm inside those transceivers runs on a very low power DPS, due to energy harvesting requirements, so often the rescuer must slow down his speed to gave time to the beacon to analyze received data. Also, it was pointed out from some manufacturer that advanced techniques, like multi-buried identification and buried status (hearth-beat) make use of other frequencies different from the one described in normative.
+
+\subsection{Italian Mountain Rescue Intervention}
+What happens after an avalanche? We interviewed some of the professionals of the Mountain Rescue Team in province of Trento, and asked them to explain us the actual procedure.
+
+\myparagraph{Intervention on Avalanche}
+The intervention begin after a witness call. Usually the witness is one of the hikers that is on the front of the avalanche. In the best situation, the hikers begins the auto-rescue procedure, with his own avalanche beacon, and calls the emergency number.
+
+During the emergency call, the operator tries to understand the location, alerts the rescue team on shift and tries to understand the general situation that the team may encounter. A rescue team is formed by:
+\begin{itemize}
+\item Mountain Rescue heli-ambulance expert
+\item Mountain Rescue canine units
+\item Health equip and nurse
+\end{itemize}
+If heli-ambulance is cleared to take off, those are the first rescuers on the avalanche. The clearance is related to weather and light conditions, because flight is performed by eye-sight. If heli-ambulance mission is aborted, Mountain Rescue team should reach the avalanche with ground vehicle.
+
+Under certain strict condition, it is possible to perform an ARTVA search from the helicopter.
+
+\myparagraph{Equipment}
+There is a procedural and moral obligation in having the last generation device, even if do not exists a directive that defines a specific model for the equipment. Each rescuer has a VHF transmitter and cellphone. 
+
+It is possible to perform a search with other technology, like RECCO\sidenote[]{RECCO is a passive searching method, composed by a reflector included in hikers clothing, and a detector used by rescue teams. A RECCO detector usually performs passive search and \num{457}\si{\kilo\hertz} avalanche beacons search at the same time. The last generation detector has an average weight of \num{1}\si{\kilogram}, while the reflector weights only few grams. RECCO cannot be used for companion rescue}, even if the detector is heavy and not always reliable.
+
+\section{State of the Art}
+
+In this section we will analyze the state of the art in the field of beacons construction and signal analysis.
+
+\subsection{Transmission}
+
+Normative states the use of a very long wavelength ($\symlunghezzaonda$) (\num{656}\si{\meter}). Such a long wavelength reduces the interference effects of snow, body and rocks and also multi-bouncing and multi-path effects\citep{balanis2012antenna} that may afflict some shorter waves. This is one of the main reason why GPS technology never erupted in this field\citep{457andfuture}.
+
+This advantage also bring a consistent number of drawbacks. One of the main drawback is the fact that the search is always performed in near--field (distance less of $\symlunghezzaonda/2\pi$). In the near--field, as we will see, interpretation of flux lines is quite complex, and it is difficult to derive a general direction of arrival algorithm.
+
+Avalanche transceiver for companion rescue has to be small, therefore antennas and batteries has to be small. As we will see in the next chapter, to increase receiver antenna gain (also called effective height $\symaltezzaeffettiva$), ferrite core antennas are used, but the efficiency and the noise introduced is not good. Those brings to transmitter that may be identified in the range of \num{40}..\num{60}\si{\meter}, in function of type of receiver.
+
+There is no big evolution in transmitter; almost all device implement a simple amplitude--shifting--key (ASK) transmitter, build with an oscillator for the carrier, and a variable gain amplifier that modulates the intelligence signal.
+
+\subsection{Reception}
+
+Usually, an analog receiver has a little more bigger receiving radius with respect to a digital one. This difference is due to stronger filtration routines implemented in digital ARTVA, with respect to analog, and because of the dimension of the z--axis antenna.
+
+A digital ARTVA implements multiple antennas. Some typical configurations are:
+\begin{itemize}
+\item two crossing antennas
+\item three perpendicular antennas
+\end{itemize}
+The signal from antennas are preprocessed using analog circuitry and then converted and processed in a DSP microprocessor. There are some advanced techniques\citep{Salos2007} implemented for the identification of the direction of the vectorial H--field, and also to help hikers and rescuers to find a transmitter. 
+
+In general, the circuit may be resumed as follows:
+
+\begin{figure}
+	\centering
+	\includegraphics[width=7cm]{ch1/img/img_schema_arva.pdf}
+	\caption{Block diagram of a commercial digital beacon}
+\end{figure}
+
+
+\begin{itemize}
+\item signal is received through the antennas
+\item the first stage of filtering is a frequency shift and  an anti-aliasing filter, that is necessary to avoid problems that could derive from AD-conversion
+\item the signal is converted in the digital domain
+\item other filtration techniques are analyzed  in \citep{Salos2007}, and are one of the main research topic in this field, in association with phase analysis to better understand the direction of the single components of the H--field
+\item the signal detector and magnetic field estimator is implemented via software
+\end{itemize}
+
+One of the main challenge that should be resolved is the problem of the noise introduced by antennas. This noise is proportional to the received signal, phenomenon that induces an unsurmountable issue in the identification of multiple burial signal.
+
+\subsection{Searching Algorithms}
+
+\myparagraph{The magnetic momentum problem}
+The main problem is the searching of the burial. Until now, only few are the example of automatic searching, while quite consolidated is the practice of the manual searching. One of the key aspects is the problem of the orientation of the transmitter: as we will see in the next chapter, the direction of the transmitter antenna change radically the shape of the field. From a general point of view, with respect to classical far--field identification problem, in this case we have to identify 6 state for each transmitter \sidenote[]{3 states refer to the position of the transmitter, while the latter 3 refers to the magnetic dipole momentum that is parallel to the axis of the antenna}, instead of only 3. The challenge is related to the fact that we can only collect 3 measurements (the H--field vector components).
+
+Even if there are some solutions for near--field qualitative direction of arrival, as explained in detail in \citep{hutchinson2000arrl}, typically those algorithm requires a very prohibitive electro--mechanical circuitry, not suitable for mountain hikers (or in our case, a drone).
+
+So far, only one solution earns the right to be cited: the solution proposed in \citep{pinies2006fast,pinies2006localization}, based upon Bayesian estimation theory and Kalman filters, is a remarkable attempt to find new approach to the solution of this problem, even if based on the weak assumption of a perfect knowledge of the covariance matrix related to the noise. One step ahead in this direction should be the redefinition of the problem in a dual form, from the Kalman filter to the information filter, in which the complete uncertainty is presented with a null matrix of the canonical form, with respect to the infinite--valued matrix of the normal form. 
+
+\myparagraph{Multiple Burial}
+Those algorithms do not analyze the problem of multiple burial, and the subsequent possible situation of overlapping signal. An almost complete dissertation about this problem, with some test on beacon present on the market, may be found in \citep{signaloverlappingARVA1,signaloverlappingARVA2}. From those technical documents, distributed by one of the most well-know company in snow--safety, rises the evident lack of a solution for the overlapping problem, due to transmitted signal limitation. The most suggest solution is to run--away from an identified source in the hope to find another new signal. Some producer try to avoid this problem using parallel carrier frequency with additional information coded into intelligence signal (unique ID, heartbeat status, \dots).
+
+\myparagraph{A complex procedure}
+State of the art is an algorithm of flux line following, in parallel with different assumption that user shall analyze, to derive the possible orientation of the buried person transmitting antenna, and subsequently find the best way to reach the hikers position. The complete explanation for the searching procedure is long even if not to complex, but based upon qualitative observation and deduction derived from expertise of the rescuer.
+
+Generally speaking, what we need to know is the fact that a simple translation of this procedure in a machine with limited computational power is not practically possible.
+
+A comprehensive description of the companion search and Mountain Rescue procedure could be found in \citep{ManualeSciAlpinismo}.
+
+\section{Autonomous VTOL for buried searching}
+
+The thesis is built around the main thread of inspect and derive the avionics of an autonomous VTOL. Even if avionics refer to the complete set of instrumentation and algorithms necessary to stabilize and control the flight, in this work we will focus on some of the main aspects necessary to perform the main task of buried searching.
+
+This work is not the first attempt to bring an automatic drone on avalanches. Some remarkable examples are 
+\begin{itemize}
+\item SHERPA, European project born to create a robotic framework of helpers for Mountain Rescue, coordinated by University of Bologna
+\item An user--piloted quad-copter research is just started in Politecnico di Torino
+\item Some interests also from the Eidgen\"{o}ssische Technische Hochschule Z\"{u}rich, with the project Alcedo\cite{projectAlcedoZurigo}
+\end{itemize}
+
+\subsection{Why the use of a VTOL?}
+The use of a drone in the searching area depends on various factors. During design it is necessary to understand and think a system the fit entirely the actual search strategy.
+
+One practical example of use could be a situation of high residual danger and an uncertainty about the presence of buried under the avalanche. In a case like that, the VTOL could be used to test the necessity of drop the rescue team on the avalanche.
+
+The main advantage is obviously the ability to move faster on the avalanche with respect to an human rescuer, avoiding ground difficulties. At the same time, the drone should be able to identify and avoid obstacle like trees and ski--lift pillars.
+
+\subsection{Quality Function Deployment}
+The best way to define the characteristics of a new product is to inspect customer needs, and from qualitative user domain extrapolate quantitative engineering dimensions\cite{akao1994development}.
+
+\myparagraph{Customer Needs}
+From our interview of Mountain Rescue members, we have derived some conclusions:
+\begin{itemize}
+\item one of the main cause of an avalanche is the weather, that modifies snow characteristics; during one day multiple avalanches may fall, so it is fundamental to guarantee a long discontinue operative time
+\item the VTOL should be portable, with limited size and weight, but at the same time ready to be used in a short amount of time
+\item all design process should be taken in to account the extreme low temperature at high altitude
+\item ARTVA device on the drone has to be robust with respect to electromagnetic interferences (propeller engines, radio, \dots)
+\item user interface is simple while complete
+\item the marking of the victims shall be hardware, with the use of visible darts
+\end{itemize}
+\input{ch1/customer_need_tbl.tex}
+
+We are now able to define a table \ref{tbl:customer_needs} in which at each customer needs a rating is given.
+
+In future, the automatic recognition of the avalanche dimensions could be a good starting point for some advanced research in the field of computer vision, with the improvements of user interface using for example voice recognition on radio.
+
+\myparagraph{Technical Specification}
+The next step in the definition of a good design is a list of technical specifications that will help us to identify the most challenging problem in and the weight of this problem with respect to the costumer needs.
+\input{ch1/tech_specs_tbl.tex}
+
+For sure, one of the first and most challenging problem is the weight reduction, that also guarantees a longer flying time. Also those elements are related to the number of  propulsion vector and the main dimension (the length of the arm). It is evident the correlation between the number of lift vectors with respect to the maximum wind interference.
+
+For the definition of a good searching algorithm, as we will see, it is important a good resolution of position and attitude of the drone; while to avoid obstacle it is important the resolution and the maximum revealing distance of the range finders.
+
+One final aspect that should be considered are the data related to the system that performs the marking of a buried person.
+
+All the specifications are listed in table \ref{tbl:tech_specs}
+
+\myparagraph{Merging the tables and comparison}
+In table \ref{tbl:need_vs_spec} all data are compared with a weighting method. The table shows the comparison between technical specifications and customer needs and also between technical specifications and the other technical specifications.
+\input{ch1/complete_tbl.tex}
+
+\myparagraph{Components selection}
+From the merged data it was possible to select the components that will be used in the prototype. All components are listed in table \ref{tbl:components_list}
+\input{ch1/components_tbl.tex}
+
+We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.

@@ -1,0 +1,53 @@
+%\documentclass[11pt,a4paper,twoside,openright,titlepage]{book}
+%\documentclass[a4paper,justified,twoside,notoc,nohyper]{tufte-book}
+%\documentclass[a4paper,justified,symmetric,notoc,nohyper,marginals=justified]{tufte-book}
+\documentclass[a4paper,justified,symmetric,notoc,nohyper,marginals=justified]{tufte-book}
+
+\input{setting/settings.tex}
+\input{setting/command_definitions.tex}
+\input{setting/tableofsymbols.tex}
+
+% Structure of the thesis
+% Frontmatter : {
+% 	Title Page
+% 	Dedication
+% 	Abstract
+% 	Acknowledgments
+% 	Table of contents and other lists
+% 	Table of symbols and notation
+% 	Preface	
+% }
+% Mainmatter : {
+% 	Inner chapters
+% 	Appendices
+% }
+% Backmatter : {
+% 	Bibliography
+% 	List of acronyms
+% 	Index
+% }
+
+% Check routines to create the front page
+\begin{document}
+	\input{misc/frontespizio.tex}
+
+\frontmatter
+	\begin{fullwidth}
+		%\input{misc/dedication.tex}
+		\input{misc/abstract.tex}
+		%\input{misc/acknowledgements.tex}
+		\dominitoc
+		\tableofcontents
+	\end{fullwidth}
+	
+\mainmatter
+	\input{ch1/ch1.tex}
+
+\backmatter
+	\begin{fullwidth}
+		\listofsymbolspages
+		\bibliographyinsert
+		%\index ?? we will see
+	\end{fullwidth}
+
+\end{document}

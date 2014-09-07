@@ -1,0 +1,38 @@
+% COMMAND DEFINITIONS
+
+% Definition of the abstract environment
+
+\newenvironment{abstract}{%
+\cleardoublepage \null \vfill \begin{center}%
+\bfseries \abstractname \end{center}}{%
+\vfill \null%
+}
+
+\newenvironment{aknowledgements}{%
+\cleardoublepage \thispagestyle{empty} \null \vspace{\stretch{4}} \begin{center}%
+\bfseries \end{center}}{%
+\vspace{\stretch{1}} \null%
+}
+
+\newenvironment{dedication}{%
+\thispagestyle{empty}%
+\begin{flushright}%
+\null \vspace{\stretch{1}}}{%
+\vspace{\stretch{2}} \null
+\end{flushright}}
+
+\newcommand{\listofsymbolspages}{%
+\cleardoublepage%
+\listofsymbols}
+
+\newcommand{\bibliographyinsert}{%
+\bibliography{bib/bibs}%
+%\bibliographystyle{bib/unsrtnat}
+\bibliographystyle{plain}%
+%\bibliographystyle{bib/ieeetr}%
+}
+
+\newcommand{\myparagraph}[1]{\paragraph{#1} \leavevmode \vspace{0.2em} \\}
+
+\def\inch{''}
+\def\euro{\texteuro}
