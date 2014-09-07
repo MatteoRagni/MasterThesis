@@ -3,7 +3,7 @@
 % Definition of the abstract environment
 
 \newenvironment{abstract}{%
-\cleardoublepage \null \vfill \begin{center}%
+\cleardoublepage \thispagestyle{empty} \null \vfill \begin{center}%
 \bfseries \abstractname \end{center}}{%
 \vfill \null%
 }
@@ -22,14 +22,13 @@
 \end{flushright}}
 
 \newcommand{\listofsymbolspages}{%
+\thispagestyle{empty}
 \cleardoublepage%
 \listofsymbols}
 
 \newcommand{\bibliographyinsert}{%
 \bibliography{bib/bibs}%
-%\bibliographystyle{bib/unsrtnat}
 \bibliographystyle{plain}%
-%\bibliographystyle{bib/ieeetr}%
 }
 
 \newcommand{\myparagraph}[1]{\paragraph{#1} \leavevmode \vspace{0.2em} \\}

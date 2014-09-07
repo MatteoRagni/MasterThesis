@@ -7,7 +7,7 @@
 
 Many people in the last few year have re-discovered a passion for winter mountain sports. Some of them have decided to explore the extreme version of this sports, like winter climbing or free-riding.
 
-The increasing number of riders in extreme snow condition facilitates avalanches falling. Mountain Rescue Team is often called for search probable buried hikers, constrained to operate in an environment with an high residual risk. To facilitate the research, national and regional laws\cite{ARTVAobbligationLaw} have imposed the use of ARTVA\marginnote{ARTVA: from the Italian \emph{Apparecchio Ricerca Travolti VAlanga}} transmitter, also called \emph{Avalanche Beacons}, for rider of non-equipped trails.
+The increasing number of riders in extreme snow condition facilitates avalanches falling. Mountain Rescue Team is often called for search probable buried hikers, constrained to operate in an environment with an high residual risk. To facilitate the research, national and regional laws\cite{ARTVAobbligationLaw} have imposed the use of ARTVA transmitter, also called \emph{Avalanche Beacons}, for rider of non-equipped trails.
 
 \section{Some statistics about the avalanche accidents}
 
@@ -19,6 +19,11 @@ A deeper analysis of the data shows that the 40\% of the accidents have victims.
 \item 34\% of the accidents have two or three buried 
 \item 16\% of the accidents have four or more or more buried
 \end{itemize}
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=5cm]{ch1/img/statistiche_sepolti.pdf}
+	\caption{Number of buried}
+\end{marginfigure}
 
 Another important factor is the position of the overwhelms hikers:
 \begin{itemize}
@@ -29,7 +34,7 @@ Another important factor is the position of the overwhelms hikers:
 
 The survival curve, because of frostbite and hypothermia, without considerable traumas, has an upper limit of 15--18 minutes. Here is the the companion rescue that makes the real difference\cite{ManualeSciAlpinismo}.
 
-One last important statistic is the number of hikers found with the ARTVA. Considering the fact that the statistics do not take into account the episode of auto-rescue, the 7\% of the buried are found by the use of the receivers, a very small amount of the total. This data should be revised in the light of the advent of new digital ARTVA receivers, that simplify the searching method, and reduce the searching time \citep{hereforddigital}. 
+One last important statistic is the number of hikers found with the ARTVA\marginnote{ARTVA: from the Italian \emph{Apparecchio Ricerca Travolti VAlanga}}. Considering the fact that the statistics do not take into account the episode of auto-rescue, the 7\% of the buried are found by the use of the receivers, a very small amount of the total. This data should be revised in the light of the advent of new digital ARTVA receivers, that simplify the searching method, and reduce the searching time \citep{hereforddigital}. 
 
 As reported in \citep{Brugger2007}, within Europe and North America, avalanche airbags and avalanche transceiver reduce mortality, and companion rescue reduces incredibly the median duration of burial, remarking the extreme importance of those device for all mountaineers.
 
@@ -62,6 +67,12 @@ During transmission, beacons transmit a so-called \emph{wild-life tag}, or more 
 	\end{itemize}
 \end{itemize}
 
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=5cm]{ch1/img/artva_signal.pdf}
+	\caption{Intelligence signal of avalanche beacons}
+\end{marginfigure}
+
 \subsection{Receiving Mode}
 
 The normative states for receiver:
@@ -69,7 +80,7 @@ The normative states for receiver:
 	\item the $(S+N)/N$ ratio of \num{6}\si{\decibel} at the terminal of electro--acoustic transducer
 	\item a clear optical indication of direction for beacon with optical signal indication of direction
 \end{itemize}
-\mmarginnote{The Italian authority in Mountain Rescue is \emph{Soccorso Alpino e Speleologico Italiano}}
+\marginnote{The Italian authority in Mountain Rescue is \emph{Soccorso Alpino e Speleologico Italiano}}
 
 \myparagraph{Analog Beacons}
 The analog beacon uses a cascade of filters and an identification circuit to extract the strength information of received signal. The strength is thus used as gain command for a sound generator, that rescuer uses to identify the direction of arrival. Typically, those ARTVA have a volume knob to perform a fine search. The main drawback is the extreme difficulty to perform a fast search, that requires an experienced user. Quoting \citep{457andfuture}: \emph{a better term for analog beacon would be \textbf{audible--based}}
@@ -100,6 +111,8 @@ During the emergency call, the operator tries to understand the location, alerts
 If heli-ambulance is cleared to take off, those are the first rescuers on the avalanche. The clearance is related to weather and light conditions, because flight is performed by eye-sight. If heli-ambulance mission is aborted, Mountain Rescue team have to reach the avalanche with ground vehicle.
 
 Under certain strict condition, it is possible to perform an ARTVA search from the helicopter.
+
+Once arrived on the location, if residual risk make it possible, the rescue team is dropped from the heli-ambulance and starts the searching procedure, with canine unit and with personal ARTVAs. The rescuers with the beacons follow a scheme that allow them to cover the avalanche front. This scheme is called primary search. While a signal is identified, the rescuer start a fine search to pinpoint the buried position.
 
 \myparagraph{Equipment}
 There is a procedural and moral obligation in having the last generation device, even if does not exist a directive that defines a specific model for the equipment. Each rescuer has a VHF transmitter and cellphone, along with the personal beacon. 
@@ -226,4 +239,4 @@ In table \ref{tbl:need_vs_spec} all data are compared with a weighting method. T
 From the merged data it was possible to select the components that will be used in the prototype. All components are listed in table \ref{tbl:components_list}
 \input{ch1/components_tbl.tex}
 
-We have also decided not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.
+We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.
