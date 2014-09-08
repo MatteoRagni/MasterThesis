@@ -1,0 +1,95 @@
+% CHAPTER 2
+
+\begin{fullwidth}
+\chapter{Design of a digital ARTVA \label{ch:chapter2}}
+\end{fullwidth}
+\minitoc
+
+In this chapter we will try to design a digital receiver for the ARTVA signal. Before starting with the design, \emph{ARTVA signal} is analyzed in detail, with the derivation of a simplified model of field pattern that could be used  for the implementation of the searching algorithm. After, ferrite antennas are analyzed, as they are the only way to receive such a long wavelength. In the last part of the chapter the circuitry for the ARTVA receiver is shown.
+
+\section{Analysis of transmitting pattern}
+
+A formal model of the transmitting pattern is fundamental for the implementation of the searching algorithm. We start from the basic Maxwell equation and we arrive to a simpler model numerically usable.
+
+As we will see, radiating pattern is quite complex due to the fact that we are working in the \textbf{near--field} region, condition that constraint not to use classical DoA\marginnote{\emph{DoA}: Direction of Arrival}, such as MUSIC or ESPRIT, that operates in far-field condition and at higher frequencies. DoA systems for long waves usually requires too big electro--mechanical devices.
+
+\subsection{Maxwell's Equations}
+The following investigation is based upon Maxwell's Equation, in which the magnetic permeability $\magperm$ and $\dielettrico$ is considered as a constant (the radiation is assumed to propagate at speed of light in air). Also we consider some field properties, that are function of radio distance and time:
+\[
+f(\radiodist,t) = f \qquad f \in \left[\; \chargedens,\; \currdens,\; \efield,\; \bfield,\; \hfield \; \right]
+\]
+The equations that rule the induction are the \emph{Gauss equation of magnetic induction} and the \emph{Faraday law of electric induction}:
+\begin{equation}
+\nabla\cdot\bfield = 0
+\label{eq:gauss1}
+\end{equation}
+\begin{equation}
+\nabla\times\efield = -\partialt \bfield
+\label{eq:faraday}
+\end{equation}
+while the equations that rule the interaction with material are \emph{Gauss equation} and \emph{Ampere law}:
+\begin{equation}
+\nabla\cdot\efield = \dfrac{\chargedens}{{\dielettrico}_0}
+\label{eq:gauss2}
+\end{equation}
+\begin{equation}
+\nabla\times\bfield = {\magperm}_0 \left( \currdens + {\dielettrico}_0 \partialt \efield \right)
+\label{eq:ampere}
+\end{equation}
+
+\subsection{EM field dynamic potentials}
+
+Starting from equation \ref{eq:gauss1}, we can define a vectorial function called \emph{potential vector} $\afield$ of $\bfield$:
+\begin{equation}
+\bfield = \nabla\times\afield
+\label{eq:potvett}
+\end{equation}
+\marginnote{The existence od $\afield$ is verified by property of $\nabla$ operator, whom states that the divergence of a curl of a vector field is zero} Putting \ref{eq:potvett} in \ref{eq:faraday}:
+\[
+\nabla\times\efield = - \partialt \left( \nabla\times\afield \right)
+\]
+\begin{equation}
+\nabla\times\left( \efield + \partialtarg{\afield} \right) = 0
+\end{equation}
+From the previous equation it is evident that the argument between parenthesis is in reality an irrotational vector field, thus a potential function exists such that:
+\[
+-\nabla\scpot = \efield + \partialtarg{\afield}
+\]
+and we derive the following definition of electric field:
+\begin{equation}
+\efield = - \nabla \scpot - \partialtarg{\afield}
+\label{eq:efieldvett}
+\end{equation}
+Equation \ref{eq:potvett} and \ref{eq:efieldvett} are used to express a new formulation for the Maxwell's equation based upon vector potential\sidenote{The proof is in chapter appendix \ref{eq:evidence1}}:
+\begin{equation}
+\begin{array}{rcl}
+\nabla^2\scpot + \partialt \nabla \cdot \afield & = & - \dfrac{\chargedens}{\dielettrico_0} \\
+\nabla^2 \afield - \dfrac{1}{\velocitaluce^2} \partialttarg{\afield} - \nabla\left( \nabla \cdot \afield + \dfrac{1}{\velocitaluce^2} \partialtarg{\scpot} \right) & = & -\magperm_0 \currdens
+\end{array}
+\label{eq:potvecmaxwell}
+\end{equation}
+Those equation, even if the evident complexity, could be resolved as a well posed boundaries condition problem. Equation are coupled with the current formulation, but could be decoupled using the \textbf{Gauge transformation}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Appendix}
+
+\subsection{Evidence}
+
+\myparagraph{EM field dynamic potential}
+The following equations are the proof for \ref{eq:potvecmaxwell}
+\begin{equation}
+\begin{array}{rcl}
+\nabla \cdot \left(  - \nabla \scpot - \partialtarg{\afield} \right) & = & \dfrac{\chargedens}{\dielettrico_0} \\
+\nabla^2 \scpot + \partialt{\nabla \cdot \afield} & = & -\dfrac{\chargedens}{\dielettrico_0} \\
+ & & \\
+\nabla \times \left( \nabla \times \afield \right) & = & \magperm_0 \left( \currdens + \dielettrico_0 \partialtarg{\left(- \nabla \scpot - \partialtarg{\afield}\right)} \right) \\
+\nabla \left( \nabla \cdot \afield \right) - \nabla^2 \afield & = & \magperm_0 \currdens - \magperm_0 \dielettrico_0 \dfrac{\partial^2 \afield}{\partial t^2} - \magperm_0 \dielettrico_0 \nabla \dfrac{\partial \scpot}{\partial t} \\
+\nabla^2 \afield - \dfrac{1}{c^2} \dfrac{\partial^2 \afield}{\partial t^2} - \nabla \left( \nabla \cdot \afield + \dfrac{1}{c^2} \dfrac{\partial \scpot}{\partial t} \right) & = & - \magperm_0 \currdens
+\end{array}
+\label{eq:evidence1}
+\end{equation}
+
+

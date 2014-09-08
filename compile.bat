@@ -7,7 +7,7 @@ pdflatex main
 
 ::del main.bbl
 ::del main.blg
-::del main.log
+del main.log
 ::del main.sub
 ::del main.suc
 ::del main.syc

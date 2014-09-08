@@ -125,11 +125,11 @@ In this section we will analyze the state of the art in the field of beacons con
 
 \subsection{Transmission}
 
-Normative states the use of a very long wavelength ($\symlunghezzaonda$) (\num{656}\si{\meter}). Such a long wavelength reduces the interference effects of snow, body and rocks and also multi-bouncing and multi-path effects\citep{balanis2012antenna} that may afflict some shorter waves. This is one of the main reason why GPS technology never erupted in this field\citep{457andfuture}.
+Normative states the use of a very long wavelength ($\lunghezzaonda$) (\num{656}\si{\meter}). Such a long wavelength reduces the interference effects of snow, body and rocks and also multi-bouncing and multi-path effects\citep{balanis2012antenna} that may afflict some shorter waves. This is one of the main reason why GPS technology never erupted in this field\citep{457andfuture}.
 
-This advantage also bring a consistent number of drawbacks, such as the fact that the search is always performed in near--field (distance less of $\symlunghezzaonda/2\pi$). In the near--field, as we will see, interpretation of flux lines is quite complex, and it is difficult to derive a general direction of arrival algorithm.
+This advantage also bring a consistent number of drawbacks, such as the fact that the search is always performed in near--field (distance less of $\lunghezzaonda/2\pi$). In the near--field, as we will see, interpretation of flux lines is quite complex, and it is difficult to derive a general direction of arrival algorithm.
 
-Avalanche transceiver for companion rescue has to be small, therefore antennas and batteries has to be small. As we will see in the next chapter, to increase receiver antenna gain (also called effective height $\symaltezzaeffettiva$), ferrite core antennas are commonly used, but the efficiency and the noise introduced is not good. Those brings to transmitter that may be identified in the range of \numrange{40}{60}\si{\meter}, in function of type of receiver.
+Avalanche transceiver for companion rescue has to be small, therefore antennas and batteries has to be small. As we will see in the next chapter, to increase receiver antenna gain (also called effective height $\altezzaeffettiva$), ferrite core antennas are commonly used, but the efficiency and the noise introduced is not good. Those brings to transmitter that may be identified in the range of \numrange{40}{60}\si{\meter}, in function of type of receiver.
 
 There is no big evolution in transmitters; almost all devices implement a simple amplitude--shifting--key (ASK) transmitter, build with an oscillator for the carrier, and a variable gain amplifier that modulates the intelligence signal.
 
@@ -230,13 +230,15 @@ For the definition of a good searching algorithm, as we will see, it is importan
 One final aspect that should be considered are the data related to the system that performs the marking of a buried person.
 
 All the specifications are listed in table \ref{tbl:tech_specs}
+\input{ch1/complete_tbl.tex}
 
 \myparagraph{Merging the tables and comparison}
 In table \ref{tbl:need_vs_spec} all data are compared with a weighting method. The table shows the comparison between technical specifications and customer needs and also between technical specifications and the other technical specifications.
-\input{ch1/complete_tbl.tex}
 
 \myparagraph{Components selection}
 From the merged data it was possible to select the components that will be used in the prototype. All components are listed in table \ref{tbl:components_list}
 \input{ch1/components_tbl.tex}
 
 We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.
+
+\FloatBarrier
