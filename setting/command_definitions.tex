@@ -24,6 +24,9 @@
 \newcommand{\listofsymbolspages}{%
 \thispagestyle{empty}
 \cleardoublepage%
+\chapter*{List of symbols}
+\addcontentsline{toc}{chapter}{List of symbols}
+%\addtocontents{toc}{\protect\contentsline{section}{List of Symbols}{}}%
 \listofsymbols}
 
 \newcommand{\bibliographyinsert}{%
@@ -41,3 +44,23 @@
 \def\partialt{\dfrac{\partial}{\partial t}}
 \newcommand{\partialtarg}[1]{\dfrac{\partial {#1}}{\partial t}}
 \newcommand{\partialttarg}[1]{\dfrac{\partial^2 {#1}}{\partial t^2}}
+
+% versors definition
+\newcommand{\vers}[1]{\hat{\mathbf{#1}}}
+\def\vrx{\vers{x}}
+\def\vry{\vers{y}}
+\def\vrz{\vers{z}}
+\newcommand{\ccos}[1]{\cos\left( #1 \right)}
+\newcommand{\ssin}[1]{\sin\left( #1 \right)}
+\newcommand{\atan}[1]{\arctan\left( #1 \right)}
+\newcommand{\braces}[1]{\left( #1 \right)}
+\def\ritardotempo{\omegaarva \left( t - \dfrac{r}{\velocitaluce}\right)}
+\def\ritardotempolinea{\omegaarva \left( t - r/\velocitaluce\right)}
+
+\newcommand{\arraymath}[1]{%
+\[%
+\begin{array}{rcl}#1\end{array}%
+\]}
+
+% Symbol heading
+\renewcommand{\symheadingname}{}

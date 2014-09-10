@@ -1,0 +1,98 @@
+% Appendix of chapter 2
+
+\section{Appendix}
+
+\subsection{Evidences}
+
+\myparagraph{EM field dynamic potential}
+The following equations are the proof for \ref{eq:potvecmaxwell}
+\begin{equation}
+\begin{array}{rcl}
+\nabla \cdot \left(  - \nabla \scpot - \partialtarg{\afield} \right) & = & \dfrac{\chargedens}{\dielettrico_0} \\
+\nabla^2 \scpot + \partialt{\nabla \cdot \afield} & = & -\dfrac{\chargedens}{\dielettrico_0} \\
+ & & \\
+\magperm_0 \left( \currdens + \dielettrico_0 \partialt\left(- \nabla \scpot - \partialtarg{\afield}\right) \right) & = & \nabla \times \left( \nabla \times \afield \right) \\
+\magperm_0 \currdens - \magperm_0 \dielettrico_0 \dfrac{\partial^2 \afield}{\partial t^2} - \magperm_0 \dielettrico_0 \nabla \dfrac{\partial \scpot}{\partial t} & = & \nabla \left( \nabla \cdot \afield \right) - \nabla^2 \afield \\
+\nabla^2 \afield - \dfrac{1}{c^2} \dfrac{\partial^2 \afield}{\partial t^2} - \nabla \left( \nabla \cdot \afield + \dfrac{1}{c^2} \dfrac{\partial \scpot}{\partial t} \right) & = & - \magperm_0 \currdens
+\end{array}
+\label{eq:evidence1}
+\end{equation}
+
+In the following equation invariance with respect to recalibration map is showed:
+\begin{equation}
+\label{eq:prooftransformationmap}
+\begin{array}{rcl}
+\nabla \times \afield' & = & \nabla(\afield + \nabla \lorentz) \\
+ & = & \nabla \times \afield + \nabla \times \nabla \lorentz \\
+ & = & \nabla \times \afield \\
+ & = & \bfield \\
+ & & \\
+- \nabla\scpot' - \partialtarg{\afield'} & = & -\nabla \left( \scpot - \partialtarg{\lorentz} \right) - \partialt\left( \afield + \nabla \lorentz \right) \\
+ & = & -\nabla \scpot + \nabla \partialt \lorentz - \partialtarg{\afield} - \partialt\nabla\lorentz \\
+ & = & -\nabla \scpot - \partialtarg{\afield} \\
+ & = & \efield
+\end{array}
+\end{equation}
+
+\myparagraph{Magnetic dipole radiation}
+To evaluate the integral \ref{eq:integraledacalc}  we should consider some simplifications.
+
+$r' \ll r$: for an ideal dipole, coils radius shall be really with respect to radio vector:
+\[
+\begin{array}{rcl}
+\kappa & = & \sqrt{(\radiodist - \radiodist') \cdot (\radiodist - \radiodist')} = \\
+ & = & \sqrt{\radiodist \cdot \radiodist + \radiodist' \cdot \radiodist' - 2\; \radiodist \cdot \radiodist'} \\
+ & = & \sqrt{r^2 + r'^2 - 2\,r\,r'\,sin(\theta)cos(\varphi')} \\
+ & = & r\;\sqrt{1 + \dfrac{r'^2}{r^2} - 2\,\dfrac{r'}{r}\,sin(\theta)cos(\varphi')}
+\end{array}
+\]
+the simplification is performed by the use of Taylor expansions, under the hypothesis of $r'^2/r^2 \approx 0$:
+\arraymath{
+\kappa & = & \mathrm{Taylor}_2\left[ r\;\sqrt{1 - 2\,\dfrac{r'}{r}\,sin(\theta)cos(\varphi')} \right]_{\dfrac{r'}{r} \rightarrow 0} \\
+ & \approx & r\left( 1 - \dfrac{r'}{r}\,sin(\theta)cos(\varphi') \right)
+}
+imposing the inverse:
+\arraymath{
+\dfrac{1}{\kappa} & = & \dfrac{1}{r}\left( 1 - \dfrac{r'}{r}\,sin(\theta)cos(\varphi') \right)^{-1} \\
+ & = & \mathrm{Taylor}_2\left[ \dfrac{1}{r}\left( 1 - \dfrac{r'}{r}\,sin(\theta)cos(\varphi') \right)^{-1} \right]_{\dfrac{r'}{r} \rightarrow 0} \\
+ & \approx & \dfrac{1}{r}\left( 1 - \dfrac{r'}{r}\,sin(\theta)cos(\varphi') \right)
+}
+
+$r' \ll \lambda = 2\pi\velocitaluce/\omegaarva$: this observation permits us to simplify the cosine in the argument of the integral, with $\tau$ as defined in \ref{eq:campidef1}:
+\marginnote{$\cos(\gamma + \beta) = \cos\gamma\cos\beta - \sin\gamma\sin\beta$\\for $\gamma\rightarrow0$ we get $\ssin{\gamma} \approx \omegaarva\tau$ and $\ccos{\gamma} \approx 1$}
+\arraymath{
+\ccos{\omegaarva \left( t - \dfrac{\kappa}{\velocitaluce}\right)} & \approx & \ccos{\omegaarva\tau} + \dfrac{\omegaarva r'}{\velocitaluce} \ssin{\theta} \ccos{\varphi'} \\
+ & = & \ccos{\omegaarva\tau}\ccos{\dfrac{\omegaarva r'}{\velocitaluce} \ssin{\theta} \ccos{\varphi'}} - \\
+ &   & + \ssin{\omegaarva\tau} \ssin{\dfrac{\omegaarva r'}{\velocitaluce} \ssin{\theta} \ccos{\varphi'}} \\
+ & \approx & \ccos{\omegaarva\tau} - \\ & & + \ssin{\omegaarva\tau} \ssin{\dfrac{\omegaarva r'}{\velocitaluce} \ssin{\theta} \ccos{\varphi'}}
+}
+
+The union of the two simplifications give us as integral argument:
+\[\begin{array}{l}
+\dfrac{1}{r}\braces{1+\dfrac{r' \ccos{\theta} \ssin{\varphi'}}{r}} \cdot \\
+\cdot \braces{\ccos{\omegaarva\tau} - \dfrac{\omegaarva r' \ssin{\theta} \ccos{\varphi'}\ssin{\omegaarva\tau}}{\velocitaluce}}
+\end{array}\]
+expanding and considering $\xi = \ssin{\theta}\ccos{\varphi'}$ we obtain:
+\[
+\dfrac{1}{r} \braces{ \dfrac{\omegaarva\ssin{\omegaarva\tau}\xi r'}{c} + \ccos{\omegaarva\tau} - \dfrac{\omegaarva\ssin{\omegaarva\tau}\xi r'^2}{cr} + \dfrac{\ccos{\omegaarva\tau}\xi r'}{r} }
+\]
+where the term $\frac{r'^2}{cr} = \frac{r'}{r}\;\frac{\omegaarva}{2\pi}\;\frac{r'}{\lambda} \approx 0$ as we have already stated:
+\[
+\dfrac{1}{r} \braces{ \ccos{\omegaarva\tau} -\braces{\dfrac{\omegaarva}{c}\ssin{\omegaarva\tau} - \dfrac{1}{r}\ccos{\omegaarva\tau}}r'\xi}
+\]
+extracting only the parts that are function of integration variable $\varphi'$:
+\arraymath{
+a_1 & = & \dfrac{1}{r} \ccos{\omegaarva\tau} \\
+a_2 & = & \dfrac{1}{r} \braces{\dfrac{\omegaarva}{c}\ssin{\omegaarva\tau} - \dfrac{1}{r}\ccos{\omegaarva\tau}}r'\ssin{\theta}
+}
+The final integral is in the form:
+\marginnote{$\begin{array}{l} \int\limits_0^{2\pi}\ccos{\varphi'}d\varphi' = 0 \\ \int\limits_0^{2\pi}\cos^2\braces{\varphi'}d\varphi' = \pi \end{array}$}
+\[
+\afield(\radiodist,t) = \dfrac{\magperm_0 J_0 r'}{4\pi r} \int\limits_{0}^{2\pi}a_1 \ccos{\varphi'} - a_2 \cos^2\braces{\varphi'} d\varphi' \hat{\phi}
+\]
+and thus solved:
+\arraymath{
+\afield(\radiodist,t) & = & -\dfrac{\magperm_0 J_0 r'}{4\pi} \pi a_2 \\
+ & = & \dfrac{\magperm_0 J_0 r'^2 \pi}{4\pi r} \braces{\dfrac{1}{r}\ccos{\omegaarva\tau} - \dfrac{\omegaarva}{c}\ssin{\omegaarva\tau}}
+}
+Applying the substitution $m_0 = \pi r'^2 J_0$ we found the solution reported in equation \ref{eq:soluzioneint}.
