@@ -86,13 +86,37 @@ a_1 & = & \dfrac{1}{r} \ccos{\omegaarva\tau} \\
 a_2 & = & \dfrac{1}{r} \braces{\dfrac{\omegaarva}{c}\ssin{\omegaarva\tau} - \dfrac{1}{r}\ccos{\omegaarva\tau}}r'\ssin{\theta}
 }
 The final integral is in the form:
-\marginnote{$\begin{array}{l} \int\limits_0^{2\pi}\ccos{\varphi'}d\varphi' = 0 \\ \int\limits_0^{2\pi}\cos^2\braces{\varphi'}d\varphi' = \pi \end{array}$}
 \[
 \afield(\radiodist,t) = \dfrac{\magperm_0 J_0 r'}{4\pi r} \int\limits_{0}^{2\pi}a_1 \ccos{\varphi'} - a_2 \cos^2\braces{\varphi'} d\varphi' \hat{\phi}
 \]
 and thus solved:
+\marginnote{$\begin{array}{l} \int\limits_0^{2\pi}\ccos{\varphi'}d\varphi' = 0 \\ \int\limits_0^{2\pi}\cos^2\braces{\varphi'}d\varphi' = \pi \end{array}$}
 \arraymath{
 \afield(\radiodist,t) & = & -\dfrac{\magperm_0 J_0 r'}{4\pi} \pi a_2 \\
  & = & \dfrac{\magperm_0 J_0 r'^2 \pi}{4\pi r} \braces{\dfrac{1}{r}\ccos{\omegaarva\tau} - \dfrac{\omegaarva}{c}\ssin{\omegaarva\tau}}
 }
 Applying the substitution $m_0 = \pi r'^2 J_0$ we found the solution reported in equation \ref{eq:soluzioneint}.
+
+\myparagraph{Complex version of magnetic field}
+Here the proof of complex magnetic field equations:
+\[
+\begin{array}{rcl}
+B_r & = & \dfrac{1}{2} \dfrac{\magperm_0 m_0}{\pi} \ccos{\theta} \braces{\dfrac{1}{r^3}\ccos{\omegaarva \tau} - \dfrac{\kappa}{r^2} \ssin{\omegaarva \tau}} \\
+ & = & \dfrac{1}{2} \dfrac{\magperm_0 m_0}{\pi} \ccos{\theta} \kappa^3 \braces{ \dfrac{1}{r^3 \kappa^3} \ccos{\omegaarva\tau} - \dfrac{1}{r^2 \kappa^2} \ssin{\omegaarva\tau} } \\
+ & = & \dfrac{1}{2} \dfrac{\magperm_0 m_0}{\pi} \ccos{\theta} \kappa^3 \braces{ \dfrac{1}{r^3 \kappa^3} + \dfrac{j}{r^2 \kappa^2}} e^{j\omegaarva \tau} \\
+ & = & \dfrac{1}{2} \dfrac{\magperm_0 m_0}{\pi} \ccos{\theta} \kappa^3 \braces{ \dfrac{j}{r^2 \kappa^2} + \dfrac{1}{r^3 \kappa^3}} e^{j\omegaarva \tau} \\
+ & = & -\dfrac{1}{2} j \dfrac{\magperm_0 m_0}{\pi} \kappa^3 \ccos{\theta} \braces{\dfrac{1}{j^2 r^2 \kappa^2} + \dfrac{1}{j^3 r^3 \kappa^3}} e^{j\omegaarva \tau}
+\end{array}
+\]
+
+\[
+\begin{array}{rcl}
+B_{\theta} & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi r^3 c^2} \ssin{\theta} \braces{\braces{\velocitaluce^2 - \omegaarva^2 r^2}\ccos{\omegaarva \tau} - \omegaarva r \velocitaluce \ssin{\omegaarva \tau}} \\
+ & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi} \ssin{\theta} \braces{ \braces{\dfrac{1}{r^3}-\dfrac{\omegaarva^2}{c^2 r}}\ccos{\omegaarva \tau} - \dfrac{\omegaarva}{r^2 c} \ssin{\omegaarva \tau}} \\
+ & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi} \ssin{\theta} \braces{ \braces{\dfrac{1}{r^3}-\dfrac{\kappa^2}{r}}\ccos{\omegaarva \tau} - \dfrac{\kappa}{r^2} \ssin{\omegaarva \tau}} \\
+ & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi} \ssin{\theta} \kappa^3 \braces{ \braces{\dfrac{1}{r^3 \kappa^3}-\dfrac{1}{r \kappa}}\ccos{\omegaarva \tau} - \dfrac{1}{r^2 \kappa^2} \ssin{\omegaarva \tau}} \\
+ & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi} \ssin{\theta} \kappa^3 \braces{ \braces{\dfrac{1}{r^3 \kappa^3}-\dfrac{1}{r \kappa}} + \dfrac{j}{r^2 \kappa^2}} e^{j\omegaarva \tau} \\
+ & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi} \ssin{\theta} \kappa^3 \braces{-\dfrac{1}{r \kappa} + \dfrac{j}{r^2 \kappa^2} + \dfrac{1}{r^3 \kappa^3}} e^{j\omegaarva \tau} \\
+ & = & -\dfrac{1}{4} j \dfrac{\magperm_0 m_0}{\pi} \kappa^3 \ssin{\theta} \braces{\dfrac{1}{j r \kappa} + \dfrac{1}{j^2 r^2 \kappa^2} + \dfrac{1}{j^3 r^3 \kappa^3}} e^{j\omegaarva \tau}
+\end{array}
+\]

@@ -5,6 +5,7 @@
 
 % Graphics
 \usepackage{graphicx}
+\usepackage{animate} % animated gifs
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \graphicspath{{img/}}
 
@@ -64,3 +65,19 @@
 
 
 % \usepackage[pscoord]{eso-pic}
+%\usepackage{titlesec} Already loaded by tufte-book
+ 
+\titleformat{\chapter}[frame]
+{\normalfont}{\filright \enspace \sffamily \thechapter\enspace}{8pt}
+{\Large\bfseries\filcenter}
+
+\titleformat{\section}[block]
+{\normalfont}{\thesection}{6pt}{\large\bfseries}
+
+\titleformat{\subsection}[block]
+{\normalfont}{\thesubsection}{6pt}{\bfseries}
+
+% Create animation
+% convert immagine.gif -coalesce animation_%d.pdf
+% poi inserire nel latex
+% \animategraphics[height=%DIMENSIONE%,autoplay,loop]{%FRAME_PER_SECONDO%}{%POSIZIONE_ANIMAZIONE%/animation_}{%PRIMO_FRAME%}{%ULTIMO_FRAME%}

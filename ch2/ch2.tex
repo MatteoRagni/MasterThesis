@@ -101,12 +101,13 @@ t_r = t - \dfrac{\mid \radiodist - \radiodist' \mid}{c}
 
 \subsection{Magnetic dipole radiation}
 
+\myparagraph{Potential of a magnetic dipole}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=8cm]{ch2/img/dipolo_magnetico.pdf}
 	\caption{Formulation of a magnetic dipole problem}
 	\label{eq:dipolomagnetico}
-	\forceversofloat
+	%\forceversofloat
 \end{figure}
 Our antenna may be seen as an ideal magnetic dipole. The transmitting antenna is a solenoid around with a ferrite core, that acts as source of the electro--magnetic field. The source is subject to a dipole magnetic moment induced by the current $J = J_0 \cos(\omegaarva t)$, with no free charges (null scalar potential). The magnetic dipole moment is:
 \begin{equation}
@@ -114,7 +115,7 @@ Our antenna may be seen as an ideal magnetic dipole. The transmitting antenna is
 \end{equation}
 From figure \ref{eq:dipolomagnetico} we define the retarded potential equation, with $\kappa = \mid \radiodist-\radiodist'\mid$:
 \[
-\afield(\radiodist,t) = \dfrac{\magperm_0}{4\pi}\int{\dfrac{J_0\cos(\omegaarva (t - \kappa/c))}{r}}
+\afield(\radiodist,t) = \dfrac{\magperm_0}{4\pi}\int{\dfrac{J_0\cos(\omegaarva (t - \kappa/c))}{r}\ccos{\varphi'}d\varphi'}\hat{\phi}
 \]
 In the hypothesis of $\radiodist\parallel\vrz\times\vrx$, we obtain a vector $\afield$ directed along $\vry$:
 \[\begin{array}{rcl}
@@ -137,7 +138,10 @@ that brings us to the following solution:
 \label{eq:soluzioneint}
 \afield(\radiodist,t) = \dfrac{\magperm_0 m_0}{4\pi r}\,\sin(\theta)\left( \dfrac{1}{r} \sin\left(\omegaarva(t-r/c)\right) - \dfrac{\omegaarva}{r}\cos\left(\omegaarva(t-r/c)\right)\right)\hat{\phi}
 \end{equation}
-in which $m_0$ identifies the total dipole moment, considering also the number of the coils of antenna. The rest of the equation describes the propagation of the transmission in near--field conditions. With null scalar potential we obtain the electric field and the magnetic field from the equations:
+in which $m_0$ identifies the total dipole moment, considering also the number of the coils of antenna. The rest of the equation describes the propagation of the transmission in near--field conditions.
+
+\myparagraph{Electric and magnetic field}
+With null scalar potential we obtain the electric field and the magnetic field from the equations:
 \marginnote{In polar coordinates: \newline $\nabla=\left[ \begin{array}{c} \dfrac{\partial}{\partial r} \\ \dfrac{1}{r}\;\dfrac{\partial}{\partial\theta} \\ \dfrac{1}{r \sin(\theta)}\;\dfrac{\partial}{\partial\phi} \end{array} \right]$}
 \begin{equation}
 \begin{array}{rcl}
@@ -152,7 +156,7 @@ The application of differential operator $\nabla$:
 \begin{equation}
 \bfield = \left[ \begin{array}{c} \dfrac{1}{r}\;\dfrac{\partial A_{\phi}}{\partial \theta} \\ - \dfrac{\partial A_{\phi}}{\partial r} \\ 0 \end{array} \right]
 \end{equation}
-The final formulation of the EM field is:
+The final formulation for th EM field of a magnetic dipole is:
 \begin{equation}
 \begin{array}{rcl}
 \label{eq:campidef1}
@@ -162,6 +166,46 @@ B_{r} & = & \dfrac{\magperm_0 m_0}{2\pi r^2}\cos(\theta)\left( \dfrac{1}{r}\cos\
 B_{\theta} & = & \dfrac{\magperm_0 m_0}{4 \pi r^3 c^2}\sin(\theta)\left( \left( \velocitaluce^2 - \omegaarva^2 r^2 \right)\cos\left( \omegaarva\tau \right) + \omegaarva r \velocitaluce \sin\left( \omegaarva\tau \right) \right) 
 \end{array}
 \end{equation}
+In figure \ref{fig:animazionifield} are shown some animation referred to the magnetic field defined in the previous equations. The animation are performed using ARTVA typical parameters, even is scaled with respect time. The equations are parametric with respect to a value, $m_0$ that is the transmitter magnetic dipole. As we have seen in \ref{ch:chapter1}, the real transmitting power of an avalanche beacon is not known, but it shall have the maximum at \num{10}\si{\meter} inside a range. The animations consider an unitary magnetic dipole moment.
+
+\begin{figure*}[p]
+\label{fig:animazionifield}
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xz_10m/animation_}{0}{59}
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xz_40m/animation_}{0}{59} \newline
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xz_100m/animation_}{0}{59}
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xz_2lambda/animation_}{0}{59} \newline
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xy_10m/animation_}{0}{59} 
+\animategraphics[width=6.5cm,autoplay,loop]{15}{ch2/img/xy_2lambda/animation_}{0}{59}
+\caption{Graphical animation of the magnetic field $\bfield$ with retarded potential formulation. Those graph derives directly from the equations \ref{eq:campidef1}. To see the animations, please use \texttt{Adobe Acrobat viewer}}
+\end{figure*}
+\FloatBarrier
+
+\subsection{Magnetic field model simplification}
+From animations it is evident that the effect of retarded propagation is almost null inside a radius of \num{40}\si{\meter} from the transmitting source, that is roughly the maximum distance at which an avalanche beacon receives the signal. This brings us to other simplifications for our the model, as we will see in this section. From now on, all the simplifications are performed with the intent to find a model computationally convenient to be used in our algorithms.
+
+\myparagraph{Re--definition in complex domain}
+The next step is to bring equation of magnetic field in complex domain, but keeping in mind that only real part of the equations keeps the physical meaning of the field. The re--definition is based upon Euler relationship and on the definition of wavenumber:
+\[
+e^{j\beta} = \ccos{\beta} + j \ssin{\beta}
+\]
+\[
+\numeroonda = \dfrac{\omegaarva}{\velocitaluce}
+\]
+\begin{equation}
+\begin{array}{rcl}
+B_r & = & \dfrac{1}{2} \dfrac{\magperm_0 m_0}{\pi} \ccos{\theta} \braces{\dfrac{1}{r^3}\ccos{\omegaarva \tau} - \dfrac{\kappa}{r^2} \ssin{\omegaarva \tau}} \\
+ & = & -\dfrac{1}{2} j \dfrac{\magperm_0 m_0}{\pi} \kappa^3 \ccos{\theta} \braces{\dfrac{1}{j^2 r^2 \kappa^2} + \dfrac{1}{j^3 r^3 \kappa^3}} e^{j\omegaarva \tau}
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rcl}
+B_{\theta} & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi r^3 c^2} \ssin{\theta} \braces{\braces{\velocitaluce^2 - \omegaarva^2 r^2}\ccos{\omegaarva \tau} - \omegaarva r \velocitaluce \ssin{\omegaarva \tau}} \\
+ & = & -\dfrac{1}{4} j \dfrac{\magperm_0 m_0}{\pi} \kappa^3 \ssin{\theta} \braces{\dfrac{1}{j r \kappa} + \dfrac{1}{j^2 r^2 \kappa^2} + \dfrac{1}{j^3 r^3 \kappa^3}} e^{j\omegaarva \tau}
+\end{array}
+\end{equation}
+The proof of those relations is in appendix.
+
+\myparagraph{From Polar to Cartesian coordinates}
 
 % Appendix
 \input{ch2/ch2_appendix.tex}
