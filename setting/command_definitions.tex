@@ -50,12 +50,22 @@
 \def\vrx{\vers{x}}
 \def\vry{\vers{y}}
 \def\vrz{\vers{z}}
+\def\vrr{\vers{r}}
+\def\vrtheta{\hat{\boldsymbol{\theta}}}
+\def\vrphi{\hat{\boldsymbol{\phi}}}
 \newcommand{\ccos}[1]{\cos\left( #1 \right)}
 \newcommand{\ssin}[1]{\sin\left( #1 \right)}
 \newcommand{\atan}[1]{\arctan\left( #1 \right)}
 \newcommand{\braces}[1]{\left( #1 \right)}
 \def\ritardotempo{\omegaarva \left( t - \dfrac{r}{\velocitaluce}\right)}
 \def\ritardotempolinea{\omegaarva \left( t - r/\velocitaluce\right)}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\def\magfieldmatrix{\left[\begin{array}{ccc}%
+2x^2-y^2-z^2 & 3xy & 3xz \\%
+3xy & 2y^2-x^2-z^2 & 3yz \\%
+3xz & 3yz & 2z^2-x^2-y^2%
+\end{array}\right]}
+
 
 \newcommand{\arraymath}[1]{%
 \[%

@@ -45,7 +45,7 @@
 %\usepackage{listofsymbols} % To use during editing
 
 % Identation
-\usepackage{parskip}
+%\usepackage{parskip}
 
 % Bibliography
 \usepackage{url}
@@ -81,3 +81,31 @@
 % convert immagine.gif -coalesce animation_%d.pdf
 % poi inserire nel latex
 % \animategraphics[height=%DIMENSIONE%,autoplay,loop]{%FRAME_PER_SECONDO%}{%POSIZIONE_ANIMAZIONE%/animation_}{%PRIMO_FRAME%}{%ULTIMO_FRAME%}
+
+% TODO DEFINITION
+\usepackage{framed,color}
+\newcommand{\TODO}[1]{%
+	\colorbox{yellow}{#1}%
+}
+
+%%%% Remove identation in tufte latex class
+\usepackage{parskip}
+
+\makeatletter
+% Paragraph indentation and separation for normal text
+\renewcommand{\@tufte@reset@par}{%
+  \setlength{\RaggedRightParindent}{0.0pc}%
+  \setlength{\JustifyingParindent}{0.0pc}%
+  \setlength{\parindent}{0pc}%
+  \setlength{\parskip}{3pt}%
+}
+\@tufte@reset@par
+
+% Paragraph indentation and separation for marginal text
+\renewcommand{\@tufte@margin@par}{%
+  \setlength{\RaggedRightParindent}{0.0pc}%
+  \setlength{\JustifyingParindent}{0.0pc}%
+  \setlength{\parindent}{0.0pc}%
+  \setlength{\parskip}{3pt}%
+}
+\makeatother

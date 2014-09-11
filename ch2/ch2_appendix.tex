@@ -2,6 +2,14 @@
 
 \section{Appendix}
 
+\subsection{Polar coordinates}
+
+Maps:
+\begin{equation} \left\{ \begin{array}{rcl} x & = & r \sin(\theta) \cos(\phi) \\ y & = & r \sin(\theta) \sin(\phi) \\ z & = & r \cos(\theta) \end{array}\right. \rightarrow \left\{ \begin{array}{rcl} r & = & \sqrt{x^2+y^2+z^2} \\ \theta & = & \arctan\left(\dfrac{z}{\sqrt{x^2+y^2}}\right) \\ \phi & = & \arctan\left( \dfrac{x}{y} \right) \end{array} \right. \end{equation}
+
+Versors in Cartesian coordinates:
+\begin{equation} \left[ \begin{array}{ccc} \vrr & \vrtheta & \vrphi \end{array}\right] = \dfrac{1}{\sqrt{x^2+y^2+z^2}} \left[ \begin{array}{ccc} x & \dfrac{xz}{\sqrt{x^2+y^2}} & -\dfrac{y}{\sqrt{x^2+y^2}} \\ y & -\dfrac{yz}{\sqrt{x^2+y^2}} & \dfrac{x}{\sqrt{x^2+y^2}} \\ z & -\dfrac{x^2+y^2}{\sqrt{x^2+y^2}} & 0 \end{array} \right] \end{equation}
+
 \subsection{Evidences}
 
 \myparagraph{EM field dynamic potential}
@@ -120,3 +128,26 @@ B_{\theta} & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi r^3 c^2} \ssin{\theta} 
  & = & -\dfrac{1}{4} j \dfrac{\magperm_0 m_0}{\pi} \kappa^3 \ssin{\theta} \braces{\dfrac{1}{j r \kappa} + \dfrac{1}{j^2 r^2 \kappa^2} + \dfrac{1}{j^3 r^3 \kappa^3}} e^{j\omegaarva \tau}
 \end{array}
 \]
+
+\myparagraph{The field in cartesian coordinates}
+From the figure \ref{fig:polar2cartesian} we derive the following relations:
+\arraymath{
+\vers{r} & = & \dfrac{\radiodist}{\abs{\radiodist}} \\
+\vrtheta & = & \dfrac{ (\magdipole \times \radiodist) \times \radiodist }{ \abs{ (\magdipole \times \radiodist) \times \radiodist } } 
+}
+and the magnetic dipole vector is the projection on the two versors:
+\arraymath{
+\magdipole \cdot \vers{r} & = & m_0 \ccos{\theta}\\
+\magdipole \cdot \vrtheta & = & -m_0 \ssin{\theta}
+}
+thus equation \ref{eq:magneticfieldpolar} becomes:
+\arraymath{
+\bfield & = & \dfrac{\magperm_0}{4 \pi r^3} \braces{ 2 m_0 \ccos{\theta} \vers{r} + m_0 \ssin{\theta} \vrtheta } \\
+ & = & \dfrac{\magperm_0}{4 \pi r^3}\braces{2\braces{\magdipole \cdot \vers{r}} \vers{r} - \braces{\magdipole \cdot \vrtheta} \vartheta} \\ 
+ & = & \dfrac{\magperm_0}{4 \pi r^3}\braces{3\braces{\magdipole \cdot \vers{r}} \vers{r} - \braces{\magdipole \cdot \vers{r}} \vers{r} - \braces{\magdipole \cdot \vrtheta} \vartheta} \\ 
+ & = & \dfrac{\magperm_0}{4 \pi r^3}\braces{3\braces{\magdipole \cdot \vers{r}} \vers{r} - \magdipole}
+}
+putting the last equation in an analytical math engine, we derive this compact version, using as notation $\radiodist = [x,\,y,\,z]^T$:
+\begin{equation}
+\bfield = \dfrac{\magperm_0}{4 \pi r^5} \magfieldmatrix \magdipole
+\end{equation}
