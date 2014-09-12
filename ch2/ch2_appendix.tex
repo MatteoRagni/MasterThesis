@@ -151,3 +151,14 @@ putting the last equation in an analytical math engine, we derive this compact v
 \begin{equation}
 \bfield = \dfrac{\magperm_0}{4 \pi r^5} \magfieldmatrix \magdipole
 \end{equation}
+
+\subsection{Antenna transfer function}
+It is easy to derive transfer function, if we consider the system as a voltage divider:
+\begin{equation}\label{eq:transferfunc}
+\begin{array}{ccl}
+\dfrac{V_{\mathrm{out}}}{\vind} & = & \dfrac{\left(R_L \parallel C s \right)}{\left(R_L \parallel C s \right) + \left(R_P \parallel L s \right)} \\
+& = & \dfrac{\dfrac{1}{\dfrac{1}{R_L} + Cs}}{\dfrac{1}{\dfrac{1}{R_L} + Cs} + \dfrac{1}{\dfrac{1}{R_L} + \dfrac{1}{L s}}} \\
+& = & \dfrac{ \dfrac{1}{R_p}+\dfrac{1}{Ls} }{ \dfrac{1}{R_L} + Cs + \dfrac{1}{R_P} + \dfrac{1}{Ls} } \\
+& = & \dfrac{1}{R_P C} \dfrac{s + \dfrac{R_P}{L}}{s^2 + \dfrac{1}{C \dfrac{R_P R_L}{R_P + R_L}}s + \dfrac{1}{LC}} 
+\end{array}
+\end{equation}

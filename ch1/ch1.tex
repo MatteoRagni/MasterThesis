@@ -38,40 +38,15 @@ One last important statistic is the number of hikers found with the ARTVA\margin
 
 As reported in \citep{Brugger2007}, within Europe and North America, avalanche airbags and avalanche transceiver reduce mortality, and companion rescue reduces incredibly the median duration of burial, remarking the extreme importance of those device for all mountaineers.
 
+It is also known that 95\% of complete burial are in the layer between \num{-3} and\num{0} \si{\meter} of the avalanche.
+
 \section{Avalanche Beacons}
 
 There are two main typologies of avalanche transceiver. Differences are mostly in the user interface during receiving. We can divide in \emph{analog} and \emph{digital} ARTVA. Both device are equal for what concerns transmission. ARTVA can not be at the same time in transmission mode and receiving mode. Some models switch from receiving to transmission status after a scheduled amount of time. 
 
 \subsection{Transmission Mode}
 
-During transmission, beacons transmit a so-called \emph{wild-life tag}, or more simply, an intermittent signal at defined frequency, as stated in normative\cite{NormativaARVA}. From the normative, it is possible to extract more informations about the transmitted signal:
-\begin{itemize}
-\item A1A Signal:
-	\begin{itemize}
-	\item amplitude modulated signal
-	\item digital information (keying)
-	\item carrier frequency: \num{457}\si{\kilo\hertz}
-	\item no auxiliary carrier
-	\item frequency error shall not exceed $\pm$\num{80}\si{\hertz}
-	\end{itemize}
-\item carrier keying characteristics:
-	\begin{itemize}
-	\item on-time: \num{70}\si{\milli\second} minimum
-	\item off-time: \num{400}\si{\milli\second} minimum
-	\item period: \num{1000}\si{\milli\second} $\pm$ \num{300}\si{\milli\second}
-	\end{itemize}
-\item H--field peak at \num{10}\si{\meter}
-	\begin{itemize}
-	\item must be greater than \num{0.5}\si{\micro\ampere\per\meter}
-	\item must be lower than \num{2.23}\si{\micro\ampere\per\meter}
-	\end{itemize}
-\end{itemize}
-
-\begin{marginfigure}
-	\centering
-	\includegraphics[width=5cm]{ch1/img/artva_signal.pdf}
-	\caption{Intelligence signal of avalanche beacons}
-\end{marginfigure}
+During transmission, beacons transmit a so-called \emph{wild-life tag}, or more simply, an intermittent signal at defined frequency, as stated in normative\cite{NormativaARVA}. From the normative, it is possible to extract more informations about the transmitted signal, that are listed in section \ref{sec:a1asegnale}.
 
 \subsection{Receiving Mode}
 
