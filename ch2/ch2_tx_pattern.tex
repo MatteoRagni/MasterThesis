@@ -1,11 +1,11 @@
 \section{Analysis of transmitting pattern}
 
-A formal model of the transmitting pattern is fundamental for the implementation of the searching algorithm. We start from the basic Maxwell equation and we arrive to a simpler model numerically usable.
+A formal model of the transmitting pattern is fundamental for the implementation of the searching algorithm. We start from the basic Maxwell's equation and we arrive to a simpler model numerically usable.
 
-As we will see, radiating pattern is quite complex due to the fact that we are working in the \textbf{near--field} region, condition that constraint not to use classical DoA\marginnote{\emph{DoA}: Direction of Arrival}, such as MUSIC or ESPRIT, that operates in far-field condition and at higher frequencies. DoA systems for long waves usually requires too big electro--mechanical devices.
+As we will see, radiating pattern is quite complex due to the fact that we are working in the \textbf{near--field} region, condition that constraint us to not use classical DoA\marginnote{\emph{DoA}: Direction of Arrival}, such as MUSIC or ESPRIT, that operates in far-field condition and at higher frequencies. DoA systems for long waves usually requires too big electro--mechanical devices.
 
 \subsection{Maxwell's Equations}
-The following investigation is based upon Maxwell's Equation, in which the magnetic permeability $\magperm$ and $\dielettrico$ is considered as a constant (the radiation is assumed to propagate at speed of light in air). Also we consider some field properties, that are function of radio distance and time:
+The following investigation is based upon Maxwell's Equation, in which the magnetic permeability $\magperm$ and dielectric constant $\dielettrico$ are considered constant (the radiation is assumed to propagate at speed of light in air). Also we consider some field properties, that are function of radio distance $\radiodist$ and time $t$:
 \[
 f(\radiodist,t) = f \qquad f \in \left[\; \chargedens,\; \currdens,\; \efield,\; \bfield,\; \hfield \; \right]
 \]
@@ -18,7 +18,7 @@ The equations that rule the induction are the \emph{Gauss equation of magnetic i
 \nabla\times\efield = -\partialt \bfield
 \label{eq:faraday}
 \end{equation}
-while the equations that rule the interaction with material are \emph{Gauss equation} and \emph{Ampere law}:
+while the equations that rule the interaction with materials are \emph{Gauss equation} and \emph{Ampere law}:
 \begin{equation}
 \nabla\cdot\efield = \dfrac{\chargedens}{{\dielettrico}_0}
 \label{eq:gauss2}
@@ -35,14 +35,15 @@ Starting from equation \ref{eq:gauss1}, we can define a vectorial function calle
 \bfield = \nabla\times\afield
 \label{eq:potvett}
 \end{equation}
-\marginnote{The existence od $\afield$ is verified by property of $\nabla$ operator, whom states that the divergence of a curl of a vector field is zero} Putting \ref{eq:potvett} in \ref{eq:faraday}:
+\marginnote{The existence of $\afield$ is verified by property of $\nabla$ operator, whom states that the divergence of a curl of a vector field is zero} 
+We insert \ref{eq:potvett} in \ref{eq:faraday}:
 \[
 \nabla\times\efield = - \partialt \left( \nabla\times\afield \right)
 \]
 \begin{equation}
 \nabla\times\left( \efield + \partialtarg{\afield} \right) = 0
 \end{equation}
-From the previous equation it is evident that the argument between parenthesis is in reality an irrotational vector field, thus a potential function exists such that:
+From the previous equation it is evident that the argument between parentheses is in reality an irrotational vector field, thus a potential function exists such that:
 \[
 -\nabla\scpot = \efield + \partialtarg{\afield}
 \]
@@ -59,7 +60,7 @@ Equation \ref{eq:potvett} and \ref{eq:efieldvett} are used to express a new form
 \end{array}
 \label{eq:potvecmaxwell}
 \end{equation}
-Those equation, even if the evident complexity, could be resolved as a well posed boundaries condition problem. Equation are coupled with the current formulation, but could be decoupled using the \textbf{Gauge transformation}, also called \textbf{recalibration map}, that are in the form:
+Those equation, even if complex, could be resolved with a well posed boundaries condition problem. Equation are coupled with the current formulation, but could be decoupled using the \textbf{Gauge transformation}, also called \textbf{recalibration map}, that is in the form:
 \begin{equation}
 \left\{ \begin{array}{rcl}
 \afield' & \mapsto & \afield + \nabla \lorentz \\
@@ -67,7 +68,7 @@ Those equation, even if the evident complexity, could be resolved as a well pose
 \end{array}
 \right.
 \end{equation}
-in which $\lorentz = \lorentz(\radiodist,t) \in C^2$. As proofed in \ref{eq:prooftransformationmap}, this map represents an invariance for dynamic potential formulation. If we consider a $\lorentz$ such that verifies the \textbf{Lorentz equation}
+in which $\lorentz = \lorentz(\radiodist,t) \in C^2$. As proofed in \ref{eq:prooftransformationmap}, this map represents an invariant with respect to dynamic potential formulation. If we consider a $\lorentz$ such that it verifies the \textbf{Lorentz equation}
 \begin{equation}
 \nabla \cdot \afield' = - \dfrac{1}{\velocitaluce^2} \partialtarg{\scpot'}
 \end{equation}
@@ -78,14 +79,14 @@ we obtain in the previous equations the decoupled version:
 \nabla^2 \afield - \dfrac{1}{\velocitaluce^2} \partialttarg{\afield} & = & - \magperm_0 \currdens 
 \end{array}
 \end{equation}
-Those dynamic equations describe the time evolution of an EM--field. If field sources are localized in a finite region, those equations admit as solution a generalization of the well know solution of stationary case, called retarded potential:
+Those dynamic equations describe the time evolution of an EM--field. If field sources are located in a finite region, those equations admit as solution a generalization of the well know solution of stationary case, called retarded potential:
 \begin{equation}
 \begin{array}{rcl}
 \scpot(\radiodist,t) & = & \dfrac{1}{4\pi \dielettrico_0} \displaystyle\iiint\limits_{\Omega} \dfrac{1}{\mid \radiodist - \radiodist' \mid} \chargedens\left( \radiodist',t-\dfrac{\mid \radiodist - \radiodist' \mid}{\velocitaluce} \right) d\radiodist   \\
 \afield(\radiodist,t) & = & \dfrac{\magperm_0}{4\pi} \displaystyle\iiint\limits_{\Omega} \dfrac{1}{\mid \radiodist - \radiodist' \mid} \currdens\left( \radiodist',t-\dfrac{\mid \radiodist - \radiodist' \mid}{\velocitaluce} \right) d\radiodist 
 \end{array}
 \end{equation}
-in which the vector distance $\radiodist - \radiodist'$ is the distance between the point where retarded potential is evaluated and the point where the element of volume $d\radiodist$ of the localized sources is located. The delay is inserted by the definition of time:
+in which the vector distance ${\radiodist - \radiodist'}$ is the distance between the point where retarded potential is evaluated and the point where the element of volume $d\radiodist$ of the localized sources is located. The delay is due to the definition of time:
 \[
 t_r = t - \dfrac{\mid \radiodist - \radiodist' \mid}{c}
 \]
@@ -96,20 +97,20 @@ t_r = t - \dfrac{\mid \radiodist - \radiodist' \mid}{c}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=8cm]{ch2/img/dipolo_magnetico.pdf}
-	\caption{Formulation of a magnetic dipole problem}
+	\caption{Formulation of magnetic dipole problem}
 	\label{eq:dipolomagnetico}
 	\forceversofloat
 \end{figure}
-Our antenna may be seen as an ideal magnetic dipole. The transmitting antenna is a solenoid around with a ferrite core, that acts as source of the electro--magnetic field. The source is subject to a dipole magnetic moment induced by the current $J = J_0 \cos(\omegaarva t)$, with no free charges (null scalar potential). The magnetic dipole moment is:
+Our antenna may be seen as an ideal magnetic dipole. The transmitting antenna is a solenoid with a ferrite core, that acts as source of the electro--magnetic field. The source is subject to a dipole magnetic moment induced by the current $J = J_0 \cos(\omegaarva t)$, with no free charges (null scalar potential). The magnetic dipole moment is:
 \begin{equation}
 \magdipole = \pi r'^2\; J \vrz = m_0 \cos(\omegaarva t) \vrz
 \label{eq:dipolodacorrente}
 \end{equation}
-From figure \ref{eq:dipolomagnetico} we define the retarded potential equation, with $\kappa = \mid \radiodist-\radiodist'\mid$:
+From figure \ref{eq:dipolomagnetico} we define the retarded potential equation, with ${\kappa = \mid \radiodist-\radiodist'\mid}$:
 \[
 \afield(\radiodist,t) = \dfrac{\magperm_0}{4\pi}\int{\dfrac{J_0\cos(\omegaarva (t - \kappa/c))}{r}\ccos{\varphi'}d\varphi'}\hat{\boldsymbol{\phi}}
 \]
-In the hypothesis of $\radiodist\parallel\vrz\times\vrx$, we obtain a vector $\afield$ directed along $\vry$:
+In the hypothesis of ${\radiodist\parallel\vrz\times\vrx}$, we obtain a vector $\afield$ directed along $\vry$:
 \[\begin{array}{rcl}
 \radiodist & = & r \sin(\theta) \vrx + r \cos(\theta) \vrz \\
 \radiodist' & = & r' \cos(\varphi') \vrx + r' \sin(\varphi') \vry \\
@@ -120,7 +121,7 @@ Those elements in retarded potential formulation lead us to the integral formula
 \label{eq:integraledacalc}
 \afield(\radiodist,t) = \dfrac{\magperm_0 J_0 r'}{4\pi}\int\limits_{0}^{2\pi}{\dfrac{\cos(\omegaarva (t - \kappa/c))}{\kappa} \cos(\varphi') d\varphi' \hat{\boldsymbol{\phi}}}
 \end{equation}
-The solution of this integral is reported in appendix; we recall only on the simplification used:
+The solution of this integral is reported in appendix; we recall only the simplification used:
 \begin{itemize}
 \item we assume $r' \ll r$
 \item we assume $r' \ll \lambda = 2\pi c/\omegaarva$
@@ -157,7 +158,7 @@ B_{r} & = & \dfrac{\magperm_0 m_0}{2\pi r^2}\cos(\theta)\left( \dfrac{1}{r}\cos\
 B_{\theta} & = & \dfrac{\magperm_0 m_0}{4 \pi r^3 c^2}\sin(\theta)\left( \left( \velocitaluce^2 - \omegaarva^2 r^2 \right)\cos\left( \omegaarva\tau \right) + \omegaarva r \velocitaluce \sin\left( \omegaarva\tau \right) \right) 
 \end{array}
 \end{equation}
-In figure \ref{fig:animazionifield} are shown some animation referred to the magnetic field defined in the previous equations. The animation are performed using ARTVA typical parameters, even is scaled with respect time. The equations are parametric with respect to a value, $m_0$ that is the transmitter magnetic dipole. As we have seen in chapter \ref{ch:chapter1}, the real transmitting power of an avalanche beacon is not known, but it shall have the maximum at \num{10}\si{\meter} inside a range. The animations consider an unitary magnetic dipole moment.
+In figure \ref{fig:animazionifield} are shown some animation referred to the magnetic field defined in the previous equations. The animation are performed using ARTVA typical parameters, even if time is scaled. The equations are parametric with respect to a value, $m_0$ that is the transmitter magnetic dipole. As we have seen in chapter \ref{ch:chapter1}, the real transmitting power of an avalanche beacon is not known, but it shall have the maximum at \num{10}\si{\meter} inside a range. The animations consider an unitary magnetic dipole moment.
 
 \begin{figure*}[p]
 \label{fig:animazionifield}
@@ -171,7 +172,7 @@ In figure \ref{fig:animazionifield} are shown some animation referred to the mag
 \end{figure*}
 
 \subsection{Magnetic field model simplification}
-From animations it is evident that the effect of retarded propagation is almost null inside a radius of \num{40}\si{\meter} from the transmitting source, that is roughly the maximum distance at which an avalanche beacon receives the signal. This brings us to other simplifications for our the model, as we will see in this section. From now on, all the simplifications are performed with the intent to find a model computationally convenient to be used in our algorithms.
+From animations it is evident that the effect of retarded propagation is almost null inside a radius of \num{40}\si{\meter} from the transmitting source, that is roughly the maximum distance at which an avalanche beacon receives the signal. This brings us to other simplifications for our model, as we will see in this section. From now on, all the simplifications are performed with the intent to find a model computationally convenient to be used in our algorithms.
 
 \myparagraph{Re--definition in complex domain}
 The next step is to bring equation of magnetic field in complex domain, but keeping in mind that only real part of the equations keeps the physical meaning of the field. The re--definition is based upon Euler relationship and on the definition of wavenumber:

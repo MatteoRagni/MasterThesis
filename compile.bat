@@ -3,11 +3,11 @@
 pdflatex main
 pdflatex main-frn
 bibtex main
-pdflatex main
+pdflatex main -synctex=-1
 
 ::del main.bbl
 ::del main.blg
-del main.log
+::del main.log
 ::del main.sub
 ::del main.suc
 ::del main.syc

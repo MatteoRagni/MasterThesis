@@ -5,7 +5,7 @@
 %% Enlarge array size
 \renewcommand{\arraystretch}{2}
 
-In this chapter we will try to design a digital receiver for the ARTVA signal. Before starting with the design, \emph{ARTVA signal} is analyzed in detail, with the derivation of a simplified model of field pattern that could be used  for the implementation of the searching algorithm. After, ferrite antennas are analyzed, as they are the only way to receive such a long wavelength. In the last part of the chapter the circuitry for the ARTVA receiver is shown.
+In this chapter we will try to design a digital receiver for the ARTVA signal. Before starting with the design, \emph{ARTVA signal} is deeply analyzed, with the derivation of a simplified model for a field pattern that could be used  for the implementation of the searching algorithm. After that, ferrite antennas are studied, as they are the only way to receive such a long wavelength. In the last part of the chapter the circuitry for the ARTVA receiver is shown and explained.
 
 \input{ch2/ch2_tx_pattern.tex}
 
@@ -54,12 +54,12 @@ The variable duty cycle is a challenge for the formulation of a searching algori
 \end{marginfigure}
 There are 3 key elements:
 \begin{itemize}
-\item $\jint$ is the current of the intelligence signal, the representation of the square wave in figure \ref{fig:squarewave}:
+\item $\jint$ is the current of the intelligence signal, the representation of the square wave in figure \ref{fig:squarewaves}:
 \begin{equation}
 \jint(t) = A\dutycycle + \sum\limits_{n=1}^{\infty}\braces{\dfrac{2A}{n\pi}\ssin{n\pi \dutycycle} \ccos{\omegaint n t}}
 \end{equation}
 in which $A$ represents the signal amplitude and $\Delta$ is the duty cycle. 
-\item the frequency of the carrier signal is $f_0 = 2\phi\omegaarva$, and it is \num{457}\si{\kilo\hertz}
+\item the frequency of the carrier signal is ${f_0 = 2\pi\omegaarva}$, and it is \num{457}\si{\kilo\hertz}
 \item $\mu$ is called modulation factor
 \end{itemize}
 From this current we are able to obtain the magnitude of dipole magnetic vector, using equation \ref{eq:dipolodacorrente}. Many of those parameter are device dependent and not known.

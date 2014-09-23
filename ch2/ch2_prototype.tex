@@ -10,13 +10,13 @@ In the last section of this chapter, we use the knowledge collected to develop a
 In figure \ref{fig:block_circuit} there is the block outline of the device:
 \begin{itemize}
 \item the first block is the tuned tank, or tuned amplifier
-\item the second block is the buffer and conditioner stage
+\item the second block is the buffer and pre--amplifier
 \item the third block is the identification part
 \item an amplification and a second buffer
 \item digital component
 \item dual supply stage
 \end{itemize}
-Through this section, each block will be discussed and explained. The design process has taken into account the tollerances for passive components\sidenote{Resistors: 5\%\newline Capacitors: 20\%}
+Through this section, each block will be discussed and explained. The design process has taken into account the tolerances for passive components\sidenote{Resistors: 5\%\newline Capacitors: 20\%}, but nothing can be done for thermal derive, that increases tolerance ranges to almost unpredictable values.
 
 \subsection{Tuned tank}
 % \begin{figure}[b]
@@ -35,16 +35,16 @@ Through this section, each block will be discussed and explained. The design pro
 
 The tuned tank is composed by a ferrite antenna, with a rod of \num{10}\si{\centi\meter} per \diameter \num{1}\si{\centi\meter}. The wire of the coil is a \num{30} AWG enameled copper wire, with a final parasite resistance of \num{22}\si{\ohm}. The coil as \num{70} windings. For more informations about this tuned circuit, check previous section.
 
-\subsection{Buffer and filter}
+\subsection{Buffer and pre--amplification}
 \begin{figure*}[h]
 	\centering
 	\includegraphics*[viewport=170 3 1250 380,scale=0.4]{ch2/img/receiver3.pdf}
-	\caption{First filter stage}
+	\caption{Pre--amplifier stage}
 	\label{fig:filter1}
 	%\forceversofloat
 \end{figure*}
 
-This block is composed by a first stage that acts as a separation between the tuned tank and the filter, thus is also called voltage follower. To limit the number of components on the board this stage is obtained with an operational amplifier. To grant a longer receiving range, an high--gain selective active filter is in cascade to the buffer before the identification. It is important to select an operational amplifier with an high bandwidth--gain--product to grant the gain at \num{457}\si{\kilo\hertz}, at which the filter is centered. Also, this stage depends to the dual \num{\pm 5}\si{\volt} supply stage. 
+This block is composed by a first stage that acts as a separation between the tuned tank and the filter, also called voltage follower. To limit the number of components on the board this stage is obtained with an operational amplifier. To grant a longer receiving range, an high--gain selective active filter is in cascade to the buffer before the identification and acts as a pre--amplifier. It is important to select an operational amplifier with an high bandwidth--gain--product to grant the gain at \num{457}\si{\kilo\hertz}, at which the filter is centered. Also, this stage depends to the dual \num{\pm 5}\si{\volt} supply stage. 
 \begin{marginfigure}
 	\centering
 	\includegraphics[width=5cm]{ch2/img/filter1.pdf}
@@ -67,9 +67,9 @@ The op--amp chosen is \texttt{LF347N}, even if a faster amplifier may be selecte
 	\caption{Logical function of an identifier}
 	\label{fig:identifier_log}
 \end{marginfigure}
-The central part of the circuit is an identification circuit, obtained with the monolithic classical IC \texttt{TA7641}\sidenote{A.k.a.: \texttt{MK484} or \texttt{ZN414}},  that acts as a one chip radio solution in AM. All receiver is derived from the modification of the basic circuit provided in schematics of this IC, extended with filtering and buffers, and the removal of the auto gain control resistance in the output feedback. Also, transistor amplification stage is removed. The output of this circuitry is in \numrange{40}{60}\si{\milli\volt}, with a very low current required. The input pin has a good impedance 
+The central block is an identification circuit, obtained with the monolithic classical IC \texttt{TA7641}\sidenote{A.k.a.: \texttt{MK484} evolution of \texttt{ZN414}},  that acts as a one chip radio solution in AM. All receiver is derived from the modification of the basic circuit provided in schematics of this IC, extended with filtering and buffers, and the removal of the auto gain control resistance in the output feedback. Also, transistor amplification stage is removed. The output of this circuitry is in \numrange{40}{60}\si{\milli\volt}, with a very low current required. The input pin has a good impedance 
 
-To better understand the use of this stage, look at figure \ref{fig:identifier_log}, in which an extremely simplified version of the IC is represented with common components. The IC straightens the received signal and identifies the envelope of the modulated intelligence with a low pass filter that has a dynamic not too slow, to not loose some of the higher frequencies information modulated (also called missed peak). IC implements this function with an high quality envelope detector.
+To better understand the use of this stage, look at figure \ref{fig:identifier_log}, in which an extremely simplified version of the IC behavior is represented with common components that are drawn in figure \ref{fig:block_circuit}. The IC straightens the received signal and identifies the envelope of the modulated intelligence with a low pass filter that has a dynamic not too slow, to not loose some of the higher frequencies information modulated (also called missed peak). IC implements this function with an high quality envelope detector.
 \begin{figure*}[h]
 	\centering
 	\includegraphics*[viewport=1443 3 2320 350,scale=0.4]{ch2/img/receiver3.pdf}
@@ -95,7 +95,7 @@ The identified signal is, again, amplified and filtered, to a lower frequency, t
 	\label{fig:adc}
 	%\forceversofloat
 \end{figure}
-One last stage is he ADC and the UART interface on the micro--controller. Using an \texttt{MSP430} it is easy to develop in \texttt{C} the routines necessary to perform the task. To reduce the power consumption, ADC sampling is performed with ALU in power saving mode. Once the sampling task is completed, an interrupt brings up the ALU that set up the variables too be sent over serial interface UART (or SPI or I2C).
+One last stage is the ADC and the UART interface on the micro--controller. Using an \texttt{MSP430} it is easy to develop in \texttt{C} the routines necessary to perform the task. To reduce the power consumption, ADC sampling is performed with ALU in power saving mode. Once the sampling task is completed, an interrupt brings up the ALU that set up the variables too be sent over serial interface UART (or SPI or I2C).
 
 \subsection{Dual supply}
 The supply is obtained through the use of a virtual ground and a symmetrical classical regulation circuit. This scheme is sometimes called rail splitter, and it is necessary for the first regulation stage, to avoid op--amps saturation.
@@ -108,12 +108,19 @@ The supply is obtained through the use of a virtual ground and a symmetrical cla
 \end{figure}
 
 \subsection{Tri--axes ARTVA}
-In figure \ref{fig:sampling_res} there is an example of sampling from the real prototype, using MATLAB serial reading capabilities. A complete prototype uses three equal antenna--filter--identification--amplifier stage, with orthogonal antennas, and one single ADC micro--controller and power supply.
-\begin{figure}[h]
+In figure \ref{fig:sampling_res} there is an example of sampling from the real prototype, using MATLAB serial reading capabilities. A complete prototype uses three equal antenna--filter--identification--amplifier stage, with orthogonal antennas, and one single ADC micro--controller and power supply unit.
+\begin{figure}[p]
 	\centering
 	\includegraphics[scale=0.65]{ch2/img/sampling_result.pdf}
 	\caption{Complete circuit}
-	\label{fig:completecirc}
+	\label{fig:samplig_res}
+	%\forceversofloat
+\end{figure}
+\begin{figure}[p]
+	\centering
+	\includegraphics[scale=1]{ch2/img/triplantenna.pdf}
+	\caption{Triple antenna}
+	\label{fig:trantenna}
 	%\forceversofloat
 \end{figure}
 \begin{figure}[p]
