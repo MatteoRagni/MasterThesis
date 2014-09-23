@@ -3,33 +3,29 @@
 % Font encoding
 \usepackage[T1]{fontenc}
 
+% Frontespizio definitions
+\usepackage[standard,norules]{frontespizio}
+
 % Graphics
 \usepackage{graphicx}
 \usepackage{animate} % animated gifs
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \graphicspath{{img/}}
 
-% hyphenation
+% Hyphenation
 \usepackage[english]{babel}
-% \hyphenation{%
-% MATLAB %
-% Simulink %
-% Maple %
-% ARTVA}
 
-% Frontespizio definitions
-\usepackage[standard]{frontespizio}
-
-% header and footer
-%\usepackage{fancyhdr}
+% Colors and frames
+\usepackage{framed}
+\usepackage{color}
 
 % Hyperref settings
 \hypersetup{%
- 	pdftitle={Autonomous VTOL for avalanche buried searching: Avionics},%    % title
-    pdfauthor={Matteo Ragni},%     % author
-    pdfsubject={Master Thesis in Mechatronics Engineering},%   % subject of the document
-    pdfcreator={Matteo Ragni -- pdflatex, edited with SublimeText and Latexing package},%   % creator of the document
-    pdfproducer={University of Trento, Department of Industrial Engineering}% % producer of the document
+ 	pdftitle={Autonomous VTOL for avalanche buried searching: Avionics},%     % title
+  pdfauthor={Matteo Ragni},%                                                % author
+  pdfsubject={Master Thesis in Mechatronics Engineering},%                  % subject of the document
+  pdfcreator={Matteo Ragni -- pdflatex},%                                   % creator of the document
+  pdfproducer={University of Trento, Department of Industrial Engineering}% % producer of the document
 }
 % minitoc in starting of the chapter
 \usepackage{minitoc}
@@ -44,9 +40,6 @@
 \usepackage[final]{listofsymbols} % To use for final version
 %\usepackage{listofsymbols} % To use during editing
 
-% Identation
-%\usepackage{parskip}
-
 % Bibliography
 \usepackage{url}
 
@@ -56,39 +49,64 @@
 % composition of table
 \usepackage{array}
 \usepackage{booktabs}
-%\usepackage{slashbox}
 
-% Euro symbol
+% Enchant math and other fonts
 \usepackage{textcomp}
 \usepackage[nointegrals]{wasysym}
 \usepackage{mathtools}
 
+%% Sectioning formatting
+%% CHAPTER DEFINITION
+\usepackage[Bjornstrup]{fncychap}
 
-% \usepackage[pscoord]{eso-pic}
 %\usepackage{titlesec} Already loaded by tufte-book
- 
-\titleformat{\chapter}[frame]
-{\normalfont}{\filright \enspace \sffamily \thechapter\enspace}{8pt}
-{\Large\bfseries\filcenter}
+%% SECTION DEFINITION
+\definecolor{lgray}{gray}{0.843}
+\titleformat{\section}[hang]{\Large\bfseries}{}{0em}{%
+  {%
+    \setlength{\fboxsep}{0pt}%
+    \colorbox{lgray}{\makebox[\textwidth]{\Large\strut}}%
+  }%
+  \hspace*{-\textwidth}%
+  \hspace*{1em}%
+  \thesection%
+  \hspace*{1em}%
+}[]
+%% SUBSECTION DEFINITION
+\titleformat{\subsection}[hang]{\bfseries}{}{0em}{%
+  {%
+    \setlength{\fboxsep}{0pt}%
+    \colorbox{lgray}{\makebox[\textwidth]{\strut}}%
+  }%
+  \hspace*{-\textwidth}%
+  \hspace*{1em}%
+  \thesubsection%
+  \hspace*{1em}%
+}[]
 
-\titleformat{\section}[block]
-{\normalfont}{\thesection}{6pt}{\large\bfseries}
+%% PARAGRAPH DEFINITION
+\newcommand{\myparagraph}[1]{\paragraph{#1} \leavevmode \vspace{0.2em} \\}
 
-\titleformat{\subsection}[block]
-{\normalfont}{\thesubsection}{6pt}{\bfseries}
+%% Old versions for sectioning format
+% \titleformat{\chapter}[frame]
+% {\normalfont}{\filright \enspace \sffamily \thechapter\enspace}{8pt}
+% {\Large\bfseries\filcenter}
 
-% Create animation
+%\titleformat{\section}[block]
+%{\normalfont}{\thesection}{6pt}{\large\bfseries}
+
+%\titleformat{\subsection}[block]
+%{\normalfont}{\thesubsection}{6pt}{\bfseries}
+
+
+
+% ANIMATIONS
 % convert immagine.gif -coalesce animation_%d.pdf
 % poi inserire nel latex
 % \animategraphics[height=%DIMENSIONE%,autoplay,loop]{%FRAME_PER_SECONDO%}{%POSIZIONE_ANIMAZIONE%/animation_}{%PRIMO_FRAME%}{%ULTIMO_FRAME%}
 
-% TODO DEFINITION
-\usepackage{framed,color}
-\newcommand{\TODO}[1]{%
-	\colorbox{yellow}{#1}%
-}
 
-%%%% Remove identation in tufte latex class
+%% REMOVE IDENTATION
 \usepackage{parskip}
 
 \makeatletter

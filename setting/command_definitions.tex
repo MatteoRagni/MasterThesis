@@ -3,38 +3,37 @@
 % Definition of the abstract environment
 
 \newenvironment{abstract}{%
-\cleardoublepage \thispagestyle{empty} \null \vfill \begin{center}%
-\bfseries \abstractname \end{center}}{%
-\vfill \null%
+	\cleardoublepage \thispagestyle{empty} \null \vfill \begin{center}%
+	\bfseries \abstractname \end{center}}{%
+	\vfill \null%
 }
 
 \newenvironment{aknowledgements}{%
-\cleardoublepage \thispagestyle{empty} \null \vspace{\stretch{4}} \begin{center}%
-\bfseries \end{center}}{%
-\vspace{\stretch{1}} \null%
+	\cleardoublepage \thispagestyle{empty} \null \vspace{\stretch{4}} \begin{center}%
+	\bfseries \end{center}}{%
+	\vspace{\stretch{1}} \null%
 }
 
 \newenvironment{dedication}{%
-\thispagestyle{empty}%
-\begin{flushright}%
-\null \vspace{\stretch{1}}}{%
-\vspace{\stretch{2}} \null
-\end{flushright}}
-
-\newcommand{\listofsymbolspages}{%
-\thispagestyle{empty}
-\cleardoublepage%
-\chapter*{List of symbols}
-\addcontentsline{toc}{chapter}{List of symbols}
-%\addtocontents{toc}{\protect\contentsline{section}{List of Symbols}{}}%
-\listofsymbols}
-
-\newcommand{\bibliographyinsert}{%
-\bibliography{bib/bibs}%
-\bibliographystyle{plain}%
+	\thispagestyle{empty}%
+	\begin{flushright}%
+	\null \vspace{\stretch{1}}}{%
+	\vspace{\stretch{2}} \null%
+	\end{flushright}%
 }
 
-\newcommand{\myparagraph}[1]{\paragraph{#1} \leavevmode \vspace{0.2em} \\}
+\newcommand{\listofsymbolspages}{%
+	\thispagestyle{empty}%
+	\cleardoublepage%
+	\chapter*{List of symbols}%
+	\addcontentsline{toc}{chapter}{List of symbols}%
+	\listofsymbols%
+}
+
+\newcommand{\bibliographyinsert}{%
+	\bibliography{bib/bibs}%
+	\bibliographystyle{plain}%
+}
 
 \def\inch{''}
 \def\euro{\texteuro}
@@ -74,3 +73,8 @@
 
 % Symbol heading
 \renewcommand{\symheadingname}{}
+
+% TODO definition
+\newcommand{\TODO}[1]{%
+  \colorbox{yellow}{#1}%
+}
