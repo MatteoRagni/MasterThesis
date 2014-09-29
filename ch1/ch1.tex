@@ -4,6 +4,8 @@
 \chapter{Introduction to Mountain Rescue \label{ch:chapter1}}
 \end{fullwidth}
 \minitoc
+\thispagestyle{plain}
+\renewcommand{\headrulewidth}{0.1pt}
 
 Many people in the last few year have re-discovered a passion for winter mountain sports. Some of them have decided to explore the extreme version of this sports, like winter climbing or free-riding.
 
@@ -125,7 +127,7 @@ In general, the circuit may be resumed as follows:
 	\centering
 	\includegraphics[width=7cm]{ch1/img/img_schema_arva.pdf}
 	\caption{Block diagram of a commercial digital beacon, taken from \citep{Salos2007}}
-	\forceversofloat
+	%\forceversofloat
 \end{figure}
 
 
@@ -207,15 +209,15 @@ One final aspect that should be considered are the data related to the system th
 All the specifications are listed in table \ref{tbl:tech_specs}
 \input{ch1/tech_specs_tbl.tex}
 
-\input{ch1/complete_tbl.tex}
-
 \myparagraph{Merging the tables and comparison}
 In table \ref{tbl:need_vs_spec} all data are compared with a weighting method. The table shows the comparison between technical specifications and customer needs and also between technical specifications and the other technical specifications.
 
 \myparagraph{Components selection}
 From the merged data it was possible to select the components that will be used in the prototype. All components are listed in table \ref{tbl:components_list}
-\input{ch1/components_tbl.tex}
 
 We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.
+\input{ch1/components_tbl.tex}
+
+\input{ch1/complete_tbl.tex}
 
 \FloatBarrier

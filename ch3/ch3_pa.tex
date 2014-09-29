@@ -1,0 +1,54 @@
+\section{Perception Action paradigm}
+The perception--action (PA) paradigm has a very strict connection with the definition of our searching algorithm. Lets try to understand what is this paradigm.
+
+\subsection{The basic paradigm}
+Leaving aside the first idea of PA maps, from the 1970, if we see simply consider the blocks that form it, we understand how it is possible to build avionics on those principle. A PA map consider an agent in which external stimuli derive from a sensor network, that perform the perception section of the agent. Perception is therefore translated into a symbol that could be handled by the action section of the agent.
+
+Making a straight example on our device, if we consider as sensor elements our digital ARTVA, the device should represent the sensor input to the perception stage, that should analyzed to perform an action, that is the movement of the drone towards buried position.
+
+The relationship between the agent and the environment is called \emph{situatedness}, while the intercourse within what represents the \emph{body} on what represents the \emph{mind} of the agent is called \emph{embodiment}, as explained in \citep{thedynamicsofactivecaterogicalperception}.
+
+\subsection{Exploiting more complex behavior}
+\myparagraph{Expanding PA}
+Apart the basic behavior the advantages of PA maps are related too the implementation of extremely complex actions using advances techniques such as:
+\begin{itemize}
+\item subsumption and grounding
+\item innate knowledge
+\item bootstrapping
+\item historical knowledge
+\item shared knowledge
+\end{itemize}
+All those element could be serially implemented, one after the other, while they run together to create a coherent attitude with respect to the problem. One of the advanced feature that we will use in this project is the subumption and the grounding of the symbols.
+\myparagraph{Subsumption and grounding}
+The \emph{symbols grounding} is an implementation of the embodiment of the agent as a stacked architecture in which different layer (subsumption), that performs different operations, are piled up in such a way that higher level, of higher complexity, could transparently use lower levels (symbols grounding \citep{harnad1990symbolgrounding}), and incorporate them to reach their objective.
+
+As an example, the very basic level that could be implemented is a stabilization control, that could be used to keep the plant in a controllable state. From this layer, an upper tracking layer will try to reduce the input error using the lower layer to preserve a safe stability for the system.
+
+This techniques, introduced in \citep{layeredmobilerobot}, will be used in our avionics definition.
+
+\myparagraph{Innate knowledge and emulation}
+Evolution and generalization of the map are referred to the embodiment, with the implementation of an innate knowledge, that may be used to perform an internal emulation of the perceived environment. A typical example of this is the co--driver model implemented in \citep{artificialcodriver}, where emulation, defined as a mathematical model, is used to infer driver actions.
+
+This techniques is also implemented in our avionics.
+
+\myparagraph{Bootstrapping and more}
+In this paragraph, for completeness, we could cite other techniques that generalize embodiment and situatedness. One of the most recent generalization approach is called \emph{bootstrapping}. From \citep{sun2001implicit} and \citep{hierarchicalbootstrapping}, a cognitive system should identify and define its motion primitives\marginnote{Even if this procedure is clearly different from innate knowledge, the implementation of this technique do not exclude the implementation of some kind of innate knowledge.}. 
+
+The exploration of motion domain is performed through the use of random inputs and fuzzy logic\citep{aframeworkforhierarchicalperceptionaction} on perception:
+\begin{itemize}
+\item random exploration gives an initial model for the primitives
+\item repetition on the primitives allows the system to remove redundancies
+\item further repetition remove unused parameters
+\item last repetitions allows to perform an optimization and update of the model parameters
+\end{itemize}
+
+\section{Building the PA map of the drone}
+
+\subsection{Overview of our searching map}
+In figure \TODO{ref} a comprehensive version of the map is presented. The map shows a tri--dimensional evolution in the upper side, where two different aims are achieved. One one side we have the searching for the signal, and on the other side we have the searching for the signal source. This particular design in the map was implement to grant to the avionics the ability to perform a sort of reasoning and reach a multiple objective, as it will be explained later on.
+
+The drone has a complex control system, already implemented in IMU shield, that takes in consideration a linearized feedback that feeds an LQR control loop\TODO{citep}. 
+
+The system could be modified to solve a tracking problem, that will be used by the upper level. The tracking problem uses transparently the stabilization layer and it is used by the searching layer.
+
+Upper layers, obstacle avoiding and altitude keeping, preserve drone to collide with isolated obstruction and at an altitude that is safe for rescuers. 

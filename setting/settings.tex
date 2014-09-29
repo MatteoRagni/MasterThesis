@@ -19,6 +19,11 @@
 \usepackage{framed}
 \usepackage{color}
 
+% Enchant math and other fonts
+\usepackage{textcomp}
+\usepackage[nointegrals]{wasysym}
+\usepackage{mathtools}
+
 % Hyperref settings
 \hypersetup{%
  	pdftitle={Autonomous VTOL for avalanche buried searching: Avionics},%     % title
@@ -40,7 +45,12 @@
 \usepackage[final]{listofsymbols} % To use for final version
 %\usepackage{listofsymbols} % To use during editing
 
-% Bibliography
+% insert algorithm
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\newcommand{\commentstyle}[1]{\footnotesize\ttfamily\textcolor{gray}{#1}}
+\SetCommentSty{commentstyle}
+
+% Insert href in text
 \usepackage{url}
 
 % Rotate text
@@ -49,11 +59,6 @@
 % composition of table
 \usepackage{array}
 \usepackage{booktabs}
-
-% Enchant math and other fonts
-\usepackage{textcomp}
-\usepackage[nointegrals]{wasysym}
-\usepackage{mathtools}
 
 %% Sectioning formatting
 %% CHAPTER DEFINITION
@@ -127,3 +132,29 @@
   \setlength{\parskip}{3pt}%
 }
 \makeatother
+
+\usepackage[titles]{tocloft}
+\setlength{\cftsecindent}{0cm}
+\setlength{\cftsecnumwidth}{25pt}
+\setlength{\cftsubsecindent}{\cftsecindent}
+\addtolength{\cftsubsecindent}{\cftsecnumwidth}
+\setlength{\cftsubsecnumwidth}{25pt}
+\setlength{\cftsubsubsecindent}{0cm}
+\addtolength{\cftsubsubsecindent}{0cm}
+\setlength{\cftparaindent}{50pt}
+\addtolength{\cftparaindent}{0cm}
+\renewcommand{\cftparafont}{\it}
+\tocloftpagestyle{empty}
+
+% Header and footer style
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\renewcommand{\chaptermark}[1]%
+%{\markboth{{\thechapter.\ #1}}{}}
+%\renewcommand{\sectionmark}[1]%
+%{\markright{{\thesection.\ #1}}}
+%\renewcommand{\headrulewidth}{0.1pt}
+%\renewcommand{\footrulewidth}{0pt}
+%\fancyhead[LE,RO]{\thepage}
+%\fancyhead[LO]{\rightmark}
+%\fancyhead[RE]{\leftmark}

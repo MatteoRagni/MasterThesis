@@ -3,27 +3,27 @@
 % Definition of the abstract environment
 
 \newenvironment{abstract}{%
-	\cleardoublepage \thispagestyle{empty} \null \vfill \begin{center}%
-	\bfseries \abstractname \end{center}}{%
-	\vfill \null%
+	\cleardoublepage \thispagestyle{empty} \begin{fullwidth} \null \vspace{\stretch{1}} \begin{center}%
+	\bfseries \colorbox{lgray}{{ } \hspace{0.438\linewidth} \abstractname \hspace{0.438\linewidth} { }} \end{center}}{%
+	\vspace{\stretch{1}} \null \end{fullwidth} \clearpage%
 }
 
 \newenvironment{aknowledgements}{%
-	\cleardoublepage \thispagestyle{empty} \null \vspace{\stretch{4}} \begin{center}%
+	\cleardoublepage \thispagestyle{empty} \begin{fullwidth} \null \vspace{\stretch{4}} \begin{center}%
 	\bfseries \end{center}}{%
-	\vspace{\stretch{1}} \null%
+	\vspace{\stretch{1}} \null \end{fullwidth} \clearpage %
 }
 
 \newenvironment{dedication}{%
 	\thispagestyle{empty}%
+	\begin{fullwidth}%
 	\begin{flushright}%
 	\null \vspace{\stretch{1}}}{%
 	\vspace{\stretch{2}} \null%
-	\end{flushright}%
+	\end{flushright} \end{fullwidth} \clearpage%
 }
 
-\newcommand{\listofsymbolspages}{%
-	\thispagestyle{empty}%
+\newcommand{\listofsymbolspages}{
 	\cleardoublepage%
 	\chapter*{List of symbols}%
 	\addcontentsline{toc}{chapter}{List of symbols}%
@@ -70,9 +70,13 @@
 \[%
 \begin{array}{rcl}#1\end{array}%
 \]}
+\newcommand{\vettore}[1]{%
+\left[\begin{array}{c}#1\end{array}\right]%
+}
 
 % Symbol heading
-\renewcommand{\symheadingname}{}
+%\renewcommand{\symheadingname}{}
+\renewcommand{\symheading}{}
 
 % TODO definition
 \newcommand{\TODO}[1]{%

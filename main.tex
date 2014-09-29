@@ -26,26 +26,32 @@
 
 % Check routines to create the front page
 \begin{document}
-	\input{misc/frontespizio.tex}
+	
+\input{misc/frontespizio.tex}
 
 \frontmatter
-	\begin{fullwidth}
-		%\input{misc/dedication.tex}
+		\input{misc/dedication.tex}
 		\input{misc/abstract.tex}
-		%\input{misc/acknowledgements.tex}
-		\dominitoc
-		\tableofcontents
-	\end{fullwidth}
-	
+		\input{misc/acknowledgements.tex}
+		%\begin{fullwidth}
+		%	\thispagestyle{empty}
+			\dominitoc
+			\tableofcontents
+		%\end{fullwidth}
+		\renewcommand{\cftsecfont}{\bf}
+		
 \mainmatter
 	\input{ch1/ch1.tex}
 	\input{ch2/ch2.tex}
+	\input{ch3/ch3.tex}
 
 \backmatter
-		\listofsymbolspages
-		\setlength{\parskip}{5pt}
-		\bibliographyinsert
-		\setlength{\parskip}{0pt}
-		%\index ?? we will see...
+	\renewcommand{\headrulewidth}{0pt}
+	\thispagestyle{empty}
+	\listofsymbolspages
+	\setlength{\parskip}{5pt}
+	\bibliographyinsert
+	\setlength{\parskip}{0pt}
+	%\index ?? we will see...
 
 \end{document}

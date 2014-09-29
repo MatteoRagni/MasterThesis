@@ -1,0 +1,78 @@
+\chapter{Drone Avionics}
+\minitoc
+\thispagestyle{plain}
+
+\renewcommand{\arraystretch}{1.75}
+
+In this chapter we explore the searching algorithm applied to a dynamic simulated device really close to our drone. The simulation will use a simpler control model (LQR) and will implement the perception action paradigm for the searching part. Searching part will be performed with device implemented in previous chapter, with auxiliary range finder for obstacle avoidance and altitude keeping. All those elements build what is called avionic framework of the drone. The basic idea is to create a stacked structure that could be easily expanded in future; again, what we are discussing in an initial platform that could be improved with the use of more increasingly complex sensor--fusion, that allows to exploit the most sophisticated searching algorithm possible. 
+
+\input{ch3/ch3_pa.tex}
+\input{ch3/ch3_hexa_layer.tex}
+\input{ch3/ch3_obsavoid.tex}
+
+\section{Altitude keeping}
+The last basic block that should be implemented is the altitude keeping, to maintain the distance of the drone to the soil high enough to avoid contact with rescuer and low enough to get a good signal strength. The sensors used are, again, ultrasonic range finder. With respect to the obstacle avoidance, that acts as a control on the lateral dynamic of the drone, that is quite slow, altitude keeping works on vertical dynamic that is really fast, and need a more reliable implementation, and require a statistical system to determine the distance even with a high irregular terrain.
+
+This part was actually not implemented because of the need of more test about response of ultrasonic waves upon snow surface, to better understand the effects of density on perceived distance.
+
+\subsection{Kalman Filter}
+We assume that the dimension could be described with the use of normal distribution:
+\begin{equation}
+p(\hexastate) \det\braces{(2\pi)^{n}\Sigma_0}^{-1/2} e^{-\dfrac{1}{2}\braces{\hexastate - \boldsymbol{\mu}}^T \Sigma^{-1}\braces{\hexastate - \boldsymbol{\mu}}}
+\end{equation}
+with ${\boldsymbol{\mu}}$ the mean value for the distribution and ${\Sigma}$ covariance matrix of the distribution.
+
+The Kalman filter include the knowledge of the covariance matrix into the state estimation procedure, and it is possible to proof that the final estimation will maintain a normal distribution if:
+\begin{itemize}
+\item distribution of initial state is normal
+\item the state distribution is a linear function of the previous state and a white Gaussian noise
+\item the measurement distribution  is a linear function of the state and a white Gaussian noise
+\end{itemize}
+
+\myparagraph{Initial state probability}
+We make the really strong hypothesis to have an initial distribution in the normal form:
+\begin{equation}
+p(\hexastate_0) \det\braces{(2\pi)^{n}\Sigma_0}^{-1/2} e^{-\dfrac{1}{2}\braces{\hexastate_0 - \boldsymbol{\mu_0}}^T \Sigma_{0}^{-1}\braces{\hexastate_0 - \boldsymbol{\mu_0}}}
+\end{equation}
+
+\myparagraph{Prediction phase}
+The distribution of the state derives from the distribution of the previous state, using the linear relation:
+\begin{equation}
+\hexastate_t = A_t \hexastate_{t-1} + B \hexacontrol_t + \mathbf{w}_t
+\end{equation}
+where ${\mathbf{w}_t}$ is a realization of a distribution ${\mathcal{N}(\mathbf{0},R_t)}$ in which $R_t$ is the matrix that describes the covariance of the noise on the state.
+
+The distribution is normal due to the relations:
+\arraymath{
+\bar{\boldsymbol{\mu}_{t}} &=& A_t \boldsymbol{\mu}_{t-1} + B_t \hexacontrol_{t} \\
+\bar{\Sigma_{t}} &=& A_t \Sigma_{t-1} A_t^T + R_t \\
+p(\hexastate_t \mid \hexastate_{t-1}, \hexacontrol_t) &=& \det((2\pi)^n R_t)^{-\frac{1}{2}} e^{\left( - \frac{1}{2} (\hexastate_t - \bar{\boldsymbol{\mu}_{t}})^T {R_t}^{-1} (\hexastate_t - \bar{\boldsymbol{\mu}_{t}}) \right)}
+}
+
+If the system has a non--linear function that describes the dynamic, it could be approximated with a first--order Taylor expansion:
+\begin{equation}
+\hexastate_t = g\braces{\hexastate_{t-1},\hexacontrol_t} + \mathbf{w}_t
+\end{equation}
+\arraymath{
+\mathrm{Taylor}_{1}\left(g(\hexastate_{t-1},\hexacontrol_t)\right)\Big\rfloor_{\bar{\boldsymbol{\mu}}_{t-1},\bar{\hexacontrol}_t} & = & g(\bar{\boldsymbol{\mu}}_{t-1},\bar{\hexacontrol}_t) + \\ & & \nabla_{\hexastate} g (\hexastate_{t-1},\hexacontrol_t)\Big\rfloor_{\bar{\boldsymbol{\mu}}_{t-1},\bar{\hexacontrol}_t}\left( {\hexastate}_{t-1} - \bar{\boldsymbol{\mu}}_{t-1} \right) \\
+& = & g(\bar{\boldsymbol{\mu}}_{t-1},\bar{\hexacontrol}_t) + A_t\left( {\hexastate}_{t-1} - \bar{\boldsymbol{\mu}}_{t-1} \right)
+}
+
+\myparagraph{Estimation state}
+The measurement distribution derives directly from the measurement model:
+\begin{equation}
+\mathbf{z}_t = C_t \hexastate_t + \mathbf{v}_t
+\end{equation}
+where ${\mathbf{v}_t}$ is a realization of a distribution ${\mathcal{N}(\mathbf{0},Q_t)}$ in which $Q_t$ is the matrix that describes the covariance of the noise on the measurement.
+
+The distribution maintains its normal behavior due to the relation:
+\[p(\mathbf{z}_t\mid\hexastate_t) = \det((2\pi)^n Q_t)^{-\frac{1}{2}} e^{\left( -\frac{1}{2} (\mathbf{z}_t - C_t \hexastate_t)^T Q_t^{-1} (\mathbf{z}_t - C_t \hexastate_t) \right)}\]
+
+If the measurement is modeled with the use of a non--linear function it is possible to use a Taylor expansion to approximate locally the measurement function:
+\begin{equation}
+\mathbf{z}_t = h(\hexastate_t) + \mathbf{v}_t
+\end{equation}
+\arraymath{
+\mathrm{Taylor}_{1}\left(h(\hexastate_{t})\right)\Big\rfloor_{\bar{\boldsymbol{\mu}}_{t}} & = & h(\bar{\boldsymbol{\mu}}_{t}) + \nabla_{\hexastate} h (\hexastate_{t})\Big\rfloor_{\bar{\boldsymbol{\mu}}_{t-1}}\left( {\hexastate}_{t} - \bar{\boldsymbol{\mu}}_{t} \right) \\
+ & = & h(\bar{\boldsymbol{\mu}}_{t}) + C_t\left( {\hexastate}_{t} - \bar{\boldsymbol{\mu}}_{t} \right)
+}
