@@ -32,11 +32,6 @@
   pdfcreator={Matteo Ragni -- pdflatex},%                                   % creator of the document
   pdfproducer={University of Trento, Department of Industrial Engineering}% % producer of the document
 }
-% minitoc in starting of the chapter
-\usepackage{minitoc}
-\setcounter{tocdepth}{1}
-\setcounter{minitocdepth}{4}
-\setcounter{secnumdepth}{3}
 
 % International system units
 \usepackage{siunitx}
@@ -59,14 +54,22 @@
 % composition of table
 \usepackage{array}
 \usepackage{booktabs}
+\usepackage{colortbl}
 
 %% Sectioning formatting
 %% CHAPTER DEFINITION
 \usepackage[Bjornstrup]{fncychap}
 
+% minitoc in starting of the chapter
+\usepackage{minitoc}
+\setcounter{tocdepth}{1}
+\setcounter{minitocdepth}{4}
+\setcounter{secnumdepth}{3}
+
 %\usepackage{titlesec} Already loaded by tufte-book
 %% SECTION DEFINITION
 \definecolor{lgray}{gray}{0.843}
+\definecolor{dgray}{gray}{0.608}
 \titleformat{\section}[hang]{\Large\bfseries}{}{0em}{%
   {%
     \setlength{\fboxsep}{0pt}%
@@ -102,8 +105,6 @@
 
 %\titleformat{\subsection}[block]
 %{\normalfont}{\thesubsection}{6pt}{\bfseries}
-
-
 
 % ANIMATIONS
 % convert immagine.gif -coalesce animation_%d.pdf
@@ -146,15 +147,13 @@
 \renewcommand{\cftparafont}{\it}
 \tocloftpagestyle{empty}
 
-% Header and footer style
-%\usepackage{fancyhdr}
-%\pagestyle{fancy}
-%\renewcommand{\chaptermark}[1]%
-%{\markboth{{\thechapter.\ #1}}{}}
-%\renewcommand{\sectionmark}[1]%
-%{\markright{{\thesection.\ #1}}}
-%\renewcommand{\headrulewidth}{0.1pt}
-%\renewcommand{\footrulewidth}{0pt}
-%\fancyhead[LE,RO]{\thepage}
-%\fancyhead[LO]{\rightmark}
-%\fancyhead[RE]{\leftmark}
+% Diagram
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+% Diagrams styles
+\tikzstyle{block} = [draw=black, rectangle, minimum height=2.5em, minimum width=2em]
+\tikzstyle{sum} = [draw=black, circle]
+\tikzstyle{gain} = [draw=black, regular polygon, regular polygon sides=3, regular polygon rotate=90, minimum height=2.5em, minimum width=2em]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]

@@ -1,5 +1,8 @@
 \section{Hexa--copter model}
-
+\begin{marginfigure}
+	\centering
+	\includegraphics[scale=0.5]{ch3/img/PA_map_dynamic.pdf}
+\end{marginfigure}
 The drone could be modeled with dynamical equations. The derivation of those equation will be performed from force analysis and control scheme is derived. A \texttt{C} version of the model, to be used in simulations is presented.
 
 \subsection{Motion equations}
@@ -17,6 +20,11 @@ The system is governed by Euler--Newton equations, simplified with the impositio
 \end{array}
 \right.
 \end{equation}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.55]{ch3/img/hexacopter_kine.pdf}
+	\caption{Hexa--copter kinematics}
+\end{figure}
 \myparagraph{External force and torque analysis}
 There are several force that act on the body of the drone:
 \begin{equation}
@@ -110,23 +118,6 @@ Defined state vectors and control vectors:
 \hexacontrol & = & \left[ L_1, L_2, L_3, L_4, L_5, L_6 \right]^T%
 }
 we get the following Newton--Euler equations that describes dynamical behavior of the drone:
-\begin{margintable}
-	\renewcommand{\arraystretch}{1.2}
-	\begin{center}
-	\begin{tabular}{p{0.5cm} p{2cm} p{1.5cm}}
-	\hline \textbf{Sym.} & \textbf{Description} & \textbf{Value} \\ \hline
-	$g$     & Gravity        & $9.81 $ \si{\kilo\gram\per\square\second} \\
-	$m$     & Mass           & $2$     \si{\kilo\gram}\\
-	$I_x$   & $x$ Inertia    & $0.008$ \si{\kilo\gram\square\meter}\\
-	$I_y$   & $y$ Inertia    & $0.01$  \si{\kilo\gram\square\meter}\\
-	$I_z$   & $z$ Inertia    & $0.05$  \si{\kilo\gram\square\meter}\\
-	$\beta$ & Drag parameter & $0.2$   \si{\kilo\gram\square\meter}\\
-	$l$     & Frame arm      & $0.3$   \si{\meter} \\ \hline
-	\renewcommand{\arraystretch}{1.75}
-	\end{tabular}
-	\end{center}
-	\caption{Mechanicals parameters of the simulated model}
-\end{margintable}
 \begin{equation}
 \left\{\begin{array}{rcl}
 \dot{x} &=&\cos ( \psi) \cos ( \theta) u +\sin ( \psi) \cos ( \theta) v -\sin ( \theta) w \\
@@ -144,6 +135,23 @@ we get the following Newton--Euler equations that describes dynamical behavior o
 \dot{r} & = & -\dfrac{I_y-I_x}{I_z} p\;q + \dfrac{\beta}{I_z}\;\left( L_1 - L_2 + L_3 - L_4 + L_5 - L_6 \right)
 \end{array}\right.
 \end{equation}
+\begin{margintable}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{center}
+	\begin{tabular}{p{0.5cm} p{2cm} p{1.5cm}}
+	\hline \textbf{Sym.} & \textbf{Description} & \textbf{Value} \\ \hline
+	$g$     & Gravity        & $9.81 $ \si{\kilo\gram\per\square\second} \\
+	$m$     & Mass           & $2$     \si{\kilo\gram}\\
+	$I_x$   & $x$ Inertia    & $0.008$ \si{\kilo\gram\square\meter}\\
+	$I_y$   & $y$ Inertia    & $0.01$  \si{\kilo\gram\square\meter}\\
+	$I_z$   & $z$ Inertia    & $0.05$  \si{\kilo\gram\square\meter}\\
+	$\beta$ & Drag parameter & $0.2$   \si{\kilo\gram\square\meter}\\
+	$l$     & Frame arm      & $0.3$   \si{\meter} \\ \hline
+	\renewcommand{\arraystretch}{1.75}
+	\end{tabular}
+	\end{center}
+	\caption{Mechanicals parameters of the simulated model}
+\end{margintable}
 
 \subsection{Linearization and LQR control}
 \myparagraph{Linearization}
@@ -206,14 +214,6 @@ where $P$ is the solution of \emph{Riccati's equation}:
 \[
 A^T P + PA - P B R^{-1} B^T P + Q = 0
 \]
-the solution of this equation is obtain through numerical tools such as Matlab's \texttt{lqr} algorithm. Unfortunately it is impossible to derive analytical solution, given a wise chose of $Q$ and $R$ matrix. Usually, and also in this case, it is a good idea to follow the Bryson estimation (diagonal matrix, with higher weight to $Q$ matrix, or \emph{cheap control}):
-\[
-\begin{array}{rcl}
-Q & = & \mathrm{eye}\left( q_i \; : \; i = 1..12 \right) \\
-R & = & \rho \mathbb{I}_{6\times 6}
-\end{array}
-\]
-whit the additional constraint to keep observability and controllability on couples:
 \begin{margintable}
 \renewcommand{\arraystretch}{1}
 	\begin{centering}
@@ -239,6 +239,14 @@ whit the additional constraint to keep observability and controllability on coup
 	\caption{Functional weights}
 \renewcommand{\arraystretch}{1.75}	
 \end{margintable}
+the solution of this equation is obtain through numerical tools such as Matlab's \texttt{lqr} algorithm. Unfortunately it is impossible to derive analytical solution, given a wise chose of $Q$ and $R$ matrix. Usually, and also in this case, it is a good idea to follow the Bryson estimation (diagonal matrix, with higher weight to $Q$ matrix, or \emph{cheap control}):
+\[
+\begin{array}{rcl}
+Q & = & \mathrm{eye}\left( q_i \; : \; i = 1..12 \right) \\
+R & = & \rho \mathbb{I}_{6\times 6}
+\end{array}
+\]
+whit the additional constraint to keep observability and controllability on couples:
 \[
 \begin{array}{rcl}
 \mathcal{O}\braces{A,\sqrt{Q}} & = & \mathrm{rank}\braces{ \sqrt{Q}^T\;A^T\sqrt{Q}^T\;\dots\;\braces{A^T}^{\dim(\hexastate)-1}\sqrt{Q}^T} = 12 \\
@@ -247,6 +255,37 @@ whit the additional constraint to keep observability and controllability on coup
 \]
 
 \myparagraph{Solving tracking problem}
+\begin{marginfigure}
+	\centering
+	\includegraphics[scale=0.5]{ch3/img/PA_map_tracking.pdf}
+\end{marginfigure}
 It is really simple to solve a tracking problem starting from an LQR, that tries always to reach a zero. Simply insert an offset in position, and the system will try to reduce the error until it reach zero. Here we have a figure that explains the complete control, and some simulation test for random initial conditions that tries to reach a specific position in space.
-\TODO{inserire immagine del controllo}
+\begin{figure}
+\centering
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    % Placing blocks
+    \node [block] (force) {$L_i = \dfrac{mg}{6}$};
+    \node [sum, right of=force] (sumforce) {};
+    \node [block, right of=sumforce] (hexacopter) {$\dot{\hexastate}=f(\hexastate,\hexacontrol)$};
+    \node [block, right of=hexacopter] (integrator) {$\dfrac{1}{s}$};
 
+    \node [output, right of=integrator] (output) {};
+
+    % draw the lines
+    \draw [->] (force) -- node[pos=0.99] {} (sumforce);
+    \draw [->] (sumforce) -- node {$\hexacontrol$} (hexacopter);
+    \draw [->] (hexacopter) -- node {} (integrator);
+    \draw [->] (integrator) -- node [name=x] {$\hexastate$} (output);
+    
+    \node [sum, below of=x] (sumpos) {};
+    \node [block, right of=sumpos] (reachpoint) {$\hexastate_f$};
+    \node [gain, left of=sumpos] (gain) {$K$};
+
+    \draw [->] (x) -- (sumpos);
+    \draw [->] (reachpoint) -- node[pos=0.99] {$-$} (sumpos);
+    \draw [->] (gain) -| node [pos=0.99] {$-$} node [pos=0.2] {$\hexacontrol*$} (sumforce);
+    \draw [->] (sumpos) -- node {$\mathbf{e}$} (gain);
+\end{tikzpicture}
+\caption{Control block scheme}
+\end{figure}
+\FloatBarrier

@@ -1,5 +1,9 @@
 
 \section{Obstacle avoidance}
+\begin{marginfigure}
+	\centering
+	\includegraphics[scale=0.5]{ch3/img/PA_map_obstacle.pdf}
+\end{marginfigure}
 An avalanche has an huge amount of kinetic energy, enough to destroy most of the artificial building and move objects with a big cross--section that are on its traveling path. Thus, the objects that avalanche drone has to avoid are mainly pillars, trees or mounds of snow.
 
 Taken into account this consideration about the surroundings in which the drone will try to find a buried person, it is useless to define an internal map of obstacle and elaborate the optimal trajectory to an ending point because, in fact, for the most of the time the drone will explore without having such a knowledge of the ending point.
@@ -33,6 +37,11 @@ that has some discontinuity problems, so the next function implemented is a sigm
 \begin{equation}
 v(d_i) = p_3 \braces{\dfrac{1}{1+e^{4 \braces{\frac{p_1}{2}-d_i}\frac{p_2}{p_3}}}-1}
 \end{equation}
+\begin{marginfigure}
+	\centering
+	\includegraphics[scale=0.4]{ch3/img/speed_profile.pdf}
+	\caption{Velocity profile}
+\end{marginfigure}
 from which we obtain a continuous function were the parameters:
 \begin{itemize}
 \item $p_1$: it is the maximum range, at which considered velocity is zero
@@ -40,9 +49,21 @@ from which we obtain a continuous function were the parameters:
 \item $p_3$: defines the maximum velocity, or the value of the curve for ${d_i = 0}$
 \end{itemize}
 
-In figure \TODO{\ref{fig:obstavoidexample}} an example of how the algorithm works is shown. Obviously, signal coming from the algorithm get some sort of filtration to eliminate various source of error.
+In figure \ref{fig:obstavoidexample} an example of how the algorithm works is shown. Obviously, signal coming from the algorithm get some sort of filtration to eliminate various source of error.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{ch3/img/obstavoid_dist.pdf}
+	\caption{Example of obstacle avoid algorithm behavior}
+	\label{fig:obstavoidexample}
+	\forceversofloat
+\end{figure}
 
 \myparagraph{Model of range finder}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{ch3/img/lobe_dimensions.pdf}
+	\caption{Range finder algorithm}
+\end{figure}
 From the simulation point of view the effects of an obstacle are obtained through a model of the characteristic lobe of each range finder. The obstacles are implemented as sets of points, paradigm that brings a little advantage of inserting some noise due to the discontinuities between points, similar to real range finder noise, due to analog to digital conversion.
 \begin{equation}
 \Psi = \left[ \mathbf{x}_i \,:\,i=1..M  \right]
@@ -66,8 +87,8 @@ so characteristic lobe is defined by the parameter:
 \item $h$: receiver maximum distance
 \item $\rho$: receiver maximum lobe dimension
 \end{itemize}
-Given a point ${\mathbf{x}_i \in \Psi}$, if it is inside the cone, the projection of the distance ${\mathbf{x}_d-\mathbf{x}_i}$ on the axis of the cone is the identified distance.
-\begin{algorithm}[H]
+
+\begin{algorithm}[h]
 \caption{Range finder points}
 \SetKw{KwAs}{as}
 \KwData{$h,\,\rho$}
@@ -101,4 +122,9 @@ $\mathbf{r} \leftarrow [r_j = \infty\,:\,j=0$ \KwTo $5]$\;
 }
 \Return{$\mathbf{r}$}
 \end{algorithm}
+
+Given a point ${\mathbf{x}_i \in \Psi}$, if it is inside the cone, the projection of the distance ${\mathbf{x}_d-\mathbf{x}_i}$ on the axis of the cone is the identified distance.
+
 The algorithm describes how each sensor returns the minimum identified distance that is inside its cone. The distances are used to build the velocity vector that avoid the obstacle.
+
+\FloatBarrier
