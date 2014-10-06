@@ -16,13 +16,35 @@ During the year 2000, alpine countries decided to start an on line Database of a
 
 A deeper analysis of the data shows that the 40\% of the accidents have victims. Also, the number of buried was analyzed. Statistically:
 \begin{itemize}
-\item 60\% of the accidents have only one buried 
+\item 50\% of the accidents have only one buried 
 \item 34\% of the accidents have two or three buried 
 \item 16\% of the accidents have four or more or more buried
 \end{itemize}
 \begin{marginfigure}
 	\centering
-	\includegraphics[width=5cm]{ch1/img/statistiche_sepolti.pdf}
+	%\includegraphics[width=5cm]{ch1/img/statistiche_sepolti.pdf}
+	\begin{tikzpicture}[auto,>=latex']
+	\coordinate (center);
+	\coordinate[at=(center.0), anchor=mid, shift=(62.05-90:0.6mm)] (pointA1);
+	\coordinate[at=(center.0), anchor=mid, shift=(153.3-90:1mm)] (pointB1);
+	\coordinate[at=(center.0), anchor=mid, shift=(260-90:1mm)] (pointC1);
+	
+	\coordinate[at=(pointA1.0), anchor=mid, shift=(0-90:15mm)] (pointA2);
+	\coordinate[at=(pointB1.0), anchor=mid, shift=(124.1-90:14.5mm)] (pointB2);
+	\coordinate[at=(pointC1.0), anchor=mid, shift=(180-90:15.5mm)] (pointC2);
+
+	\filldraw[fill=gray!30, draw=black] (pointA1) -- (pointA2) arc (0-90:124.1-90:15mm) -- cycle;
+	\filldraw[fill=white, draw=black] (pointB1) -- (pointB2) arc (124.1-90:180-91.5:15mm) -- cycle;
+	\filldraw[fill=gray!70, draw=black] (pointC1) -- (pointC2) arc (180-90:360-90:15.5mm) -- cycle;
+
+	\node[at=(pointA1.0), anchor=(0), shift=(-15:13mm)] {34\%};
+	\node[at=(pointB1.0), anchor=(0), shift=(40:13mm)] {16\%};
+	\node[at=(pointC1.0), anchor=(0), shift=(180:3mm)] {50\%};
+
+	\node[at=(pointA1.0), anchor=(180), shift=(-80:20mm), text width=2cm] {\scriptsize{2 or 3 buried person}};
+	\node[at=(pointB1.0), anchor=(180), shift=(80:20mm), text width=2cm] {\scriptsize{more than 3 buried person}};
+	\node[at=(pointC1.0), anchor=(180), shift=(140:29mm), text width=2cm] {\scriptsize{1 buried person}};
+	\end{tikzpicture}
 	\caption{Number of buried}
 \end{marginfigure}
 
@@ -124,7 +146,36 @@ In general, the circuit may be resumed as follows:
 
 \begin{figure}
 	\centering
-	\includegraphics[width=7cm]{ch1/img/img_schema_arva.pdf}
+	%\includegraphics[width=7cm]{ch1/img/img_schema_arva.pdf}
+	\begin{tikzpicture}[auto,node distance=1cm,>=latex']
+
+		\node[regular polygon, regular polygon sides=3, regular polygon rotate=180, draw, minimum height=1cm] (ant) {};
+		\draw (ant.north) -- (ant.south);
+		
+		\node[below of=ant] (input) {};
+		\begin{scope}[node distance=4mm and 6mm]
+			\node[block, right=of input, minimum width=2.3cm, text width=2cm, align=center] (b1) {\scriptsize{Triple Antennas}};
+			\node[block, right=of b1, minimum width=2.3cm, text width=2cm, align=center] (b2) {\scriptsize{Frequency shift \\ Anti--alias filter}};
+			\node[block, below=of b2, minimum width=2.3cm, text width=2cm, align=center] (b3) {\scriptsize{A--D \\ Conversion}};
+			\node[block, below=of b3, fill=white, minimum width=2.3cm, text width=2cm, align=center] (b4) {\scriptsize{Digital Filter}};
+			\node[block, left=of b4, minimum width=2.3cm, text width=2cm, align=center] (b5) {\scriptsize{Signal \\ Detection}};
+			\node[block, left=of b5, minimum width=2.3cm, text width=2cm, align=center] (b6) {\scriptsize{H--field \\ Estimation}};
+		\end{scope}
+
+		\draw[->] (ant.south) |- (b1) {};
+		\draw[->] (b1) -- (b2) {};
+		\draw[->] (b2) -- (b3) {};
+		\draw[->] (b3) -- (b4) {};
+		\draw[->] (b4) -- (b5) {};
+		\draw[->] (b5) -- (b6) {};
+		\node [at=(b3.0), anchor=(180), shift=(0:3mm)] (n1) {};
+		\node [at=(b3.0), anchor=(180), shift=(180:88mm)] (n2) {};
+		\draw [dashed] (n2) -- (b3) {};
+		\draw [dashed] (n1) -- (b3) {};
+
+		\node [at=(n2.0), anchor=(180), shift=(25:7mm)] (n1) {Analog};
+		\node [at=(n2.0), anchor=(180), shift=(-25:7mm)] (n1) {Digital};	
+	\end{tikzpicture}
 	\caption{Block diagram of a commercial digital beacon, taken from \citep{Salos2007}}
 	%\forceversofloat
 \end{figure}

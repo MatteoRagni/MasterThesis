@@ -17,12 +17,12 @@ The detection theory is seen as a binary classification problem based upon two h
 \item hypothesis $0$: absence of signal
 \item hypothesis $1$: presence of signal
 \end{itemize}
-The choice is made upon a signal ${\mathbf{s} = [s_1,\dots,s_n]}$ in which a certain number of feature identifies its belonging to a decision field or observation space $\mathbb{Z} \in \mathbb{R}^n$. The observation space is defined by the union of two decision regions:
-\[ \mathbb{Z} \equiv \mathbb{Z}_0 \cup \mathbb{Z}_1 \]
+The choice is made upon a signal ${\signal = [s_1,\dots,s_n]}$ in which a certain number of feature identifies its belonging to a decision field or observation space $\decspace \in \mathbb{R}^n$. The observation space is defined by the union of two decision regions:
+\[ \decspace \equiv \decspacezero \cup \decspaceone \]
 Each decision space has a conditional \emph{PDF}, that is assumed to be known:
 \arraymath{
-	\mathbb{Z}_0 & \mapsto & p(\mathbf{s}|H_0) \\
-	\mathbb{Z}_1 & \mapsto & p(\mathbf{s}|H_1) \\
+	\decspacezero & \mapsto & p(\signal|\hypzero) \\
+	\decspaceone & \mapsto & p(\signal|\hypone) \\
 }
 
 \subsection{Risk criterion}
@@ -35,14 +35,14 @@ The classification is based upon criteria, such as:
 That represents the classification strategies.
 
 \myparagraph{Minimum risk criterion}
-This criterion is based upon the assumptions that posteriors probability ${P(H_0|\mathbf{s})}$ and ${P(H_1|\mathbf{s})}$ are known, and also the cost matrix is known, where the matrix is defined in table \ref{tbl:cost_matrix}.
+This criterion is based upon the assumptions that posteriors probability ${P(\hypzero|\signal)}$ and ${P(\hypone|\signal)}$ are known, and also the cost matrix is known, where the matrix is defined in table \ref{tbl:cost_matrix}.
 \begin{margintable}
 	\renewcommand{\arraystretch}{1}
 	\begin{centering} 
 		\begin{tabular}{>{\centering} m{1.25cm} <{\centering} | >{\centering} m{1.25cm} <{\centering} >{\centering} m{1.25cm} <{\centering}}
 		\hline										& \scriptsize{\textbf{Decide absent}\newline$D_0$} & \scriptsize{\textbf{Decide present}\newline$D_1$} \tabularnewline \hline
-		\scriptsize{\textbf{Signal absent}\newline$H_0$}  	& \cellcolor{lgray}\scriptsize{Correct rejection:\newline$c_{0,0}$} & \cellcolor{dgray}\scriptsize{False alarm:\newline$c_{1,0}$}        \tabularnewline
-		\scriptsize{\textbf{Signal present}\newline$H_1$} 	& \cellcolor{dgray}\scriptsize{Miss:\newline$c_{0,1}$}              & \cellcolor{lgray}\scriptsize{Hit:\newline$c_{1,1}$}                \tabularnewline \hline
+		\scriptsize{\textbf{Signal absent}\newline$\hypzero$}  	& \cellcolor{lgray}\scriptsize{Correct rejection:\newline$c_{0,0}$} & \cellcolor{dgray}\scriptsize{False alarm:\newline$c_{1,0}$}        \tabularnewline
+		\scriptsize{\textbf{Signal present}\newline$\hypone$} 	& \cellcolor{dgray}\scriptsize{Miss:\newline$c_{0,1}$}              & \cellcolor{lgray}\scriptsize{Hit:\newline$c_{1,1}$}                \tabularnewline \hline
 		\end{tabular}
 	\end{centering} 
 	\renewcommand{\arraystretch}{1.75}
@@ -51,9 +51,9 @@ This criterion is based upon the assumptions that posteriors probability ${P(H_0
 \end{margintable}
 In practice we have: ${c_{0,1} > c_{1,1}}$ and ${c_{1,0} > c_{0,0}}$.
 
-The main objective is to \emph{minimize the average cost incurred by erroneous decision}\TODO{citep libro pattrec}. This is done through a minimization of a risk function defined over observation space. This optimization allows us to define the decision regions $\mathbb{Z}_0$ and $\mathbb{Z}_1$ which are optimal in terminal of overall risk. We define the risk:
+The main objective is to \emph{minimize the average cost incurred by erroneous decision}\TODO{citep libro pattrec}. This is done through a minimization of a risk function defined over observation space. This optimization allows us to define the decision regions $\decspacezero$ and $\decspaceone$ which are optimal in terminal of overall risk. We define the risk:
 \begin{equation}
-R = c_{0,0} P(D_0, H_0) + c_{1,0} P(D_1, H_0) + c_{0,1} P(D_0, H_1) + c_{1,1} P(D_1, H_1)
+R = c_{0,0} P(D_0, \hypzero) + c_{1,0} P(D_1, \hypzero) + c_{0,1} P(D_0, \hypone) + c_{1,1} P(D_1, \hypone)
 \end{equation}
 using the axiom of probability on $P(D_i,H_j)$, we get in general:
 \begin{equation}
@@ -61,7 +61,7 @@ P(D_i,H_j) = P(D_i|H_j) P(H_j) \qquad (i,j) \in (0..1,0..1)
 \end{equation}
 and also:
 \begin{equation}
-P(D_i|H_j) = \int\limits_{\mathbb{Z}_i}P(\mathbf{s}|H_j)d\mathbf{s}
+P(D_i|H_j) = \int\limits_{\decspace_i}P(\signal|H_j)d\signal
 \end{equation}
 The evaluation, for each conditional probability is:
 \begin{marginfigure}
@@ -70,87 +70,87 @@ The evaluation, for each conditional probability is:
 	\caption{Probability versus decision space}
 \end{marginfigure}
 \arraymath{
-	P(D_0|H_0) & = & \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_0)d\mathbf{s} = 1 - P_F \\
-	P(D_0|H_1) & = & \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_1)d\mathbf{s} = P_M \\
-	P(D_1|H_0) & = & \int\limits_{\mathbb{Z}_1}p(\mathbf{s}|H_0)d\mathbf{s} = P_F \\
-	P(D_1|H_1) & = & \int\limits_{\mathbb{Z}_1}p(\mathbf{s}|H_1)d\mathbf{s} = 1 - P_M
+	P(D_0|\hypzero) & = & \int\limits_{\decspacezero}p(\signal|\hypzero)d\signal = 1 - \probfalse \\
+	P(D_0|\hypone) & = & \int\limits_{\decspacezero}p(\signal|\hypone)d\signal = \probmiss \\
+	P(D_1|\hypzero) & = & \int\limits_{\decspaceone}p(\signal|\hypzero)d\signal = \probfalse \\
+	P(D_1|\hypone) & = & \int\limits_{\decspaceone}p(\signal|\hypone)d\signal = 1 - \probmiss
 }
 where:
 \begin{itemize}
-\item $P_C$: represents probability of correct rejection
-\item $P_F$: represents probability of false alarm
-\item $P_M$: represents probability of missed alarm
-\item $P_D$: represents probability of detection
+\item $\probrej$: represents probability of correct rejection
+\item $\probfalse$: represents probability of false alarm
+\item $\probmiss$: represents probability of missed alarm
+\item $\probdet$: represents probability of detection
 \end{itemize}
 and, looking at figure \ref{fig:probdetection}, stands the relation:
 \arraymath{
-	P_D + P_M & = & 1 \\
-	P_C + P_F & = & 1
+	\probdet + \probmiss & = & 1 \\
+	\probrej + \probfalse & = & 1
 }
 
 Finally, we get the defintion of risk:
 \begin{equation}
 \begin{array}{rcl} 
-R & = & c_{0,0} \braces{1-P_F} P(H_0) + c_{0,1} P_M P(H_1) + \\ 
-  &   &  + c_{1,0} P_F P(H_0) + c_{1,1} (1-P_M) P(H_1) \\
-  & = & P(H_0) \braces{c_{0,0} + P_F (c_{1,0} - c_{0,0})} + P(H_1) \braces{c_{1,1} + P_M (c_{0,1} - c_{1,1})}
+R & = & c_{0,0} \braces{1-\probfalse} P(\hypzero) + c_{0,1} \probmiss P(\hypone) + \\ 
+  &   &  + c_{1,0} \probfalse P(\hypzero) + c_{1,1} (1-\probmiss) P(\hypone) \\
+  & = & P(\hypzero) \braces{c_{0,0} + \probfalse (c_{1,0} - c_{0,0})} + P(\hypone) \braces{c_{1,1} + \probmiss (c_{0,1} - c_{1,1})}
 \end{array}
 \end{equation}
 applying some substitutions:
 \arraymath{
-	P_M & = & \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_1)d\mathbf{s} \\
-	P_F & = & \int\limits_{\mathbb{Z}_1}p(\mathbf{s}|H_0)d\mathbf{s} =  \\
-	    & = & 1 - \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_0)d\mathbf{s}  \\
-	1 & = & \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_j)d\mathbf{s} + \int\limits_{\mathbb{Z}_1}p(\mathbf{s}|H_j)d\mathbf{s} 
+	\probmiss & = & \int\limits_{\decspacezero}p(\signal|\hypone)d\signal \\
+	\probfalse & = & \int\limits_{\decspaceone}p(\signal|\hypzero)d\signal =  \\
+	    & = & 1 - \int\limits_{\decspacezero}p(\signal|\hypzero)d\signal  \\
+	1 & = & \int\limits_{\decspacezero}p(\signal|H_j)d\signal + \int\limits_{\decspaceone}p(\signal|H_j)d\signal 
 }
 and the risk equation:
 \begin{equation}
 \begin{array}{rcl}
-R & = & P(H_0) \braces{c_{0,0} + P_F (c_{1,0} - c_{0,0})} + P(H_1) \braces{c_{1,1} + P_M (c_{0,1} - c_{1,1})} = \\ 
-  & = & P(H_0) \braces{c_{0,0} + \braces{1 - \int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_0)d\mathbf{s}} (c_{1,0} - c_{0,0})} + \\ 
-  &   &  + P(H_1) \braces{c_{1,1} + \braces{\int\limits_{\mathbb{Z}_0}p(\mathbf{s}|H_1)d\mathbf{s}} (c_{0,1} - c_{1,1})} = \\ 
-  & = & P(H_0) c_{1,0} + P(H_1) c_{1,1} + \\
-  &   & + \int\limits_{\mathbb{Z}_0} P(H_1)\braces{c_{0,1} - c_{1,1}} p(\mathbf{s}|H_1) - P(H_0)\braces{c_{1,0} - c_{0,0}} p(\mathbf{s}|H_0) d\mathbf{s}
+R & = & P(\hypzero) \braces{c_{0,0} + \probfalse (c_{1,0} - c_{0,0})} + P(\hypone) \braces{c_{1,1} + \probmiss (c_{0,1} - c_{1,1})} = \\ 
+  & = & P(\hypzero) \braces{c_{0,0} + \braces{1 - \int\limits_{\decspacezero}p(\signal|\hypzero)d\signal} (c_{1,0} - c_{0,0})} + \\ 
+  &   &  + P(\hypone) \braces{c_{1,1} + \braces{\int\limits_{\decspacezero}p(\signal|\hypone)d\signal} (c_{0,1} - c_{1,1})} = \\ 
+  & = & P(\hypzero) c_{1,0} + P(\hypone) c_{1,1} + \\
+  &   & + \int\limits_{\decspacezero} P(\hypone)\braces{c_{0,1} - c_{1,1}} p(\signal|\hypone) - P(\hypzero)\braces{c_{1,0} - c_{0,0}} p(\signal|\hypzero) d\signal
 \end{array}
 \end{equation}
-The first part is constant, to minimize the risk we have to work on the argument of the integral, that depends upon ${\mathbb{Z}_0}$. Because:
+The first part is constant, to minimize the risk we have to work on the argument of the integral, that depends upon ${\decspacezero}$. Because:
 \arraymath{
-	P(H_1)\braces{c_{0,1} - c_{1,1}} p(\mathbf{s}|H_1) & \geq & 0 \\
-	P(H_0)\braces{c_{1,0} - c_{0,0}} p(\mathbf{s}|H_0) & \geq & 0
+	P(\hypone)\braces{c_{0,1} - c_{1,1}} p(\signal|\hypone) & \geq & 0 \\
+	P(\hypzero)\braces{c_{1,0} - c_{0,0}} p(\signal|\hypzero) & \geq & 0
 }
 the risk is minimized when:
 \begin{equation}
-P(H_1)\braces{c_{0,1} - c_{1,1}} p(\mathbf{s}|H_1) < P(H_0)\braces{c_{1,0} - c_{0,0}} p(\mathbf{s}|H_0)
+P(\hypone)\braces{c_{0,1} - c_{1,1}} p(\signal|\hypone) < P(\hypzero)\braces{c_{1,0} - c_{0,0}} p(\signal|\hypzero)
 \end{equation}
 and rearranged as follow
 \begin{equation}
-\naming{ \dfrac{p(\mathbf{s}|H_1)}{p(\mathbf{s}|H_0)} }{\Lambda(\mathbf{s})} < \naming{ \dfrac{P(H_0)\braces{c_{1,0} - c_{0,0}}}{P(H_1)\braces{c_{0,1} - c_{1,1}}} }{\eta}
+\naming{ \dfrac{p(\signal|\hypone)}{p(\signal|\hypzero)} }{\likelihood} < \naming{ \dfrac{P(\hypzero)\braces{c_{1,0} - c_{0,0}}}{P(\hypone)\braces{c_{0,1} - c_{1,1}}} }{\threshold}
 \end{equation}
 that allow us to define the algorithm \ref{alg:minimumrisk}. Must be noticed:
 \begin{itemize}
 \item because of the binary nature, the decision rule obtained with the minimization on a single decision, grant the minimization of the risk also on the other decision; thus we could say that the local decision rule minimizes the overall risk
 \item the likelihood ratio and threshold define decision regions as follows:
 \arraymath{
-	\mathbb{Z}_0 &=& \{ \mathbf{s}\in\mathbb{Z} \,:\,\Lambda(\mathbf{s})<\eta \} \\
-	\mathbb{Z}_1 &=& \{ \mathbf{s}\in\mathbb{Z} \,:\,\Lambda(\mathbf{s})>\eta \} 
+	\decspacezero &=& \{ \signal\in\decspace \,:\,\likelihood<\threshold \} \\
+	\decspaceone &=& \{ \signal\in\decspace \,:\,\likelihood>\threshold \} 
 }
-and a sample such that $\Lambda(\mathbf{s})=\eta$ could be assigned arbitrarily to one of the decision region
-\item the distributions ${p(\mathbf{s}|H_0)}$ and ${p(\mathbf{s}|H_1)}$ should be derived experimentally, something that is not to difficult because of characteristics of our signal
+and a sample such that $\likelihood=\threshold$ could be assigned arbitrarily to one of the decision region
+\item the distributions ${p(\signal|\hypzero)}$ and ${p(\signal|\hypone)}$ should be derived experimentally, something that is not to difficult because of characteristics of our signal
 \end{itemize}
 \begin{algorithm}[h]
 \caption{Minimum risk criterion}
 \label{alg:minimumrisk}
-\KwData{ $p(\mathbf{s}|H_1),\,p(\mathbf{s}|H_0),\,c_{0,0},\,c_{1,0},\,c_{0,1},\,c_{1,1}$ }
+\KwData{ $p(\signal|\hypone),\,p(\signal|\hypzero),\,c_{0,0},\,c_{1,0},\,c_{0,1},\,c_{1,1}$ }
 \tcc{Define the likelihood ratio}
-$\Lambda(\mathbf{s}) \leftarrow \dfrac{p(\mathbf{s}|H_1)}{p(\mathbf{s}|H_0)} $ \;
+$\likelihood \leftarrow \dfrac{p(\signal|\hypone)}{p(\signal|\hypzero)} $ \;
 \tcc{Define the threshold}
-$\eta \leftarrow \dfrac{P(H_0)\braces{c_{1,0} - c_{0,0}}}{P(H_1)\braces{c_{0,1} - c_{1,1}}}$ \;
+$\threshold \leftarrow \dfrac{P(\hypzero)\braces{c_{1,0} - c_{0,0}}}{P(\hypone)\braces{c_{0,1} - c_{1,1}}}$ \;
 \tcc{Binary classification}
-\ForAll{$\mathbf{s}_{in}$}{
-	\eIf{$\Lambda(\mathbf{s}_in) \leq \eta$}{
-		\Return{$\mathbf{s} \in H_0$}
+\ForAll{$\signal_{in}$}{
+	\eIf{$\Lambda(\signal_{in}) \leq \threshold$}{
+		\Return{$\signal \in \hypzero$}
 	}{
-		\Return{$\mathbf{s} \in H_1$}
+		\Return{$\signal \in \hypone$}
 	}
 }
 \end{algorithm}

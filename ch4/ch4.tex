@@ -1,0 +1,31 @@
+\chapter{Simulations}
+\minitoc
+\thispagestyle{plain}
+
+In this chapter we will see the implementation of part of the system using Matlab/Simulink platform. Some results are shown. Implementation takes into account the presence of noise in ARTVA receiver and consider a good estimation for the position and attitude of the system. To make simulation faster, we used \texttt{C--compiled} functions to perform heavier computational tasks\marginnote{The complete project is available on--line as a public Github repository. Please refer to the project for the actual source code of the single blocks.}. 
+
+\section{Implementations}
+
+\subsection{Dynamic model implementation}
+
+The dynamic of the model is implemented with an \texttt{S-Function}, while the control is derived from the linearization of the model and thus inserted as gain in the model loop. The system has a free $\vrz$ attitude, while position is controlled through the use of an integrated velocity vector.
+
+\TODO{assieme modello simulink}
+
+\subsection{Receiver Model}
+
+The receiver implements a mean sampler to reduce white Gaussian noise. The model of the receiver contains the equations of the H--field at which noise proportional to signal intensity on each antenna. The idea is to get \num{40}\si{\decibel} of signal to noise ratio, that is quite optimistic, but it is also the value declared from some manufacturer. Also algorithm may work with lower receiver SNR.
+
+\TODO{Modello ricevitore}
+
+\subsection{Obstacle avoidance}
+
+In the obstacle avoidance block we find a model of the receivers, written as a \texttt{mex--function}, and than the quite simple algorithm that allow us to avoid the obstacle generating a velocity vector orthogonal to the obstacle plane. This velocity vector is added to the searching input. This behavior is typical of the grounded paradigm.
+
+\subsection{Searching algorithm}
+
+The receiver output feeds directly the two component of the source searching algorithm. The field information is transformed in an intensity and in a direction value to get an exploration direction. Measured field is used to perform the emulation, as an optimization problem. It was quite tricky to call the optimizer from Simulink, but possible using the \texttt{caller extrinsic} directive, alongside with an external evaluation from the Matlab engine, using \texttt{feval}. To speed up the process, residuals and barrier function results are evaluated using a \texttt{mex--function}. The parzen window estimation is performed offline, only as qualitative expression of the quality of the algorithm. The system shows some problem due to the symmetry of the transmitting field.
+
+\section{Results}
+
+\TODO{Immagini risultato}
