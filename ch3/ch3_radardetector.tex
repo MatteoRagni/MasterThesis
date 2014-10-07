@@ -1,7 +1,32 @@
 \section{The signal detection problem}
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.5]{ch3/img/PA_map_radar.pdf}
+	%\includegraphics[scale=0.5]{ch3/img/PA_map_radar.pdf}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=gray!40,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+\end{tikzpicture}
 \end{marginfigure}
 We have two searching status for our agent. In one searching status, the VTOL tries to identify a signal, while in the second stage, once we have identified the presence of a signal, the drone has to find the transmission source point. The passage from a searching strategy to another is the\emph{supervised signal detection}.
 

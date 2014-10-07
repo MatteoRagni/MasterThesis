@@ -148,12 +148,7 @@ The exploration of motion domain is performed through the use of random inputs a
 \section{Building the PA map of the drone}
 
 \subsection{Overview of our searching map}
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.9]{ch3/img/PA_map_general.pdf}
-	\caption{General Perception--Action map for our drone}
-	\label{fig:genPAmap}
-\end{figure}
+
 In figure \ref{fig:genPAmap} a comprehensive version of the map is presented. The map shows a tri--dimensional evolution in the upper side, where two different aims are achieved. One one side we have the searching for the signal, and on the other side we have the searching for the signal source. This particular design in the map was implement to grant to the avionics the ability to perform a sort of reasoning and reach a multiple objective, as it will be explained later on.
 
 The drone has a complex control system, already implemented in IMU shield, that takes in consideration a linearized feedback that feeds an LQR control loop\TODO{citep}. 
@@ -161,4 +156,37 @@ The drone has a complex control system, already implemented in IMU shield, that 
 The system could be modified to solve a tracking problem, that will be used by the upper level. The tracking problem uses transparently the stabilization layer and it is used by the searching layer.
 
 Upper layers, obstacle avoiding and altitude keeping, preserve drone to collide with isolated obstruction and at an altitude that is safe for rescuers. 
+\begin{figure}[h]
+	\centering
+	%\includegraphics[scale=0.9]{ch3/img/PA_map_general.pdf}
+
+	\begin{tikzpicture}[>=latex']
+		\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+		\node [at=(perception_D),xshift=30,yshift=-10] {\textbf{Perception}};
+		\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{Dynamics and control}{};
+		\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{Tracking Problem}{};
+		
+		\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{Obstacle Avoidance}{};
+		\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{Altitude Keeping}{};
+		
+		\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{Source searching}{text width=2cm,align=center};
+		\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{Emulation}{text width=2cm,align=center};
+
+		\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{Radar detect}{rotate=45,xslant=1};
+
+		\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{Exploration routines}{text width=2cm,align=center};
+		\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+		\node [at=(action_D),xshift=20,yshift=-10] {\textbf{Action}};
+
+		\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+		\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+		\coordinate [at=(radar_det_D), yshift=-20] (arrows_point);
+		\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+		\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+	\end{tikzpicture}
+	\forcerectofloat
+	\caption{General Perception--Action map for our drone}
+	\label{fig:genPAmap}
+\end{figure}
 \FloatBarrier

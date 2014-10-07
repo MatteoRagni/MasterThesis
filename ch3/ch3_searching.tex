@@ -1,7 +1,32 @@
 \section{Searching for the signal}
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.5]{ch3/img/PA_map_exploration.pdf}
+	%\includegraphics[scale=0.5]{ch3/img/PA_map_exploration.pdf}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{gray!40}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+\end{tikzpicture}
 \end{marginfigure}
 In this section we derive a very simple method to cover the avalanche front to search for a signal beacon. The algorithm presented is incredibly simple and derives from what is actually done by a rescuer on the avalanche front. We try to cover the area of the avalanche with straight equi--spaced lines generated from a series of points.
 \begin{figure*}[p]
@@ -74,7 +99,32 @@ The proposed algorithm uses a two component algorithm.
 \subsection{Exploration step}
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.5]{ch3/img/PA_map_direction.pdf}
+	%\includegraphics[scale=0.5]{ch3/img/PA_map_direction.pdf}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{gray!40}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+\end{tikzpicture}
 \end{marginfigure}
 The first step is simply an adaptive filter, stolen from the evaluation of Round--Trip--Time in TCP networking, that tries to identify a direction in which the signal is maximized, given an adapted previous knowledge. The algorithm takes into consideration the presence of fluctuations due to noise and interference and changes orientation only when the change in signal is obvious. Scaling parameter regulate the velocity that will move the drone.
 
@@ -135,7 +185,32 @@ $\mathbf{v}_k = \vettore{
 \subsection{Emulation step}
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.5]{ch3/img/PA_map_emulation.pdf}
+	%\includegraphics[scale=0.5]{ch3/img/PA_map_emulation.pdf}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{gray!40}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+\end{tikzpicture}
 \end{marginfigure}
 
 \myparagraph{Optimization}
