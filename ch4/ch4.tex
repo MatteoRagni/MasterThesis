@@ -1,12 +1,13 @@
 \chapter{Simulations}
 \minitoc
 \thispagestyle{plain}
+\def\saltino{\vspace{0.5cm}}
 
 In this chapter we will see the implementation of part of the system using Matlab/Simulink platform. Some results are shown. Implementation takes into account the presence of noise in ARTVA receiver and consider a good estimation for the position and attitude of the system. To make simulation faster, we used \texttt{C--compiled} functions to perform heavier computational tasks\marginnote{The complete project is available on--line as a public Github repository. Please refer to the project for the actual source code of the single blocks.}. 
 
 \section{Implementations}
 
-\subsection{Dynamic model implementation}
+\subsection{Dynamic model}
 
 The dynamic of the model is implemented with an \texttt{S-Function}, while the control is derived from the linearization of the model and thus inserted as gain in the model loop. The system has a free $\vrz$ attitude, while position is controlled through the use of an integrated velocity vector.
 \begin{figure*}[h] \centering
@@ -44,6 +45,8 @@ The dynamic of the model is implemented with an \texttt{S-Function}, while the c
 \end{tikzpicture}
 \caption{System complete model}
 \end{figure*}
+\saltino
+
 \begin{figure*}[h] \centering
 \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
 	\inputpin{stato}{$\mathbf{x}$}{}
@@ -75,6 +78,7 @@ The dynamic of the model is implemented with an \texttt{S-Function}, while the c
 \end{tikzpicture}
 \caption{Tracking problem}
 \end{figure*}
+\saltino
 \FloatBarrier
 
 \subsection{Receiver Model}
@@ -110,6 +114,7 @@ The receiver implements a mean sampler to reduce white Gaussian noise. The model
 \end{tikzpicture}
 \caption{Receiver implementation}
 \end{figure*}
+\saltino
 \FloatBarrier
 
 \subsection{Obstacle avoidance}
@@ -142,6 +147,7 @@ In the obstacle avoidance block we find a model of the receivers, written as a \
 
 \caption{Obstacle avoidance sub--block}
 \end{figure*}
+\saltino
 \FloatBarrier
 
 \subsection{Searching algorithm}
@@ -185,8 +191,44 @@ The receiver output feeds directly the two component of the source searching alg
 
 \caption{Searching algorithm sub--block}
 \end{figure*}
+\saltino
 \FloatBarrier
 
 \section{Results}
+In the next pages some results are reported, for a sample simulation.
 
-\TODO{Immagini risultato}
+\begin{figure*}[f]
+	\centering
+	\includegraphics[]{ch4/img/3Dplot.pdf}
+\label{fig:3dplot}
+\caption{Graphical representation of a searching mission. The blue part is an obstacle, while the red dot is the position of the transmitter.}
+\end{figure*}
+
+\begin{figure*}[f]
+	\centering
+	\includegraphics[]{ch4/img/State.pdf}
+\label{fig:state}
+\caption{State of the drone during the entire searching routine. The earlier seconds are used to stabilize the drone, while for the rest of the time tries to reach the source.}
+\end{figure*}
+
+\begin{figure*}[f]
+	\centering
+	\includegraphics[]{ch4/img/Searching.pdf}
+\label{fig:searching}
+\caption{The searching routine perceived value. It is important to notice the monotonic behavior of the H--field strength. The algorithm succeeds in finding the direction in which the field increases.}
+\end{figure*}
+
+\begin{figure*}[f]
+	\centering
+	\includegraphics[]{ch4/img/ParzenWindow.pdf}
+\label{fig:parzwin}
+\caption{The results for the emulation routine. We can see that this algorithm does not produce great result at this time. Wee need to infer some more knowledge to the emulation equations. This problem could be related to the intrinsic symmetry of the field.}
+\end{figure*}
+
+\begin{figure*}[f]
+	\centering
+	\includegraphics[]{ch4/img/RangeFinder.pdf}
+\label{fig:rangefinder}
+\caption{The range finder distance reading.}
+\end{figure*}
+

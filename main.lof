@@ -1,0 +1,56 @@
+\select@language {english}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Introduction to Mountain Rescue }{11}{chapter.1}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Number of buried}}{12}{section.1.1}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Tracker DTS Avalanche Transceiver, a digital beacon}}{13}{paragraph*.2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Block diagram of a commercial digital beacon, taken from \citep {Salos2007}}}{15}{subsection.1.3.2}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Design of a digital ARTVA }{21}{chapter.2}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Formulation of magnetic dipole problem}}{24}{paragraph*.12}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Graphical animation of the magnetic field $\relax \ensuremath {\mathbf {B}}\xspace \let \@@protect \let \@unexpandable@protect \afterassignment \let \@@protect \xdef yes{yes}$ with retarded potential formulation. Those graph derives directly from the equations \ref {eq:campidef1}. To see the animations, please use \texttt {Adobe Acrobat viewer}}}{26}{equation.2.1.18}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces From Polar coordinates to Cartesian coordinates}}{27}{paragraph*.15}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Representation of a magnetic field with source: \newline $\relax \ensuremath {\mathbf {p}_{\mathrm {tx}}}\xspace \let \@@protect \let \@unexpandable@protect \afterassignment \let \@@protect \xdef no{yes}= [10, 0, 10]^T$ \newline $\relax \ensuremath {\mathbf {m}}\xspace \let \@@protect \let \@unexpandable@protect \afterassignment \let \@@protect \xdef yes{yes}=[\qopname \relax o{cos}\left ( \pi /4 \right ),0,\qopname \relax o{sin}\left ( \pi /4 \right )]^T$}}{27}{paragraph*.15}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Intelligence signal of avalanche beacons}}{28}{section.2.2}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of a A--1A modulated signal}}{28}{equation.2.2.24}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Single coil in a field}}{29}{paragraph*.16}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Flux lines through coil and ferrite rod}}{30}{paragraph*.17}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Antenna equivalent circuit}}{31}{subsection.2.3.2}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Block diagram for the circuit}}{32}{section.2.4}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Tuned tank portion of circuit}}{33}{subsection.2.4.1}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Pre--amplifier stage}}{33}{subsection.2.4.2}
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Filter magnitude characteristic}}{34}{subsection.2.4.2}
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Identification stage}}{34}{subsection.2.4.3}
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Logical function of an identifier}}{34}{subsection.2.4.3}
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Low pass filter and amplification stage}}{35}{subsection.2.4.3}
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Filter magnitude characteristic}}{35}{subsection.2.4.4}
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Digital stage}}{35}{subsection.2.4.5}
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Example of a sampling result}}{36}{subsection.2.4.6}
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Complete circuit}}{36}{subsection.2.4.7}
+\contentsline {figure}{\numberline {2.21}{\ignorespaces Triple antenna}}{36}{subsection.2.4.7}
+\contentsline {figure}{\numberline {2.22}{\ignorespaces Complete circuit}}{37}{subsection.2.4.7}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Drone Avionics}{43}{chapter.3}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Classical percetion--action map}}{44}{subsection.3.1.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Embodiment and situatedness}}{44}{subsection.3.1.1}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Subsumption and grounding architecture}}{45}{paragraph*.26}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Emulation in an agent}}{46}{paragraph*.27}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces General Perception--Action map for our drone}}{47}{subsection.3.2.1}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Hexa--copter kinematics}}{48}{equation.3.3.1}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Control block scheme}}{53}{paragraph*.34}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Velocity profile}}{54}{equation.3.4.24}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Example of obstacle avoid algorithm behavior}}{54}{equation.3.4.24}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Range finder algorithm}}{55}{paragraph*.35}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Altitude keeping problem}}{59}{subsection.3.5.2}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Decision spaces}}{60}{subsection.3.6.1}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Probability versus decision space}}{61}{equation.3.6.38}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Exploration algorithm}}{64}{section.3.7}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Simulations}{69}{chapter.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces System complete model}}{70}{subsection.4.1.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Tracking problem}}{70}{subsection.4.1.1}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Receiver implementation}}{71}{subsection.4.1.2}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Obstacle avoidance sub--block}}{71}{subsection.4.1.3}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Searching algorithm sub--block}}{72}{subsection.4.1.4}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Bibliography}{75}{chapter*.44}
+\contentsfinish 

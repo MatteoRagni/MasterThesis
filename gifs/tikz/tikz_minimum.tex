@@ -14,7 +14,6 @@
 \tikzstyle{output} = [coordinate]
 \tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
 
-\begin{document}
 
 \newcommand{\fromworkspace}[3]{%
 	\node [block, draw=white,#3, minimum height=1.5em] (#1) {#2};%
@@ -37,163 +36,203 @@
 	\draw (#1.north west) -- (#1_in) -- (#1.south west);%
 }
 
+\begin{document}
 
-\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex']
+proviamo un pochino di testo \tikz[baseline=-0.1ex]{ \node (var) {$x_{p}$}; \node [at=(var.north), xshift=-2, yshift=-1, circle, draw, fill=black, inner sep=0.25pt] {}; } e concludiamo con altro testo
 
-	\node [block, fill=gray!40] (hexamodel) {Hexacopter Model};
-	\fromworkspace{parameter}{\scriptsize{Parameters}}{at=(hexamodel),xshift=-50,yshift=30}
-	\node [sum, left=of hexamodel] (sumA) {$+$};
-	\node [block, left=of sumA] (force) {$F_i = \dfrac{mg}{6}$};
+\begin{tikzpicture}[>=latex']
 	
-	\node [ellipse, draw, minimum width=1.3cm, above=of force] {\scriptsize{Time}};
-	\node [block,below=of hexamodel] (controller) {LQR Controller};
-	\node [block, right=of controller] (integrator) {$\dfrac{1}{s}$};
-	\fromworkspace{zattitude}{\scriptsize{$\hat{\mathbf{z}}$ attitude}}{at=(controller),yshift=-30,xshift=-50}
-	\node [sum, right=of integrator] (sumB) {$+$};
-	\node [block, right=of sumB, text width=2cm,align=center] (searching) {Searching Algorithm};
-	\node [block, below=of searching, text width=2cm,align=center] (obstacle) {Obstacle Avoiding};
-	\coordinate[at=(hexamodel),xshift=220] (intersection);
-	\toworkspace{results}{$\mathbf{x}$}{right=of intersection};
+	\begin{scope}[xslant=1]
+		\draw [ystep=1.5,xstep=3,thin,gray] (0,0) grid (3*3,1.5*3);
+		\foreach \x in {1,...,3}
+		{
+			\foreach \y in {1,...,3} 
+			{
+				\node at (\x*3-1.5,\y*1.5-0.75) [circle,fill=black,inner sep=1pt] (nodo_\x_\y) {};
+				\node [ellipse,draw, minimum width=60, minimum height=30,rotate=0,gray,dashed,xslant=1] at (nodo_\x_\y) {};
+			}
+		}
 
-	\draw [->] (force) -- (sumA);
-	\draw [->] (sumA) -- (hexamodel);
-	\draw [->] (hexamodel) -- (results_in);
-	\draw [->] (searching) -- (sumB);
-	\draw [->] (sumB) -- (integrator);
-	\draw [->] (integrator) -- (controller);
-
-	\draw [->] (controller) -| (sumA);
-	\draw [->] (zattitude_out) -| (controller);
-	\draw [->] (parameter_out) -| (hexamodel);
-	\draw [->] (obstacle) -| (sumB);
-	\draw [->] (intersection) |- (searching);
-	\draw [->] (intersection) |- (obstacle);
-
-\end{tikzpicture}
-
-\salta
-
-\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
-	\inputpin{stato}{$\mathbf{x}$}{}
-	\draw [at=(stato), xshift=50, fill=black] ++(0,0) node(muxin){} -- ++(0,2cm) -- ++(1mm,0) -- node[pos=0.2](posizione){} node[pos=0.4](velocita){} node[pos=0.6](angolo){} node[pos=0.8](velrotazione){} ++(0,-4cm) -- ++(-1mm,0) -- cycle;
-	\node [sum, at=(posizione), xshift=50] (sumA) {$+$};
-	\node [sum, at=(angolo), xshift=100] (sumB) {$+$};
-	\draw [at=(stato), xshift=200+1mm, fill=black] ++(0,0) node(muxout){} -- ++(0,2cm) -- ++(-1mm,0) -- node[pos=0.2](posizioneB){} node[pos=0.4](velocitaB){} node[pos=0.6](angoloB){} node[pos=0.8](velrotazioneB){} ++(0,-4cm) -- ++(1mm,0) -- cycle;
-	\node [gain,at=(stato.west), xshift=255, regular polygon rotate=-90] (gain) {$K$};
-	\outputpin{controllo}{$\mathbf{u}$}{at=(stato.west), xshift=315};
-
-	\inputpin{refer}{$\mathbf{x}_f$}{at=(stato.center), yshift=-80}
-	\inputpin{attitz}{$\psi_f$}{at=(stato.center), yshift=-110}
-
-	\draw [->] (stato_out) -- (muxin.center);
-	\draw [->] (posizione.west) -- node[text width=1.5cm,align=left,pos=0.60]{\scriptsize{Position}} (sumA.west);
-	\draw [->] (sumA.east) -- (posizioneB.west);
-	\draw [->] (velocita.west) -- node[text width=1.5cm,align=left,pos=0.175]{\scriptsize{Velocity}} (velocitaB.west);
-	\draw [->] (angolo.west) -- node[text width=1.5cm,align=left,pos=0.275]{\scriptsize{Attitude}} (sumB.west);
-	\draw [->] (sumB.east) -- (angoloB.west);
-	\draw [->] (velrotazione.west) -- node[text width=1.5cm,align=left,pos=0.175]{\scriptsize{Ang.ratio}} (velrotazioneB.west);
-	\draw [->] (muxout.center) -- (gain);
-	\draw [->] (gain) -- (controllo_in);
-
-	\draw [->,draw=white,line width=2] (refer_out) -| (sumA.south);
-	\draw [->,draw=white,line width=2] (attitz_out) -| (sumB.south);
-	\draw [->] (refer_out) -| node[right,at end]{$-$} (sumA.south);
-	\draw [->] (attitz_out) -| node[right,at end]{$-$} (sumB.south);
+		\draw [->] (nodo_1_3) -- (nodo_2_3);
+		\draw [->] (nodo_2_3) -- (nodo_3_3);
+		\draw [->] (nodo_3_3) -- (nodo_3_2);
+		\draw [->] (nodo_3_2) -- (nodo_2_2);
+		\draw [->] (nodo_2_2) -- (nodo_1_2);
+		\draw [->] (nodo_1_2) -- (nodo_1_1);
+		\draw [->] (nodo_1_1) -- (nodo_2_1);
+		\draw [->] (nodo_2_1) -- (nodo_3_1);
+	\end{scope}
+	\node (hexacopter) [at=(nodo_2_3), yshift=50, xshift=10] {\includegraphics[scale=0.15]{../../img/hexacopterB.pdf}};
+	\coordinate [at=(hexacopter),yshift=-10] (hexapin);
+	\draw (hexapin) -- node[pos=1,ellipse,draw=black, minimum width=120, minimum height=70,rotate=0,dashed,xslant=1,fill=gray,opacity=0.4] {} ++(0,-1.5) coordinate(circlecenter);
+	\node at (circlecenter) [circle,fill=black,inner sep=1pt] {};
+ 	\node [at=(nodo_1_3), yshift=7.5,xshift=7.5] {$\mathbf{p}_0$};
+	\node [at=(nodo_3_1), yshift=7.5,xshift=7.5] {$\mathbf{p}_n$};
+	\coordinate [at=(nodo_1_3),xshift=-60] (direction1); \coordinate [at=(nodo_1_1),xshift=-60] (direction2);
+	\draw [->,line width=2] (direction1) -- node[pos=0.5,above,rotate=45]{Plane direction} (direction2);
+	\coordinate [at=(circlecenter),shift=(150:1.3)] (labelA);
+	\draw [<-](labelA) -- ++(150:1) -- ++(-2,0) node[above,pos=0.5]{\scriptsize{Receiver range}};
 
 \end{tikzpicture}
 
-\salta
 
-\begin{tikzpicture}[auto,node distance=10mm and 10mm, >=latex]
+
+% \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex']
+
+% 	\node [block, fill=gray!40] (hexamodel) {Hexacopter Model};
+% 	\fromworkspace{parameter}{\scriptsize{Parameters}}{at=(hexamodel),xshift=-50,yshift=30}
+% 	\node [sum, left=of hexamodel] (sumA) {$+$};
+% 	\node [block, left=of sumA] (force) {$F_i = \dfrac{mg}{6}$};
 	
-	\inputpin{stato}{$\mathbf{x}$}{}
-	\node [block, right=of stato_out,fill=gray!40] (Hfield) {$\mathbf{H}\left( \mathbf{x}, \mathbf{p}_T, \hat{\mathbf{m}} \right)$};
-	\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
-	\fromworkspace{tpos}{\scriptsize{Transmitter position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
+% 	\node [ellipse, draw, minimum width=1.3cm, above=of force] {\scriptsize{Time}};
+% 	\node [block,below=of hexamodel] (controller) {LQR Controller};
+% 	\node [block, right=of controller] (integrator) {$\dfrac{1}{s}$};
+% 	\fromworkspace{zattitude}{\scriptsize{$\hat{\mathbf{z}}$ attitude}}{at=(controller),yshift=-30,xshift=-50}
+% 	\node [sum, right=of integrator] (sumB) {$+$};
+% 	\node [block, right=of sumB, text width=2cm,align=center] (searching) {Searching Algorithm};
+% 	\node [block, below=of searching, text width=2cm,align=center] (obstacle) {Obstacle Avoiding};
+% 	\coordinate[at=(hexamodel),xshift=220] (intersection);
+% 	\toworkspace{results}{$\mathbf{x}$}{right=of intersection};
 
-	\coordinate [right=of Hfield] (intersection);
-	\node [block, below=of intersection,text width=1cm, align=center] (absolute) {$|\mathbf{H}|$};
-	\node [sum, below=of absolute] (prod) {$\times$};
-	\node [block, left=of prod] (noise) {$\mathcal{N}(\mathbf{0},\Sigma)$};
-	\node [gain, right=of prod, regular polygon rotate=-90, text width=0.3cm] (gain) {\scriptsize{SNR}};
-	\node [sum, at=(intersection), xshift=100] (somma) {$+$};
-	\outputpin{hvalue}{$\mathbf{H}$}{right=of somma}
+% 	\draw [->] (force) -- (sumA);
+% 	\draw [->] (sumA) -- (hexamodel);
+% 	\draw [->] (hexamodel) -- (results_in);
+% 	\draw [->] (searching) -- (sumB);
+% 	\draw [->] (sumB) -- (integrator);
+% 	\draw [->] (integrator) -- (controller);
 
-	\draw[->] (stato_out) -- (Hfield);
-	\draw[->] (Hfield) -- (somma);
-	\draw[->] (somma) -- (hvalue_in);
-	\draw[->] (intersection) -- (absolute);
-	\draw[->] (absolute) -- (prod);
-	\draw[->] (noise) -- (prod);
-	\draw[->] (prod) -- (gain);
-	\draw[->] (gain) -| (somma);
-	\draw[->] (mvector_out) -| (Hfield);
-	\draw[->] (tpos_out) -| (Hfield);
+% 	\draw [->] (controller) -| (sumA);
+% 	\draw [->] (zattitude_out) -| (controller);
+% 	\draw [->] (parameter_out) -| (hexamodel);
+% 	\draw [->] (obstacle) -| (sumB);
+% 	\draw [->] (intersection) |- (searching);
+% 	\draw [->] (intersection) |- (obstacle);
 
-\end{tikzpicture}
+% \end{tikzpicture}
 
-\salta
+% \salta
 
-\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
-	\inputpin{stato}{$\mathbf{x}$}{}
-	\coordinate [right=of stato_out] (intersectionA);
-	\node [block, right=of intersectionA] (Hfield) {$\mathbf{H}$ sensor};
-	\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
-	\fromworkspace{tpos}{\scriptsize{Transmitter position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
-	\coordinate [right=of Hfield] (intersectionB);
-	\node [block, right=of intersectionB] (direction){$\begin{array}{l} |\mathbf{H}| \\ \cos(\theta) \\ \sin(\theta) \end{array}$};
-	\node [block, right=of direction] (filtering) {$\dfrac{\alpha_1 s + 1}{\beta_1 s^2 + \beta_2 s +1}$};
-	\node [block,right=of filtering,text width=2cm,align=center] (velocity) {Exploration direction};
-	\outputpin{velout}{$\mathbf{v}$}{right=of velocity}
-	\node [block,below=of filtering,fill=gray!40,text width=3cm,align=center, minimum height=2cm] (emulation) {Emulation ${(\mathbf{H} - \hat{\mathbf{H}})^2 = \mathbf{0}}$};
-	\coordinate [at=(emulation.east), yshift=15] (emulation_out1);
-	\coordinate [at=(emulation.east), yshift=-15] (emulation_out2);
-	\coordinate [at=(emulation.west), yshift=15] (emulation_in1);
-	\coordinate [at=(emulation.west), yshift=-15] (emulation_in2);
+% \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
+% 	\inputpin{stato}{$\mathbf{x}$}{}
+% 	\draw [at=(stato), xshift=50, fill=black] ++(0,0) node(muxin){} -- ++(0,2cm) -- ++(1mm,0) -- node[pos=0.2](posizione){} node[pos=0.4](velocita){} node[pos=0.6](angolo){} node[pos=0.8](velrotazione){} ++(0,-4cm) -- ++(-1mm,0) -- cycle;
+% 	\node [sum, at=(posizione), xshift=50] (sumA) {$+$};
+% 	\node [sum, at=(angolo), xshift=100] (sumB) {$+$};
+% 	\draw [at=(stato), xshift=200+1mm, fill=black] ++(0,0) node(muxout){} -- ++(0,2cm) -- ++(-1mm,0) -- node[pos=0.2](posizioneB){} node[pos=0.4](velocitaB){} node[pos=0.6](angoloB){} node[pos=0.8](velrotazioneB){} ++(0,-4cm) -- ++(1mm,0) -- cycle;
+% 	\node [gain,at=(stato.west), xshift=255, regular polygon rotate=-90] (gain) {$K$};
+% 	\outputpin{controllo}{$\mathbf{u}$}{at=(stato.west), xshift=315};
 
-	\toworkspace{posopt}{Optimized $\mathbf{p}_T$}{right=of emulation_out1}
-	\toworkspace{mopt}{Optimized $\hat{\mathbf{m}}$}{right=of emulation_out2}
-	\fromworkspace{paramV}{\scriptsize{Parameters}}{at=(velocity),xshift=-45,yshift=30}
+% 	\inputpin{refer}{$\mathbf{x}_f$}{at=(stato.center), yshift=-80}
+% 	\inputpin{attitz}{$\psi_f$}{at=(stato.center), yshift=-110}
 
-	\draw [->] (mvector_out) -| (Hfield);
-	\draw [->] (tpos_out) -| (Hfield);
-	\draw [->] (stato_out) -- (Hfield);
-	\draw [->] (Hfield) -- (direction);
-	\draw [->] (direction) -- (filtering);
-	\draw [->] (filtering) -- (velocity);
-	\draw [->] (velocity) -- (velout_in);
-	\draw [->] (intersectionA) |- (emulation_in2);
-	\draw [->] (intersectionB) |- (emulation_in1);
-	\draw [->] (emulation_out1) -- (posopt_in);
-	\draw [->] (emulation_out2) -- (mopt_in);
-	\draw [->] (paramV_out) -| (velocity);
-\end{tikzpicture}
+% 	\draw [->] (stato_out) -- (muxin.center);
+% 	\draw [->] (posizione.west) -- node[text width=1.5cm,align=left,pos=0.60]{\scriptsize{Position}} (sumA.west);
+% 	\draw [->] (sumA.east) -- (posizioneB.west);
+% 	\draw [->] (velocita.west) -- node[text width=1.5cm,align=left,pos=0.175]{\scriptsize{Velocity}} (velocitaB.west);
+% 	\draw [->] (angolo.west) -- node[text width=1.5cm,align=left,pos=0.275]{\scriptsize{Attitude}} (sumB.west);
+% 	\draw [->] (sumB.east) -- (angoloB.west);
+% 	\draw [->] (velrotazione.west) -- node[text width=1.5cm,align=left,pos=0.175]{\scriptsize{Ang.ratio}} (velrotazioneB.west);
+% 	\draw [->] (muxout.center) -- (gain);
+% 	\draw [->] (gain) -- (controllo_in);
 
-\salta
+% 	\draw [->,draw=white,line width=2] (refer_out) -| (sumA.south);
+% 	\draw [->,draw=white,line width=2] (attitz_out) -| (sumB.south);
+% 	\draw [->] (refer_out) -| node[right,at end]{$-$} (sumA.south);
+% 	\draw [->] (attitz_out) -| node[right,at end]{$-$} (sumB.south);
 
-\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
-	\inputpin{stato}{$\mathbf{x}$}{}
-	\coordinate [right=of stato_out] (intersectionA);
-	\node [block, right=of intersectionA,fill=gray!40] (range_finder) {Range Finder Model ${d_i}$};
-	\fromworkspace{punti}{\scriptsize{${\Psi = [\mathbf{x}_i:i=1..M]}$}}{at=(range_finder),xshift=-60,yshift=30,text width=2cm}
-	\fromworkspace{parametri}{\scriptsize{$[h,\,\rho]$}}{at=(range_finder),xshift=-60,yshift=50,text width=2cm}
-	\node [block, below=of range_finder] (rotmat) {${\mathcal{R}^T(\phi,\theta,\psi)}$};
-	\node [block, right=of range_finder] (velocita) {${\mathbf{v}_b = \sum\limits_{i=1}^{6} v(d_i) \hat{\mathbf{u}}_i}$};
-	\node [sum, right=of velocita] (prod) {$\times$};
-	\outputpin{velout}{$\mathbf{v}$}{right=of prod}
-	\fromworkspace{paramV}{\scriptsize{$[p_1,\,p_2,\,p_3]$}}{at=(velocita),xshift=-45,yshift=30}
+% \end{tikzpicture}
 
-	\draw [->] (stato_out) -- (range_finder);
-	\draw [->] (range_finder) -- (velocita);
-	\draw [->] (velocita) -- (prod);
-	\draw [->] (prod) -- (velout_in);
-	\draw [->] (intersectionA) |- (rotmat);
-	\draw [->] (rotmat) -| (prod);
-	\draw [->] (punti_out) -| (range_finder);
-	\draw [->] (parametri_out) -| (range_finder);
-	\draw [->] (paramV_out) -| (velocita);
+% \salta
 
-\end{tikzpicture}
+% \begin{tikzpicture}[auto,node distance=10mm and 10mm, >=latex]
+	
+% 	\inputpin{stato}{$\mathbf{x}$}{}
+% 	\node [block, right=of stato_out,fill=gray!40] (Hfield) {$\mathbf{H}\left( \mathbf{x}, \mathbf{p}_T, \hat{\mathbf{m}} \right)$};
+% 	\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
+% 	\fromworkspace{tpos}{\scriptsize{Transmitter position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
+
+% 	\coordinate [right=of Hfield] (intersection);
+% 	\node [block, below=of intersection,text width=1cm, align=center] (absolute) {$|\mathbf{H}|$};
+% 	\node [sum, below=of absolute] (prod) {$\times$};
+% 	\node [block, left=of prod] (noise) {$\mathcal{N}(\mathbf{0},\Sigma)$};
+% 	\node [gain, right=of prod, regular polygon rotate=-90, text width=0.3cm] (gain) {\scriptsize{SNR}};
+% 	\node [sum, at=(intersection), xshift=100] (somma) {$+$};
+% 	\outputpin{hvalue}{$\mathbf{H}$}{right=of somma}
+
+% 	\draw[->] (stato_out) -- (Hfield);
+% 	\draw[->] (Hfield) -- (somma);
+% 	\draw[->] (somma) -- (hvalue_in);
+% 	\draw[->] (intersection) -- (absolute);
+% 	\draw[->] (absolute) -- (prod);
+% 	\draw[->] (noise) -- (prod);
+% 	\draw[->] (prod) -- (gain);
+% 	\draw[->] (gain) -| (somma);
+% 	\draw[->] (mvector_out) -| (Hfield);
+% 	\draw[->] (tpos_out) -| (Hfield);
+
+% \end{tikzpicture}
+
+% \salta
+
+% \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
+% 	\inputpin{stato}{$\mathbf{x}$}{}
+% 	\coordinate [right=of stato_out] (intersectionA);
+% 	\node [block, right=of intersectionA] (Hfield) {$\mathbf{H}$ sensor};
+% 	\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
+% 	\fromworkspace{tpos}{\scriptsize{Transmitter position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
+% 	\coordinate [right=of Hfield] (intersectionB);
+% 	\node [block, right=of intersectionB] (direction){$\begin{array}{l} |\mathbf{H}| \\ \cos(\theta) \\ \sin(\theta) \end{array}$};
+% 	\node [block, right=of direction] (filtering) {$\dfrac{\alpha_1 s + 1}{\beta_1 s^2 + \beta_2 s +1}$};
+% 	\node [block,right=of filtering,text width=2cm,align=center] (velocity) {Exploration direction};
+% 	\outputpin{velout}{$\mathbf{v}$}{right=of velocity}
+% 	\node [block,below=of filtering,fill=gray!40,text width=3cm,align=center, minimum height=2cm] (emulation) {Emulation ${(\mathbf{H} - \hat{\mathbf{H}})^2 = \mathbf{0}}$};
+% 	\coordinate [at=(emulation.east), yshift=15] (emulation_out1);
+% 	\coordinate [at=(emulation.east), yshift=-15] (emulation_out2);
+% 	\coordinate [at=(emulation.west), yshift=15] (emulation_in1);
+% 	\coordinate [at=(emulation.west), yshift=-15] (emulation_in2);
+
+% 	\toworkspace{posopt}{Optimized $\mathbf{p}_T$}{right=of emulation_out1}
+% 	\toworkspace{mopt}{Optimized $\hat{\mathbf{m}}$}{right=of emulation_out2}
+% 	\fromworkspace{paramV}{\scriptsize{Parameters}}{at=(velocity),xshift=-45,yshift=30}
+
+% 	\draw [->] (mvector_out) -| (Hfield);
+% 	\draw [->] (tpos_out) -| (Hfield);
+% 	\draw [->] (stato_out) -- (Hfield);
+% 	\draw [->] (Hfield) -- (direction);
+% 	\draw [->] (direction) -- (filtering);
+% 	\draw [->] (filtering) -- (velocity);
+% 	\draw [->] (velocity) -- (velout_in);
+% 	\draw [->] (intersectionA) |- (emulation_in2);
+% 	\draw [->] (intersectionB) |- (emulation_in1);
+% 	\draw [->] (emulation_out1) -- (posopt_in);
+% 	\draw [->] (emulation_out2) -- (mopt_in);
+% 	\draw [->] (paramV_out) -| (velocity);
+% \end{tikzpicture}
+
+% \salta
+
+% \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
+% 	\inputpin{stato}{$\mathbf{x}$}{}
+% 	\coordinate [right=of stato_out] (intersectionA);
+% 	\node [block, right=of intersectionA,fill=gray!40] (range_finder) {Range Finder Model ${d_i}$};
+% 	\fromworkspace{punti}{\scriptsize{${\Psi = [\mathbf{x}_i:i=1..M]}$}}{at=(range_finder),xshift=-60,yshift=30,text width=2cm}
+% 	\fromworkspace{parametri}{\scriptsize{$[h,\,\rho]$}}{at=(range_finder),xshift=-60,yshift=50,text width=2cm}
+% 	\node [block, below=of range_finder] (rotmat) {${\mathcal{R}^T(\phi,\theta,\psi)}$};
+% 	\node [block, right=of range_finder] (velocita) {${\mathbf{v}_b = \sum\limits_{i=1}^{6} v(d_i) \hat{\mathbf{u}}_i}$};
+% 	\node [sum, right=of velocita] (prod) {$\times$};
+% 	\outputpin{velout}{$\mathbf{v}$}{right=of prod}
+% 	\fromworkspace{paramV}{\scriptsize{$[p_1,\,p_2,\,p_3]$}}{at=(velocita),xshift=-45,yshift=30}
+
+% 	\draw [->] (stato_out) -- (range_finder);
+% 	\draw [->] (range_finder) -- (velocita);
+% 	\draw [->] (velocita) -- (prod);
+% 	\draw [->] (prod) -- (velout_in);
+% 	\draw [->] (intersectionA) |- (rotmat);
+% 	\draw [->] (rotmat) -| (prod);
+% 	\draw [->] (punti_out) -| (range_finder);
+% 	\draw [->] (parametri_out) -| (range_finder);
+% 	\draw [->] (paramV_out) -| (velocita);
+
+% \end{tikzpicture}
 
 %\begin{tikzpicture}[auto,>=latex']
 %	\coordinate (center);
