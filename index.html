@@ -1,0 +1,83 @@
+<html language="en">
+
+	<head>
+		<meta charset="utf-8">
+    	  	
+    	<title>Matteo Ragni - Master Thesis</title>
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		
+		<style>
+			#embedder {
+				padding-top:60px;
+				height: 100%;
+				width: 100%;
+			}
+			body {
+				background-color: #333;
+			}
+
+			.issue {
+				margin-top: 10px;
+				line-height: 20px;
+			}
+
+			.issue:hover {
+				background-color:#ff032a;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Abstract</h4>
+				</div>
+					<div class="modal-body">
+					<p>The aim of the thesis is to inspect and derive a model for an autonomous VTOL that could help Mountain Rescue in finding the position of buried person under avalanche.</p>
+
+					<p>The first part of the thesis will inspect the state of the art in buried searching, ARTVA transmitter and searching algorithms. Also we will show some of the requirements and technical specifications for a searching drone.</p>
+
+					<p>In the second chapter we will expose the problem of searching the position of a transmitting source in near-field with ferromagnetic antennas. The chapter will be closed with a design for a digital ARTVA receiver</p>
+
+					<p>In the third chapter, a new kind of searching algorithm will be defined, including routines of obstacle-avoidance and altitude-keeping.</p>
+
+					<p>In the fourth chapter, a model of an hexa-copter and its stabilization controls are derived and simulated in MATLAB/Simulink. The loop is closed on some of the searching algorithm defined in the previous chapter. Results of searching routine are shown and critically examined.</p>
+
+					<p>The last chapter will take into account all the results to derive some conclusions about the stated problem, with some suggestions for further improvements.</p>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  			<div class="container">
+  				<a class="navbar-brand" href="https://github.com/MatteoRagni/MasterThesis">Matteo Ragni - Master Thesis</a> 
+    			<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" data-toggle="modal" data-target="#myModal">Abstract</a></li>
+					<li><a href="https://github.com/MatteoRagni/MasterThesis/blob/master/main.pdf?raw=true" class="btn btn">Download</a></li>
+					<li><a href="mailto:matteo.ragni.it@gmail.com?subject=%5BMaster%20Thesis%5D">Contact</a></li>
+					<li><a href="https://github.com/MatteoRagni/MasterThesis/issues/new"><span class="label label-danger issue">New Issue</span></a></li>
+				</ul>
+  			</div>	
+  		</nav>
+  		<div class="container">
+  			<div class="row">
+  			<embed src="https://dl.dropboxusercontent.com/u/67901134/MasterThesis.pdf" alt="pdf" type="application/pdf" id="embedder">
+  			</div>
+  		</div>
+	</body>
+</html>
