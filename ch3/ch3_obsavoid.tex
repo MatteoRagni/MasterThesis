@@ -64,7 +64,30 @@ v(d_i) = p_3 \braces{\dfrac{1}{1+e^{4 \braces{\frac{p_1}{2}-d_i}\frac{p_2}{p_3}}
 \end{equation}
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.4]{ch3/img/speed_profile.pdf}
+	%\includegraphics[scale=0.4]{ch3/img/speed_profile.pdf}
+	\pgfmathdeclarefunction{speed}{3}{%
+		\pgfmathparse{#3 * ( (1)/(1+exp(4*((#1/2)-x)*#2/#3)) - 1 )}%
+	}
+	\begin{tikzpicture}[>=latex]
+		\begin{axis}[
+			domain=0:11.5, samples=100,
+			enlargelimits=false,
+			xmin=0, xmax=12, ymin=-6, ymax=1,
+			height=6cm, width=6cm,
+			axis lines=middle,
+			xlabel=\scriptsize{$d_i$}, ylabel=\scriptsize{$v(d_i)$},
+			every axis y label/.style={at=(current axis.above origin),anchor=south },
+			every axis x label/.style={at=(current axis.right of origin),anchor=west},
+			xtick=\empty, ytick=\empty,
+			extra y ticks={-4.7}, extra y tick labels={$p_3$},
+			extra x ticks={10}, extra x tick labels={$p_1$}
+		]
+			\addplot[black,line width=1.5]{speed(7,1,5)};
+		\end{axis}
+		
+		\draw (0.75,1.3) -- ++(240:1) -- ++(60:5) -- ++(240:0.75) -- ++(0.75,0) --++(-0.15,0) coordinate(arco);
+		\draw[<->] (arco) arc(0:60:0.6) node [xshift=15] {$p_2$};	
+	\end{tikzpicture}
 	\caption{Velocity profile}
 \end{marginfigure}
 from which we obtain a continuous function were the parameters:
@@ -86,7 +109,31 @@ In figure \ref{fig:obstavoidexample} an example of how the algorithm works is sh
 \myparagraph{Model of range finder}
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.45]{ch3/img/lobe_dimensions.pdf}
+	%\includegraphics[scale=0.45]{ch3/img/lobe_dimensions.pdf}
+	\begin{tikzpicture}[>=latex']
+		\draw[dashed,gray] (0,0) .. controls (6cm,3cm) ..  (8.5cm,3.5cm) to[bend left,out=45] (11cm,0cm) to [bend left,in=125] (8.5cm,-3.5cm) .. controls (6cm,-3cm) .. cycle;
+	   \draw [fill=gray!40,opacity=40](5cm,0cm) ellipse (0.75cm and 2.05cm);
+		\draw (8.5cm,0cm) ellipse (1.25cm and 3.5cm);
+		\draw (8.2cm,-3.4cm) -- (0,0) -- (8.2cm,3.4cm);
+		\draw[dashed] (0,0) -- (9cm,0);
+
+		\node [circle,inner sep=1pt,fill=black] at (5cm,4cm) {};
+		\draw [<->] (5cm,0cm) -- node[pos=0.9,right]{$\sqrt{d_i^2-u^2}$} (5cm,3.9cm);
+		\draw [->,line width=1.5] (0cm,0cm) -- (2.5cm,0cm);
+		\draw [->,line width=1.5] (0cm,0cm) -- node[above,rotate=38.53]{$d_i = | \mathbf{x}_i^{\Psi} - \mathbf{x}_d|$} (4.9cm,3.9cm);
+		\draw [->] (5cm,0cm) -- ++(-70:1.4) node[anchor=west,xshift=3,yshift=-3] {$\dfrac{\rho}{h}u$};
+		\node at(4cm,4.3cm) {$(\mathbf{x}_i^{\Psi} - \mathbf{x}_d)$};
+		\node at(2.5cm,-0.35cm) {$\hat{\mathbf{u}}_{i}$};
+
+		\draw [->] (8.5cm,0cm) -- ++(-70:2.5) node[anchor=west,xshift=3,yshift=-3] {$\rho$ (maximum radius)};
+
+		\draw (0cm,-0.1cm) -- (0cm,-5cm);
+		\draw (4.9cm,-2.2cm) -- (4.9cm,-4cm);
+		\draw (8.5cm,-0.1cm) -- (8.5cm,-5cm);
+		\draw [<->](0cm,-3.9cm) -- node[pos=0.5,above]{$u=(\mathbf{x}_i^{\Psi} - \mathbf{x}_d) \cdot \hat{\mathbf{u}}_i$} (4.9cm,-3.9cm);
+		\draw [<->](0cm,-4.9cm) -- node[pos=0.5,above]{$h$ (maximum range)} (8.5cm,-4.9cm);
+		\draw [<-] (9cm,3.5cm) -- ++(45:0.5cm) -- node[pos=0.5,above]{Characteristic lobe} ++(3cm,0); 
+	\end{tikzpicture}
 	\caption{Range finder algorithm}
 \end{figure}
 From the simulation point of view the effects of an obstacle are obtained through a model of the characteristic lobe of each range finder. The obstacles are implemented as sets of points, paradigm that brings a little advantage of inserting some noise due to the discontinuities between points, similar to real range finder noise, due to analog to digital conversion.

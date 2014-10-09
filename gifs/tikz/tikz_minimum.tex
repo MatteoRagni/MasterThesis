@@ -1,11 +1,11 @@
 \documentclass{tufte-handout}
 \usepackage{tikz}
-%\usepackage{}
+\usepackage{tikz-3dplot}
 \usepackage{mathtools}
-
+\usepackage{pgfplots}
 \def\salta{\vspace{2cm}}
 
-\usetikzlibrary{shapes,arrows,matrix,fit,positioning,decorations.pathreplacing}
+\usetikzlibrary{shapes,arrows,matrix,fit,positioning,decorations.pathreplacing,3d,calc}
 % Diagrams styles
 \tikzstyle{block} = [draw=black, rectangle, minimum height=2.5em, minimum width=2em]
 \tikzstyle{sum} = [draw=black, circle]
@@ -36,46 +36,326 @@
 	\draw (#1.north west) -- (#1_in) -- (#1.south west);%
 }
 
+\newcommand{\riferimento}{%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (2,0,0) node[anchor=east]{$x’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,2,0) node[anchor=north]{$y’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,0,2) node[anchor=west]{$z’$};%
+}
+\newcommand{\ground}{%
+\draw[color=red,thick,->] (0,0,0) -- (2,0,0) node[anchor=east]{$x’$};%
+\draw[color=red,thick,->] (0,0,0) -- (0,2,0) node[anchor=north]{$y’$};%
+\draw[color=red,thick,->] (0,0,0) -- (0,0,2) node[anchor=west]{$z’$};%
+}
+
 \begin{document}
 
-proviamo un pochino di testo \tikz[baseline=-0.1ex]{ \node (var) {$x_{p}$}; \node [at=(var.north), xshift=-2, yshift=-1, circle, draw, fill=black, inner sep=0.25pt] {}; } e concludiamo con altro testo
-
-\begin{tikzpicture}[>=latex']
+\pgfmathdeclarefunction{speed}{3}{%
+	\pgfmathparse{#3 * ( (1)/(1+exp(4*((#1/2)-x)*#2/#3)) - 1 )}%
+}
+\begin{tikzpicture}[>=latex]
+	\begin{axis}[
+		domain=0:11.5, samples=100,
+		enlargelimits=false,
+		xmin=0, xmax=12, ymin=-6, ymax=1,
+		height=6cm, width=6cm,
+		axis lines=middle,
+		xlabel=\scriptsize{$d_i$}, ylabel=\scriptsize{$v(d_i)$},
+		every axis y label/.style={at=(current axis.above origin),anchor=south },
+		every axis x label/.style={at=(current axis.right of origin),anchor=west},
+		xtick=\empty, ytick=\empty,
+		extra y ticks={-4.7}, extra y tick labels={$p_3$},
+		extra x ticks={10}, extra x tick labels={$p_1$}
+	]
+		\addplot[black,line width=1.5]{speed(7,1,5)};
+	\end{axis}
 	
-	\begin{scope}[xslant=1]
-		\draw [ystep=1.5,xstep=3,thin,gray] (0,0) grid (3*3,1.5*3);
-		\foreach \x in {1,...,3}
-		{
-			\foreach \y in {1,...,3} 
-			{
-				\node at (\x*3-1.5,\y*1.5-0.75) [circle,fill=black,inner sep=1pt] (nodo_\x_\y) {};
-				\node [ellipse,draw, minimum width=60, minimum height=30,rotate=0,gray,dashed,xslant=1] at (nodo_\x_\y) {};
-			}
-		}
+	\draw (0.75,1.3) -- ++(240:1) -- ++(60:5) -- ++(240:0.75) -- ++(0.75,0) --++(-0.15,0) coordinate(arco);
+	\draw[<->] (arco) arc(0:60:0.6) node [xshift=15] {$p_2$};
 
-		\draw [->] (nodo_1_3) -- (nodo_2_3);
-		\draw [->] (nodo_2_3) -- (nodo_3_3);
-		\draw [->] (nodo_3_3) -- (nodo_3_2);
-		\draw [->] (nodo_3_2) -- (nodo_2_2);
-		\draw [->] (nodo_2_2) -- (nodo_1_2);
-		\draw [->] (nodo_1_2) -- (nodo_1_1);
-		\draw [->] (nodo_1_1) -- (nodo_2_1);
-		\draw [->] (nodo_2_1) -- (nodo_3_1);
-	\end{scope}
-	\node (hexacopter) [at=(nodo_2_3), yshift=50, xshift=10] {\includegraphics[scale=0.15]{../../img/hexacopterB.pdf}};
-	\coordinate [at=(hexacopter),yshift=-10] (hexapin);
-	\draw (hexapin) -- node[pos=1,ellipse,draw=black, minimum width=120, minimum height=70,rotate=0,dashed,xslant=1,fill=gray,opacity=0.4] {} ++(0,-1.5) coordinate(circlecenter);
-	\node at (circlecenter) [circle,fill=black,inner sep=1pt] {};
- 	\node [at=(nodo_1_3), yshift=7.5,xshift=7.5] {$\mathbf{p}_0$};
-	\node [at=(nodo_3_1), yshift=7.5,xshift=7.5] {$\mathbf{p}_n$};
-	\coordinate [at=(nodo_1_3),xshift=-60] (direction1); \coordinate [at=(nodo_1_1),xshift=-60] (direction2);
-	\draw [->,line width=2] (direction1) -- node[pos=0.5,above,rotate=45]{Plane direction} (direction2);
-	\coordinate [at=(circlecenter),shift=(150:1.3)] (labelA);
-	\draw [<-](labelA) -- ++(150:1) -- ++(-2,0) node[above,pos=0.5]{\scriptsize{Receiver range}};
-
+	
 \end{tikzpicture}
 
 
+%\pgfmathdeclarefunction{gauss}{2}{%
+%  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+%}
+%\begin{tikzpicture}[>=latex']
+%\begin{axis}[ 
+%	domain=0:12, samples=100,
+%  	height=4cm, width=6cm,
+%	enlargelimits=false,
+%	axis lines=middle, xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+%every axis y label/.style={at=(current axis.above origin),anchor=south east},
+%  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+%  xtick=\empty, ytick=\empty,
+%  extra x ticks={2.25,4.5,8.25},
+%  extra x tick labels={$\mathbb{Z}_0$,$$,$\mathbb{Z}_1$},
+%  ]
+%  \addplot [fill=gray!40, draw=none, domain=0:4.5] {gauss(6.5,1.5)} \closedcycle;
+%	\addplot [fill=gray!75, draw=none, domain=4.5:12] {gauss(6.5,1.5)} \closedcycle;
+%  \addplot [black,line width=1.5] {gauss(4,1.3)};
+%  \addplot [black,line width=1.5] {gauss(6.5,1.5)};
+%
+%\end{axis}
+%\node[xshift=85,yshift=70]{$p(\mathbf{s}|H_1)$};
+%\node[xshift=27,yshift=77]{$p(\mathbf{s}|H_0)$};
+%\draw  (1.665,0) -- ++(0,3.25) node[yshift=5]{$\leftarrow\mathbf{s}\rightarrow$};
+%\draw (0.2,1)  -- node[above,pos=0.5]{$P_C$} ++(0.5,0) -- ++(-45:1.1);
+%\draw (3,0.5) -- ++(45:1.1) -- ++(0.5,0) node[above,pos=0.5]{$P_D$};
+%\end{tikzpicture} \\
+%\begin{tikzpicture}[>=latex']
+%\begin{axis}[ 
+%	domain=0:12, samples=100,
+%  	height=4cm, width=6cm,
+%	enlargelimits=false,
+%	axis lines=middle, xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+%every axis y label/.style={at=(current axis.above origin),anchor=south east},
+%  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+%  xtick=\empty, ytick=\empty,
+%  extra x ticks={2.25,4.5,8.25},
+%  extra x tick labels={$\mathbb{Z}_0$,$$,$\mathbb{Z}_1$},
+%  ]
+%  \addplot [fill=gray!40, draw=none, domain=4.5:12] {gauss(4,1.3)} \closedcycle;
+%	\addplot [fill=gray!75, draw=none, domain=0:4.5] {gauss(4,1.3)} \closedcycle;
+%  \addplot [black,line width=1.5] {gauss(4,1.3)};
+%  \addplot [black,line width=1.5] {gauss(6.5,1.5)};
+%
+%\end{axis}
+%\node[xshift=85,yshift=70]{$p(\mathbf{s}|H_1)$};
+%\node[xshift=27,yshift=77]{$p(\mathbf{s}|H_0)$};
+%\draw  (1.665,0) -- ++(0,3.25) node[yshift=5]{$\leftarrow\mathbf{s}\rightarrow$};
+%\draw (0.2,1)  -- node[above,pos=0.5]{$P_M$} ++(0.5,0) -- ++(-45:0.5);
+%\draw (2,0.5) -- ++(25:1.5) -- ++(0.5,0) node[above,pos=0.5]{$P_F$};
+%\end{tikzpicture}
+
+%\begin{tikzpicture}[>=latex']
+%	\node [rectangle,inner sep=5pt,draw,xshift=-30] (src) {Signal Source};
+%	\draw [rotate=30](-2cm,-4cm) ellipse (2.5 and 1.5) node[xshift=45]{$\mathbb{Z}_0$};
+%	\draw [rotate=30,fill=gray!40](-2.5cm,-4cm) ellipse (1.2 and 0.75)node[xshift=15]{$\mathbb{Z}_1$};
+%	\node [yshift=-190] {$\mathbb{Z}$};
+%	\coordinate (z1) at (-0.75cm,-4.75cm);
+%	\coordinate (z0) at (1.7cm,-3.2cm);
+%
+%	\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (-2cm,-3cm) .. (z1) node[pos=0.5,left]{$p(\mathbf{s}|H_1)$};
+%	\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (2cm, -1.5cm) .. (z0) node[pos=0.6,left]{$p(\mathbf{s}|H_0)$};
+%\end{tikzpicture}
+
+%\begin{tikzpicture}[>=latex']
+%	\draw[dashed,gray] (0,0) .. controls (6cm,3cm) ..  (8.5cm,3.5cm) to[bend left,out=45] (11cm,0cm) to [bend left,in=125] (8.5cm,-3.5cm) .. controls (6cm,-3cm) .. cycle;
+%
+%   \draw [fill=gray!40,opacity=40](5cm,0cm) ellipse (0.75cm and 2.05cm);
+%	\draw (8.5cm,0cm) ellipse (1.25cm and 3.5cm);
+%	\draw (8.2cm,-3.4cm) -- (0,0) -- (8.2cm,3.4cm);
+%	\draw[dashed] (0,0) -- (9cm,0);
+%
+%	\node [circle,inner sep=1pt,fill=black] at (5cm,4cm) {};
+%	\draw [<->] (5cm,0cm) -- node[pos=0.9,right]{$\sqrt{d_i^2-u^2}$} (5cm,3.9cm);
+%	\draw [->,line width=1.5] (0cm,0cm) -- (2.5cm,0cm);
+%	\draw [->,line width=1.5] (0cm,0cm) -- node[above,rotate=38.53]{$d_i = | \mathbf{x}_i^{\Psi} - \mathbf{x}_d|$} (4.9cm,3.9cm);
+%	\draw [->] (5cm,0cm) -- ++(-70:1.4) node[anchor=west,xshift=3,yshift=-3] {$\dfrac{\rho}{h}u$};
+%	\node at(4cm,4.3cm) {$(\mathbf{x}_i^{\Psi} - \mathbf{x}_d)$};
+%	\node at(2.5cm,-0.35cm) {$\hat{\mathbf{u}}_{i}$};
+%
+%	\draw [->] (8.5cm,0cm) -- ++(-70:2.5) node[anchor=west,xshift=3,yshift=-3] {$\rho$ (maximum radius)};
+%
+%	\draw (0cm,-0.1cm) -- (0cm,-5cm);
+%	\draw (4.9cm,-2.2cm) -- (4.9cm,-4cm);
+%	\draw (8.5cm,-0.1cm) -- (8.5cm,-5cm);
+%	\draw [<->](0cm,-3.9cm) -- node[pos=0.5,above]{$u=(\mathbf{x}_i^{\Psi} - \mathbf{x}_d) \cdot \hat{\mathbf{u}}_i$} (4.9cm,-3.9cm);
+%	\draw [<->](0cm,-4.9cm) -- node[pos=0.5,above]{$h$ (maximum range)} (8.5cm,-4.9cm);
+%	\draw [<-] (9cm,3.5cm) -- ++(45:0.5cm) -- node[pos=0.5,above]{Characteristic lobe} ++(3cm,0); 
+%\end{tikzpicture}
+
+%\begin{tikzpicture}[auto,>=latex]
+%%\draw[style=help lines] (-3,-3) grid (9,3);
+%\foreach \y in {1,...,9} {
+%	\draw[color=gray,dashed] (-3,0.3*\y+0.3) -- (3,0.3*\y+0.3); 
+%	\draw[color=gray,dashed] (-3,-0.3*\y) .. controls (0,-0.1*\y-1) .. (3,-0.3*\y); 
+%}
+%	\coordinate (center2) at (0,-1.5);
+%	\coordinate (center1) at (0,3-4*0.3);
+%	
+%	\draw [dashdotted] (0,3.75) -- (0,-3.75);
+%	\draw [line width=2] (0,3.25) -- (0,3.75);
+%	\draw [line width=2] (0,-3.25) -- (0,-3.75);
+%	\draw [->] (-0.75,-3.5) -- (0,-3.5);
+%	\draw [->] (-0.75,3.5) -- (0,3.5);
+%
+%
+%	\draw [fill=white] ($ (center2) + (-1.5,0.25) $) -- ++(3,0) -- ++(0,-0.5) -- ++(-3,0) -- cycle;
+%	\draw [fill=black] ($ (center1) + (-0.25,0.5) $) -- ++(0.5,0) -- ++(0,-1) -- ++(-0.5,0) -- cycle;
+%	\draw [fill=black] ($ (center2) + (-0.25,0.5) $) -- ++(0.5,0) -- ++(0,-1) -- ++(-0.5,0) -- cycle;
+%	
+%	\coordinate (rcenter1) at ($ (center1) + (5,0) $);
+%	\coordinate (rcenter2) at ($ (center2) + (5,0) $);
+%
+%	\foreach \y in {0,...,18} {
+%	\foreach \x in {1,...,5} {
+%		\node [circle,draw=gray,inner sep=0.5pt, fill=gray,at=(rcenter1.0),shift=(20*\y:\x*0.25)] {};
+%	}}
+%
+%	\foreach \y in {0,...,18} {
+%	\foreach \x in {1,...,15} {
+%		\node [circle,draw=gray,inner sep=0.5pt, fill=gray,at=(rcenter2.0),shift=(20*\y:0.00035*\x*\x*\x)] {};
+%	}}
+%
+%	\draw[fill=white] (rcenter2) circle (0.25);
+%	\draw [line width=1.3](rcenter2) circle (0.5);
+%	\draw [line width=1.3](rcenter1) circle (0.5);
+%
+%	\draw [<-] ($ (rcenter2) + (50:0.25) $) -- ++(50:1.3) -- ++(1,0) node[above,pos=0.6]{$A_r$};
+%	\draw [<-] ($ (rcenter1) + (50:0.5) $) -- ++(50:1) -- ++(1,0) node[above,pos=0.6]{$A$};
+%
+%	\draw [<-] ($ (center1) + (65:0.65) $) -- ++(50:1) -- ++(1,0) node[above,pos=0.6]{Coil};
+%	\draw [<-] ($ (center2) + (1,0) + (65:0.35) $) -- ++(50:1.25) -- ++(2,0) node[above,pos=0.6]{Ferrite rod};
+%	
+%\end{tikzpicture}
+
+%\tdplotsetmaincoords{70}{110}
+%\begin{tikzpicture}[auto,>=latex,tdplot_main_coords]
+%	\coordinate (origin) at (0,0,0);
+%	\tdplotsetrotatedcoords{-100}{-70}{0}
+%	\tdplotsetrotatedcoordsorigin{(origin)}
+%
+%	\foreach \x in {1,...,6}{
+%		\foreach \z in {1,...,6}{
+%			\draw[dotted] (\x-3,-2,\z-3) -- (\x-3,0,\z-3);
+%		}
+%	}
+%	\draw[] (0,-1.8,0) -- (0,0,0);
+%	\tdplotdrawarc[tdplot_rotated_coords,color=white,fill=white,opacity=0.75]{(0,0,0)}{2.5}{0}{360}{}{}
+%	\tdplotdrawarc[tdplot_rotated_coords,|-|]{(0,0,0)}{2.5}{-170}{170}{yshift=-138,xshift=47}{$V_{\mathrm{ind}}$}
+%	\foreach \x in {1,...,6}{
+%		\foreach \z in {1,...,6}{
+%			\draw[dotted] (\x-3,0,\z-3) -- (\x-3,2,\z-3);
+%		}
+%	}
+%	\draw[] (0,0,0) -- (0,1.8,0) node[yshift=22]{$\hat{\mathbf{e}}_a$};	
+%	\draw [tdplot_rotated_coords,->] (0,0,0) -- (0,0,2);
+%	\tdplotdrawarc[tdplot_rotated_coords,->,line width=1.5]{(0,0,0)}{2.5}{-60}{-40}{yshift=10}{$d\mathbf{l}$}
+%	\draw[tdplot_rotated_coords,->,line width=1.5] (-60:2.5) -- (-60:3.5) node[xshift=5]{$\mathbf{E}$};
+%
+%	\tdplotsetrotatedcoords{0}{-90}{-18}
+%	\tdplotsetrotatedcoordsorigin{(origin)}
+%	\tdplotdrawarc[tdplot_rotated_coords,<->]{(0,0,0)}{1.3}{90}{108}{yshift=-12}{$\theta$}
+%	
+%	\node at (2,2,5) {$\Phi_B$};
+%\end{tikzpicture}
+
+
+%\begin{tikzpicture}[>=latex]
+%	\draw [->] (0,0) -- node[below,pos=0.5]{\scriptsize{Time}} (3.5,0) node[anchor=west]{\scriptsize{$x$}};
+%	\draw [->] (0,0) -- node[above,pos=0.75,rotate=90]{\scriptsize{Intelligence}} node[left,pos=0.1,yshift=-8,xshift=-1.5]{0} node[left,pos=0.4,yshift=3,xshift=-1.5]{1} (0,3.5) node[anchor=south]{\scriptsize{$y$}};
+%	\draw [line width=1.25] (0.1,0.1) -- ++(0.4,0) -- ++(0,1.5) -- ++(1,0) -- ++(0,-1.5) -- ++(1.3,0) -- ++(0,1.5) -- ++(0.5,0);
+%
+%	\coordinate (start) at (0.5,1.7);
+%	\coordinate (mid) at (1.5,1.7);
+%	\coordinate (stop) at (2.8,1.7);
+%	\coordinate (pA) at (0.5,1.7+1.3);
+%	\coordinate (pB) at (2.8,1.7+1.3);
+%	\coordinate (pC) at (0.5,1.7+0.5);
+%	\coordinate (pD) at (1.5,1.7+0.5);
+%	\coordinate (pE) at (2.8,1.7+0.5);
+%
+%	\draw (start) -- (pA) -- ++(0,0.1);
+%	\draw (stop) -- (pB) -- ++(0,0.1);
+%	\draw (mid) -- (pD) -- ++(0,0.1);
+%
+%	\draw [<->] (pC) -- (pD) node[above, pos=0.5]{\scriptsize{$\geq70ms$}};	
+%	\draw [<->] (pD) -- (pE) node[above, pos=0.5]{\scriptsize{$\geq400ms$}};	
+%	\draw [<->] (pA) -- (pB) node[above, pos=0.5]{\scriptsize{$1000\pm300ms$}};	
+%\end{tikzpicture}
+
+%\tdplotsetmaincoords{70}{110}
+%\begin{tikzpicture}[auto,>=latex,tdplot_main_coords]
+%	\coordinate (origin) at (0,0,0);
+%	\tdplotsetrotatedcoords{-45}{-90}{0}
+%	\tdplotsetrotatedcoordsorigin{(origin)}
+%	%\riferimento
+%	% Axis
+%	\draw [->] (origin) -- (3,0,0) node[anchor=north east]{\scriptsize{$x$}}; \draw (origin) -- (-0.2,0,0);
+%	\draw [->] (origin) -- (0,2.5,0) node[anchor=west]{\scriptsize{$y$}}; \draw (origin) -- (0,-0.2,0);
+%	\draw [->] (origin) -- (0,0,2.5) node[anchor=south]{\scriptsize{$z$}}; \draw (origin) -- (0,0,-0.2);
+%
+%	\draw[->,line width=2] (0,0,-0.1) -- node[left]{$\hat{\mathbf{m}}$} (0,0,1.5);
+%	\node [circle,draw,inner sep=1pt, fill=black] at (3,3,3) (rpoint) {};
+%	\draw [->] (origin) -- node[pos=0.8,above]{$\mathbf{r}$} (rpoint);
+%	\draw [dashed] (origin) -- (3,3,0) -- (3,3,3);
+%	\draw[tdplot_rotated_coords,<->] (2,0) arc (0:55:2) node[pos=0.5]{$\theta$};
+%	\draw [<->] (2,0,0) arc (0:45:2) node[pos=0.5,below]{$\phi$};
+%\end{tikzpicture}
+
+%\tdplotsetmaincoords{60}{130}
+%\begin{tikzpicture}[auto,>=latex,tdplot_main_coords]
+%
+%
+%	\coordinate (origin) at (0,0,0);
+%	
+%	% Axis
+%	\draw [->] (origin) -- (4,0,0) node[anchor=north east]{$x$}; \draw (origin) -- (-0.2,0,0);
+%	\draw [->] (origin) -- (0,4,0) node[anchor=north west]{$y$}; \draw (origin) -- (0,-0.2,0);
+%	\draw [->] (origin) -- (0,0,2) node[anchor=south]{$z$}; \draw (origin) -- (0,0,-0.2);
+%
+%	\tdplotdrawarc[->,line width=3]{(0,0,0)}{2.7}{90}{360+80}{}{}
+%	\tdplotdrawarc[line width=6]{(0,0,0)}{2.7}{25}{35}{}{}
+%	\tdplotdrawarc[<->]{(0,0,0)}{3.5}{0}{30}{anchor=north west,xshift=-10}{$\varphi'$}
+%	\coordinate (drpoint) at (30:2.7);
+%	\node at (-2.3,2.3,0) {$\mathbf{J}$};
+%	\node [at=(drpoint),xshift=5,yshift=-10] {$d\mathbf{r}$};
+%
+%	\node [circle,draw,inner sep=1pt, fill=black] at (7.5,0,6) (rpoint) {};
+%	\draw[->] (origin) -- node[pos=0.8,above]{$\mathbf{r}$} (rpoint);
+%	\draw [dashed] (rpoint) -- (7.5,0,0) -- ++(-2.5,0,0);
+%	\coordinate [at=(drpoint),yshift=3] (drpoint2);
+%	\draw [<->] (rpoint) -- node[pos=0.425,below,xshift=-22]{$\kappa=|\mathbf{r}-\mathbf{r}'|$} (drpoint2);
+%	\draw [->] (origin) -- node[right]{$\mathbf{r}'$} (drpoint2);
+%
+%	\tdplotsetrotatedcoords{90}{90}{180}
+%	\tdplotsetrotatedcoordsorigin{(origin)}
+%	\draw[tdplot_rotated_coords,<->] (0.5,0) arc (0:52.5:0.5) node[left,xshift=5,yshift=10]{$\theta$};
+%
+%	\tdplotsetrotatedcoords{29.5+270}{-23.75}{0}
+%	\tdplotsetrotatedcoordsorigin{(origin)}
+%%	\riferimento
+%	\draw[tdplot_rotated_coords,<->] (0.75,0) arc (0:90:0.75) node[left,xshift=-15,yshift=10]{$\psi$};
+%	
+%\end{tikzpicture}
+%\tdplotsetmaincoords{0}{0}
+
+%\begin{tikzpicture}[>=latex']
+%	
+%	\begin{scope}[xslant=1]
+%		\draw [ystep=1.5,xstep=3,thin,gray] (0,0) grid (3*3,1.5*3);
+%		\foreach \x in {1,...,3}
+%		{
+%			\foreach \y in {1,...,3} 
+%			{
+%				\node at (\x*3-1.5,\y*1.5-0.75) [circle,fill=black,inner sep=1pt] (nodo_\x_\y) {};
+%				\node [ellipse,draw, minimum width=60, minimum height=30,rotate=0,gray,dashed,xslant=1] at (nodo_\x_\y) {};
+%			}
+%		}
+%
+%		\draw [->] (nodo_1_3) -- (nodo_2_3);
+%		\draw [->] (nodo_2_3) -- (nodo_3_3);
+%		\draw [->] (nodo_3_3) -- (nodo_3_2);
+%		\draw [->] (nodo_3_2) -- (nodo_2_2);
+%		\draw [->] (nodo_2_2) -- (nodo_1_2);
+%		\draw [->] (nodo_1_2) -- (nodo_1_1);
+%		\draw [->] (nodo_1_1) -- (nodo_2_1);
+%		\draw [->] (nodo_2_1) -- (nodo_3_1);
+%	\end{scope}
+%	\node (hexacopter) [at=(nodo_2_3), yshift=50, xshift=10] {\includegraphics[scale=0.15]{../../img/hexacopterB.pdf}};
+%	\coordinate [at=(hexacopter),yshift=-10] (hexapin);
+%	\draw (hexapin) -- node[pos=1,ellipse,draw=black, minimum width=120, minimum height=70,rotate=0,dashed,xslant=1,fill=gray,opacity=0.4] {} ++(0,-1.5) coordinate(circlecenter);
+%	\node at (circlecenter) [circle,fill=black,inner sep=1pt] {};
+% 	\node [at=(nodo_1_3), yshift=7.5,xshift=7.5] {$\mathbf{p}_0$};
+%	\node [at=(nodo_3_1), yshift=7.5,xshift=7.5] {$\mathbf{p}_n$};
+%	\coordinate [at=(nodo_1_3),xshift=-60] (direction1); \coordinate [at=(nodo_1_1),xshift=-60] (direction2);
+%	\draw [->,line width=2] (direction1) -- node[pos=0.5,above,rotate=45]{Plane direction} (direction2);
+%	\coordinate [at=(circlecenter),shift=(150:1.3)] (labelA);
+%	\draw [<-](labelA) -- ++(150:1) -- ++(-2,0) node[above,pos=0.5]{\scriptsize{Receiver range}};
+%
+%\end{tikzpicture}
 
 % \begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex']
 

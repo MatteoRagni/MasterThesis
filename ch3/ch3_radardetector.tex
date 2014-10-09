@@ -34,7 +34,18 @@ We have two searching status for our agent. In one searching status, the VTOL tr
 What we are trying to define is a strategy that is able to detect a target signal from a background noise. This is not new to signal theory, if we look at radar research work.
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.5]{ch3/img/signalsources.pdf}
+	%\includegraphics[scale=0.5]{ch3/img/signalsources.pdf}
+	\begin{tikzpicture}[>=latex']
+		\node [rectangle,inner sep=5pt,draw,xshift=-30] (src) {Signal Source};
+		\draw [rotate=30](-2cm,-4cm) ellipse (2.5 and 1.5) node[xshift=45]{$\mathbb{Z}_0$};
+		\draw [rotate=30,fill=gray!40](-2.5cm,-4cm) ellipse (1.2 and 0.75)node[xshift=15]{$\mathbb{Z}_1$};
+		\node [yshift=-190] {$\mathbb{Z}$};
+		\coordinate (z1) at (-0.75cm,-4.75cm);
+		\coordinate (z0) at (1.7cm,-3.2cm);
+
+		\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (-2cm,-3cm) .. (z1) node[pos=0.5,left]{$p(\mathbf{s}|H_1)$};
+		\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (2cm, -1.5cm) .. (z0) node[pos=0.6,left]{$p(\mathbf{s}|H_0)$};
+	\end{tikzpicture}
 	\caption{Decision spaces}
 \end{marginfigure}
 The detection theory is seen as a binary classification problem based upon two hypothesis:
@@ -91,7 +102,59 @@ P(D_i|H_j) = \int\limits_{\decspace_i}P(\signal|H_j)d\signal
 The evaluation, for each conditional probability is:
 \begin{marginfigure}
 	\centering
-	\includegraphics[scale=0.55]{ch3/img/probcurves.pdf}
+	%\includegraphics[scale=0.55]{ch3/img/probcurves.pdf}
+	\pgfmathdeclarefunction{gauss}{2}{%
+		\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+	}
+	\begin{tikzpicture}[>=latex']
+		\begin{axis}[ 
+			domain=0:12, samples=100,
+		  	height=4cm, width=6cm,
+			enlargelimits=false,
+			axis lines=middle, 
+			xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+			every axis y label/.style={at=(current axis.above origin),anchor=south east},
+		  	every axis x label/.style={at=(current axis.right of origin),anchor=west},
+		  	xtick=\empty, ytick=\empty,
+		  	extra x ticks={2.25,4.5,8.25},
+		 	extra x tick labels={$\mathbb{Z}_0$,,$\mathbb{Z}_1$},
+		  ]
+		\addplot [fill=gray!40, draw=none, domain=0:4.5] {gauss(6.5,1.5)} \closedcycle;
+		\addplot [fill=gray!75, draw=none, domain=4.5:12] {gauss(6.5,1.5)} \closedcycle;
+		\addplot [black,line width=1.5] {gauss(4,1.3)};
+		\addplot [black,line width=1.5] {gauss(6.5,1.5)};
+
+		\end{axis}
+		\node[xshift=85,yshift=70]{$p(\mathbf{s}|H_1)$};
+		\node[xshift=27,yshift=77]{$p(\mathbf{s}|H_0)$};
+		\draw  (1.665,0) -- ++(0,3.25) node[yshift=5]{$\leftarrow\mathbf{s}\rightarrow$};
+		\draw (0.2,1)  -- node[above,pos=0.5]{$P_C$} ++(0.5,0) -- ++(-45:1.1);
+		\draw (3,0.5) -- ++(45:1.1) -- ++(0.5,0) node[above,pos=0.5]{$P_D$};
+		\end{tikzpicture} \\
+		\begin{tikzpicture}[>=latex']
+		\begin{axis}[ 
+			domain=0:12, samples=100,
+		  	height=4cm, width=6cm,
+			enlargelimits=false,
+			axis lines=middle, xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+			every axis y label/.style={at=(current axis.above origin),anchor=south east},
+		  	every axis x label/.style={at=(current axis.right of origin),anchor=west},
+		  	xtick=\empty, ytick=\empty,
+		  	extra x ticks={2.25,4.5,8.25},
+		  	extra x tick labels={$\mathbb{Z}_0$,,$\mathbb{Z}_1$},
+		  ]
+		\addplot [fill=gray!40, draw=none, domain=4.5:12] {gauss(4,1.3)} \closedcycle;
+		\addplot [fill=gray!75, draw=none, domain=0:4.5] {gauss(4,1.3)} \closedcycle;
+		\addplot [black,line width=1.5] {gauss(4,1.3)};
+		\addplot [black,line width=1.5] {gauss(6.5,1.5)};
+
+		\end{axis}
+		\node[xshift=85,yshift=70]{$p(\mathbf{s}|H_1)$};
+		\node[xshift=27,yshift=77]{$p(\mathbf{s}|H_0)$};
+		\draw  (1.665,0) -- ++(0,3.25) node[yshift=5]{$\leftarrow\mathbf{s}\rightarrow$};
+		\draw (0.2,1)  -- node[above,pos=0.5]{$P_M$} ++(0.5,0) -- ++(-45:0.5);
+		\draw (2,0.5) -- ++(25:1.5) -- ++(0.5,0) node[above,pos=0.5]{$P_F$};
+		\end{tikzpicture}
 	\caption{Probability versus decision space}
 \end{marginfigure}
 \arraymath{

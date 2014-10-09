@@ -135,3 +135,9 @@
 	\coordinate [at=(#1.center), xshift=-0.75cm] (#1_in);%
 	\draw (#1.north west) -- (#1_in) -- (#1.south west);%
 }
+
+\newcommand{\riferimento}{%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (2,0,0) node[anchor=east]{$x’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,2,0) node[anchor=north]{$y’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,0,2) node[anchor=west]{$z’$};%
+}
