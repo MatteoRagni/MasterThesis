@@ -1,0 +1,46 @@
+\chapter{Conclusions}
+\minitoc
+
+We have explored many different topics through this work. It is not easy to find a common line to derive conclusion about the future of such a kind of project. 
+
+\section{The ARTVA and the searching field}
+
+The digital ARTVA we have build is not ready to be used on a drone. The SNR is too high, and the receiving distance too small. Also the use of a complete analogical preamplifier should be avoided due to thermal derive.
+
+What should be concluded from this analysis is:
+\begin{itemize}
+\item it is possible to build an ARTVA receiver relying only on normative data
+\item the performance of a complete analogical preamplifier circuit tells us that other architecture should be preferred
+\end{itemize}
+
+It could be a good starting point remove the pre--amplification section, and \textbf{insert an high speed sampling device}, like an FPAA or an FPGA. Those device grant a sampling rate that is extremely higher with respect to a micro--controller, and antenna input could be directly sampled to implement more intense filtering routines. The use of such devices increases also the thermal reliability of the receiver, through the elimination of analog passive components in the filter. 
+
+The receiver low performance may also be taken back to the low quality of the antenna. \textbf{Building a ferrite loop antenna} require a profound radio amateur experience and some specific instrumentation to characterize the winded loop. It is almost impossible to build two equal antenna, that is why a direct AD conversion is highly advised, and a dynamical calibration may be implemented via software.
+
+The receiver is not the only critical part, some word must be spent about the complexity of the \textbf{searching H--field} and the transmission protocol. Even if based upon some strong advantages due to little interference induced by external environment, the protocol is defined in such a way that is almost impossible to perform a reliable searching routine. The use of one frequency, with such long $\lunghezzaonda$ put us in the difficult situation of searching in near field condition. As we have already seen, the field lines creates a very difficult shape to be interpreted.
+
+The protocol has a \textbf{extremely variable duty cycle}, that is not a problem for a human rescuers, but could introduce issues in our algorithms, that make them unreliable.
+
+Some simpler aspects of a construction of transmitting device are also locked by the normative, like battery. The use of commercial batteries is forced, while some other form of accumulator, with higher energy density, may be used. More energy could bring to the use of \textbf{different frequency transmitted}, to perform searches in near and far field, and send some more data.
+
+The last element that should be taken into account is the impossibility to find two or more buried that are close to each other. The \textbf{signal overlapping problem} do not allow us to understand and sometime even receive the weaker signal. At this moment the only solution seems to be an estrangement from the buried found, to try to receive other beacons signal.
+
+\textit{What is suggested in literature is a revision of the searching protocol and normative, to get a new one more conform to the technology evolution and to get a signal that is defined in such a way that could be used to perform an automatic searching routine.}
+
+\section{The drone and its avionic}
+
+The system presented is not ready to be implemented as a complete project. Many study should be performed to adapt the avionic to the duty cycle problem, and a better device, with higher SNR ratio must be implemented. 
+
+From the mechanical point  of view, the use of an hexa--copter is due to the need of a very strong thrust vector to be robust with respect to wind gust, but a system to identify a continuous interference like constant wind that drone may encounter. 
+
+The \textbf{perception--action map} fit completely the avionic problem, and its definition makes really easy to implement other high level routines, to expand searching capabilities and scope of use of our drone. With respect to literature, our map implement a tri--dimensional expansion in which two different behavior are accessed through an algorithm, the radar detection routine. This intuition is almost new to the theory, and is something that allow us to expand the embodiment of the agent.
+
+Searching is performed in two step: an \textbf{exploration} and a \textbf{source searching and emulation}. Exploration gives the drone the ability to cover the avalanche front in search for a signal. When a signal is received and identified with the \textbf{radar detection} algorithm, the drone enter in fine searching method. The exploration tries to reach the maximum signal strength, avoiding impasse due to the field geometry, no matter what orientation magnetic dipole vector has.
+
+The \textbf{emulation routine}, that runs in parallel, and represent the action part of the searching routine, tries to optimize numerically the equation of the field with respect to drone location to understand the position of the source. Simulation showed us that this formulation is not ready to be used on the field, even if it is a good starting point for a built from scratch searching algorithm. The symmetry of the field generates more than one single solution for the system of equations, and noise influences the results. More information should be provided to the optimization routine, in particular from the exploration: the exploring direction information may reduce the area in which source could be, from a sphere to an hemisphere, reducing optimization error. Also knowledge about avalanche plane could help us to limit the position of the source under the avalanche. Restriction to solution space increases our chances to find the global minimum of the optimization that refers to our buried position.
+
+For what concerns \textbf{obstacle avoidance}, the algorithm presented generates a simple run away speed from obstacle. This means that we have no symbolical knowledge of the surroundings, decision derived from the fact that our computational resources are limited and mainly focused on the searching of the buried position. Parameter of the avoidance velocity should be chosen wisely, with respect to searching velocity.
+
+The perception--action map may take advantages from different future sensor--fusion insertion, like video feed. Implementation of higher complexity will require an external element, like ground station with higher computational power, and an employment of a wireless communication bus, to exchange mission information. Also, a speech--to--text over radio could be used as a fast way to allow communication between rescuers and drone.
+
+\emph{This work poses some foundation for the develop of an agent that is able to find a buried victim on the avalanche. The performance of the agent can not be completely related to the definition of its searching algorithm, but also due to the complexity of the ARTVA protocol. Taken this problem apart, perception action map showed us how it is possible to implement a complete avionic, and get an autonomous drone, prone to further modification and expansions.}
