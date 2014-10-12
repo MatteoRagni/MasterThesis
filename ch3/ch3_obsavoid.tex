@@ -42,7 +42,7 @@ This simplification gather different advantage to the final algorithm:
 \end{itemize}
 while the main drawbacks are
 \begin{itemize}
-\item we are searching using an optimized domain
+\item we are flying on a non optimal path
 \item it is based on a simplification, and real life is always harder than what we aspect
 \end{itemize}
 
@@ -90,14 +90,14 @@ v(d_i) = p_3 \braces{\dfrac{1}{1+e^{4 \braces{\frac{p_1}{2}-d_i}\frac{p_2}{p_3}}
 	\end{tikzpicture}
 	\caption{Velocity profile}
 \end{marginfigure}
-from which we obtain a continuous function were the parameters:
+from which we obtain a continuous function where the parameters:
 \begin{itemize}
 \item $p_1$: it is the maximum range, at which considered velocity is zero
 \item $p_2$: defines the slope of the curve at ${d_i = p_1/2}$
 \item $p_3$: defines the maximum velocity, or the value of the curve for ${d_i = 0}$
 \end{itemize}
 
-In figure \ref{fig:obstavoidexample} an example of how the algorithm works is shown. Obviously, signal coming from the algorithm get some sort of filtration to eliminate various source of error.
+In figure \ref{fig:obstavoidexample} an example of how the algorithm works is shown. Obviously, signal coming from the algorithm get some sort of filtration to eliminate various source of noise.
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.45]{ch3/img/obstavoid_dist.pdf}
@@ -107,6 +107,7 @@ In figure \ref{fig:obstavoidexample} an example of how the algorithm works is sh
 \end{figure}
 
 \myparagraph{Model of range finder}
+From the simulation point of view the effects of an obstacle are obtained through a model of the characteristic lobe of each range finder. 
 \begin{figure}[h]
 	\centering
 	%\includegraphics[scale=0.45]{ch3/img/lobe_dimensions.pdf}
@@ -135,8 +136,9 @@ In figure \ref{fig:obstavoidexample} an example of how the algorithm works is sh
 		\draw [<-] (9cm,3.5cm) -- ++(45:0.5cm) -- node[pos=0.5,above]{Characteristic lobe} ++(3cm,0); 
 	\end{tikzpicture}
 	\caption{Range finder algorithm}
+	\forcerectofloat
 \end{figure}
-From the simulation point of view the effects of an obstacle are obtained through a model of the characteristic lobe of each range finder. The obstacles are implemented as sets of points, paradigm that brings a little advantage of inserting some noise due to the discontinuities between points, similar to real range finder noise, due to analog to digital conversion.
+The obstacles are implemented as sets of points, paradigm that brings a little advantage from the simulation point of view of inserting some noise due to the discontinuities between points, similar to real range finder noise, due to analog to digital conversion.
 \begin{equation}
 \Psi = \left[ \mathbf{x}_i \,:\,i=1..M  \right]
 \end{equation}
@@ -149,12 +151,12 @@ For our system we suppose to know exactly the position $\hexastate_d$ and orient
 The characteristic of the range finder is described with the use of a cone. Distance is evaluated using time of flight of an ultrasonic signal emitted by the oscillator. Mathematically it is possible to define the lobe with a cone in the space, that has axis parallel to the versors defined in \ref{eq:versorirangefind}, and vertex coincident with receiving system. The solid that approximates the characteristic lobe is defined by:
 \begin{equation}
 \begin{array}{rcl}
-x = \dfrac{u}{h} \rho \cos(\theta)
-y = \dfrac{u}{h} \rho \sin(\theta)
-z = u
+x &=& \dfrac{u}{h} \rho \cos(\theta) \\
+y &=& \dfrac{u}{h} \rho \sin(\theta) \\
+z &=& u
 \end{array}
 \end{equation}
-so characteristic lobe is defined by the parameter:
+where the parameters:
 \begin{itemize}
 \item $h$: receiver maximum distance
 \item $\rho$: receiver maximum lobe dimension

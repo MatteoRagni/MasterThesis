@@ -28,10 +28,10 @@
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 	\end{tikzpicture}
 \end{marginfigure}
-The drone could be modeled with dynamical equations. The derivation of those equation will be performed from force analysis and control scheme is derived. A \texttt{C} version of the model, to be used in simulations is presented.
+The drone could be modeled with dynamical equations. The derivation of those equation will be performed from force analysis and control scheme is derived.
 
 \subsection{Motion equations}
-The system is governed by Euler--Newton equations, simplified with the imposition of the center of motion for Euler equations in center of mass of the drone. With character $g$ we refer to global coordinate system, while with $b$ we identify the coordinate system, that is attached to body and has origin in CoM:
+The system is governed by Newton--Euler equations, simplified with the imposition of the center of motion for Euler equations in center of mass of the drone. With character $g$ we refer to global coordinate system, while with $b$ we identify the coordinate system that is attached to body and has origin in CoM:
 \begin{equation}
 \left\{
 \begin{array}{rcl}
@@ -49,6 +49,7 @@ The system is governed by Euler--Newton equations, simplified with the impositio
 	\centering
 	\includegraphics[scale=0.55]{ch3/img/hexacopter_kine.pdf}
 	\caption{Hexa--copter kinematics}
+	\forceversofloat
 \end{figure}
 \myparagraph{External force and torque analysis}
 There are several force that act on the body of the drone:
@@ -160,7 +161,7 @@ we get the following Newton--Euler equations that describes dynamical behavior o
 \dot{r} & = & -\dfrac{I_y-I_x}{I_z} p\;q + \dfrac{\beta}{I_z}\;\left( L_1 - L_2 + L_3 - L_4 + L_5 - L_6 \right)
 \end{array}\right.
 \end{equation}
-\begin{margintable}
+\begin{margintable}[-4cm]
 	\renewcommand{\arraystretch}{1.2}
 	\begin{center}
 	\begin{tabular}{p{0.5cm} p{2cm} p{1.5cm}}
@@ -184,7 +185,7 @@ We now linearize the system feedback to get a control that stabilizes our drone:
 \begin{equation}
 \hexacontrol_0 \; : \; \mathbf{0}=f(\hexastate_0, \hexacontrol_0)
 \end{equation}
-that will be solved for hovering state, that is one of the most important flight routine. In a drone, hovering is not dependent with respect to vertical orientation along $\vers{z}$ axis:
+that will be solved for hovering state, that is one of the most important flight routine. Hovering is not dependent with respect to vertical orientation along $\vers{z}$ axis:
 \[
 \hexastate = \left[ x_0, y_0, z_0,0,0,0,0,0,\psi_0,0,0,0 \right]^T
 \]
@@ -309,7 +310,7 @@ whit the additional constraint to keep observability and controllability on coup
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 \end{tikzpicture}
 \end{marginfigure}
-It is really simple to solve a tracking problem starting from an LQR, that tries always to reach a zero. Simply insert an offset in position, and the system will try to reduce the error until it reach zero. Here we have a figure that explains the complete control, and some simulation test for random initial conditions that tries to reach a specific position in space.
+It is really simple to solve a tracking problem starting from an LQR, that tries always to reach a zero. Simply insert an offset in position, and the system will try to reduce the error until it reach zero. Figure \ref{fig:lqr_control} explains the complete control.
 \begin{figure}
 \centering
 \begin{tikzpicture}[auto, node distance=2cm,>=latex']
@@ -336,6 +337,7 @@ It is really simple to solve a tracking problem starting from an LQR, that tries
     \draw [->] (gain) -| node [pos=0.99] {$-$} node [pos=0.2] {$\hexacontrol*$} (sumforce);
     \draw [->] (sumpos) -- node {$\mathbf{e}$} (gain);
 \end{tikzpicture}
+\label{fig:lqr_control}
 \caption{Control block scheme}
 \end{figure}
 \FloatBarrier

@@ -28,18 +28,18 @@
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 \end{tikzpicture}
 \end{marginfigure}
-The last basic block that should be implemented is the altitude keeping, to maintain the distance of the drone to the soil high enough to avoid contact with rescuer and low enough to get a good signal strength. The sensors used are, again, ultrasonic range finder. With respect to the obstacle avoidance, that acts as a control on the lateral dynamic of the drone, that is quite slow, altitude keeping works on vertical dynamic that is really fast, and need a more reliable implementation, and require a statistical system to determine the distance even with a high irregular terrain.
+The last grounded block that should be implemented is the altitude keeping, to maintain the distance of the drone to the soil high enough to avoid contact with rescuer and low enough to get a good signal strength. The sensors used are, again, ultrasonic range finder. With respect to the obstacle avoidance, that acts as a control on the lateral dynamic of the drone, that is quite slow, altitude keeping works on vertical dynamic that is really fast, and need a more reliable implementation, and require a statistical system to determine the distance even with a high irregular terrain.
 
 This part was actually not implemented because of the need of more test about response of ultrasonic waves upon snow surface, to better understand the effects of density on perceived distance.
 
 \subsection{Kalman Filter}
 We assume that the dimension could be described with the use of normal distribution:
 \begin{equation}
-p(\hexastate) \det\braces{(2\pi)^{n}\Sigma_0}^{-1/2} e^{-\dfrac{1}{2}\braces{\hexastate - \boldsymbol{\mu}}^T \Sigma^{-1}\braces{\hexastate - \boldsymbol{\mu}}}
+p(\hexastate) = \det\braces{(2\pi)^{n}\Sigma_0}^{-1/2} e^{-\dfrac{1}{2}\braces{\hexastate - \boldsymbol{\mu}}^T \Sigma^{-1}\braces{\hexastate - \boldsymbol{\mu}}}
 \end{equation}
 with ${\boldsymbol{\mu}}$ the mean value for the distribution and ${\Sigma}$ covariance matrix of the distribution.
 
-The Kalman filter include the knowledge of the covariance matrix into the state estimation procedure, and it is possible to proof that the final estimation will maintain a normal distribution if:
+The Kalman filter include the knowledge of the covariance matrix into the state estimation procedure\citep{thrun2005probabilistic}, and it is possible to proof that the final estimation will maintain a normal distribution if:
 \begin{itemize}
 \item distribution of initial state is normal
 \item the state distribution is a linear function of the previous state and a white Gaussian noise
@@ -123,7 +123,7 @@ ${\statecovest_t = \braces{\mathbb{I} - \kfgain C_t} \statecovpred_t}$ \;
 	\centering
 	\includegraphics[scale=0.65]{ch3/img/altitude_keep.pdf}
 	\caption{Altitude keeping problem}
-	\forceversofloat
+	\forcerectofloat
 \end{figure}
 \FloatBarrier
 We can model the problem taking into account attitude dynamic and vertical dynamic of the VTOL, from which we know also the rotation matrix of the drone. The plane of the avalanche could be approximated through the orthogonal versor $\vers{m}$, projected in the drone reference frame. The problem, inserting $\vers{m}$ into the state vector, becomes equivalent to a \emph{SLAM}\sidenote[][-1cm]{\emph{SLAM}: Simultaneous Localization And Mapping} problem.
@@ -134,7 +134,7 @@ The state is:
 \hexastate = \vettore{\hexastate \\ \vers{m}_b}
 \end{equation}
 \renewcommand{\arraystretch}{1.75}
-and the covariance matrix of the state derives from covariance of the position system at which must be added a covarianc ematrix on the knowledge of ${\vers{m}_b = \rotmat^{T} \vers{m}}$. We could use three range finder directed to the ground, under the drone, that allow us to define three points on the surface. A model for the measurement function uses some simple algebraic definitions: given three points that belong to the plane, $\{A,\, B,\, C\}$, the normal is:
+and the covariance matrix of the state derives from covariance of the position system at which must be added a covarianc matrix on the knowledge of ${\vers{m}_b = \rotmat^{T} \vers{m}}$. We could use three range finder directed to the ground, under the drone, that allow us to define three points on the surface. A model for the measurement function uses some simple algebraic definitions: given three points that belong to the plane, $\{A,\, B,\, C\}$, the normal is:
 \begin{equation}
 \vers{m} = \dfrac{(A-B)\times(B-C)}{\abs{(A-B)\times(B-C)}}
 \end{equation}

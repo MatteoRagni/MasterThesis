@@ -35,7 +35,7 @@ Starting from equation \ref{eq:gauss1}, we can define a vectorial function calle
 \bfield = \nabla\times\afield
 \label{eq:potvett}
 \end{equation}
-\marginnote{The existence of $\afield$ is verified by property of $\nabla$ operator, whom states that the divergence of a curl of a vector field is zero} 
+\marginnote{The existence of $\afield$ is verified by property of $\nabla$ operator, whom states that the divergence of a curl of a vector field is zero\citep{bramanti2009analisi}} 
 We insert \ref{eq:potvett} in \ref{eq:faraday}:
 \[
 \nabla\times\efield = - \partialt \left( \nabla\times\afield \right)
@@ -43,7 +43,7 @@ We insert \ref{eq:potvett} in \ref{eq:faraday}:
 \begin{equation}
 \nabla\times\left( \efield + \partialtarg{\afield} \right) = 0
 \end{equation}
-From the previous equation it is evident that the argument between parentheses is in reality an irrotational vector field, thus a potential function exists such that:
+From the previous equation it is evident that the argument between parentheses is an irrotational vector field, thus a potential function exists such that:
 \[
 -\nabla\scpot = \efield + \partialtarg{\afield}
 \]
@@ -60,7 +60,7 @@ Equation \ref{eq:potvett} and \ref{eq:efieldvett} are used to express a new form
 \end{array}
 \label{eq:potvecmaxwell}
 \end{equation}
-Those equation, even if complex, could be resolved with a well posed boundaries condition problem. Equation are coupled with the current formulation, but could be decoupled using the \textbf{Gauge transformation}, also called \textbf{recalibration map}, that is in the form:
+Those equation, even if complex, could be resolved with a well posed boundaries condition problem. Equation are coupled with the current formulation, but could be decoupled using the \textbf{Gauge transformation}\citep{mencuccini1988fisica}, also called \textbf{recalibration map}, that is in the form:
 \begin{equation}
 \left\{ \begin{array}{rcl}
 \afield' & \mapsto & \afield + \nabla \lorentz \\
@@ -72,14 +72,14 @@ in which $\lorentz = \lorentz(\radiodist,t) \in C^2$. As proofed in \ref{eq:proo
 \begin{equation}
 \nabla \cdot \afield' = - \dfrac{1}{\velocitaluce^2} \partialtarg{\scpot'}
 \end{equation}
-we obtain in the previous equations the decoupled version:
+we obtain the decoupled version:
 \begin{equation}
 \begin{array}{rcl}
 \nabla^2 \scpot - \dfrac{1}{\velocitaluce^2} \partialttarg{\scpot} & = & - \dfrac{\chargedens}{\dielettrico_0} \\
 \nabla^2 \afield - \dfrac{1}{\velocitaluce^2} \partialttarg{\afield} & = & - \magperm_0 \currdens 
 \end{array}
 \end{equation}
-Those dynamic equations describe the time evolution of an EM--field. If field sources are located in a finite region, those equations admit as solution a generalization of the well know solution of stationary case, called retarded potential:
+Those dynamic equations describe the time evolution of an EM--field. If field sources are located in a finite region, the problem admit as solution a generalization of the well know stationary formulation, called retarded potential:
 \begin{equation}
 \begin{array}{rcl}
 \scpot(\radiodist,t) & = & \dfrac{1}{4\pi \dielettrico_0} \displaystyle\iiint\limits_{\Omega} \dfrac{1}{\mid \radiodist - \radiodist' \mid} \chargedens\left( \radiodist',t-\dfrac{\mid \radiodist - \radiodist' \mid}{\velocitaluce} \right) d\radiodist   \\
@@ -94,6 +94,7 @@ t_r = t - \dfrac{\mid \radiodist - \radiodist' \mid}{c}
 \subsection{Magnetic dipole radiation}
 
 \myparagraph{Potential of a magnetic dipole}
+Our antenna may be seen as an ideal magnetic dipole\citep{balanis2012antenna}. The transmitting antenna is a solenoid with a ferrite core, that acts as source of the electro--magnetic field. The source is subject to a dipole magnetic moment induced by the current $J = J_0 \cos(\omegaarva t)$, with no free charges (null scalar potential). 
 \begin{figure}[h]
 	\centering
 	
@@ -135,7 +136,7 @@ t_r = t - \dfrac{\mid \radiodist - \radiodist' \mid}{c}
 	\label{eq:dipolomagnetico}
 	\forceversofloat
 \end{figure}
-Our antenna may be seen as an ideal magnetic dipole. The transmitting antenna is a solenoid with a ferrite core, that acts as source of the electro--magnetic field. The source is subject to a dipole magnetic moment induced by the current $J = J_0 \cos(\omegaarva t)$, with no free charges (null scalar potential). The magnetic dipole moment is:
+The magnetic dipole moment is:
 \begin{equation}
 \magdipole = \pi r'^2\; J \vrz = m_0 \cos(\omegaarva t) \vrz
 \label{eq:dipolodacorrente}
@@ -182,7 +183,7 @@ The application of differential operator $\nabla$:
 \qquad
 \bfield = \left[ \begin{array}{c} \dfrac{1}{r}\;\dfrac{\partial A_{\phi}}{\partial \theta} \\ - \dfrac{\partial A_{\phi}}{\partial r} \\ 0 \end{array} \right]
 \end{equation}
-The final formulation for th EM field of a magnetic dipole is:
+The final formulation for th EM field of a magnetic dipole is\citep{knoepfel2008magnetic}:
 \begin{equation}
 \begin{array}{rcl}
 \label{eq:campidef1}
@@ -209,7 +210,7 @@ In figure \ref{fig:animazionifield} are shown some animation referred to the mag
 From animations it is evident that the effect of retarded propagation is almost null inside a radius of \num{40}\si{\meter} from the transmitting source, that is roughly the maximum distance at which an avalanche beacon receives the signal. This brings us to other simplifications for our model, as we will see in this section. From now on, all the simplifications are performed with the intent to find a model computationally convenient to be used in our algorithms.
 
 \myparagraph{Re--definition in complex domain}
-The next step is to bring equation of magnetic field in complex domain, but keeping in mind that only real part of the equations keeps the physical meaning of the field. The re--definition is based upon Euler relationship and on the definition of wavenumber:
+The next step is to bring equation of magnetic field in complex domain, but keeping in mind that only real part of the equations retains the physical meaning of the field. The re--interpretation is based upon Euler relationship and on the definition of wavenumber:
 \[
 e^{j\beta} = \ccos{\beta} + j \ssin{\beta}
 \]
@@ -280,6 +281,6 @@ The projection of the field in cartesian coordinates is:
 \end{equation}
 A final generalization grants us the ability to write a general form of the field that has origin in position different from the origin:
 \begin{equation}
-\bfield(\posrx - \postx,\magdipole)
+\bfield(\hexastate - \postx,\magdipole)
 \end{equation}
 That is the form used for our simulations.

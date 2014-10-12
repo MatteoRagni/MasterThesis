@@ -1,0 +1,33 @@
+\documentclass[tikz]{standalone}
+\usepackage{graphicx}
+\usetikzlibrary{calc}
+\begin{document}
+
+\newcommand{\stile}[1]{\textbf{#1}}
+\newcommand{\studente}      {Matteo Ragni}
+\newcommand{\corsolaurea}   {Ingegneria Meccatronica}
+\newcommand{\titolotesi}    {Autonomous VTOL for avalanche buried searching \\ Avionics}
+\newcommand{\relatori}      {Prof. Ing. Paolo Bosetti \\ Prof. Ing. Francesco Biral}
+\newcommand{\annoaccademico}{2013--14}
+\newcommand{\datadiscus}    {22/10/2014}
+
+\begin{tikzpicture}
+
+	\draw [color=gray, dashed] (0cm,0cm) -- (12.05cm,0cm) -- (12.05cm,12.05cm) -- (0,12.05cm) -- cycle;
+	\node at (6cm,10cm) {\includegraphics[width=9cm]{LogoUniTn.jpg}};
+
+	\node at (1cm, 7cm) [anchor=180,align=left] {Corso di Laurea in:};
+	\node at (1cm, 6cm) [anchor=180,align=left] {Laureando:};
+	\node at (1cm, 4.5cm) [anchor=180,align=left] {Titolo della tesi:};
+	\node at (1cm, 3cm) [anchor=180,align=left] {Relatore/i:};
+	\node at (6cm, 1cm) [align=center] {\footnotesize{AA: \stile{\annoaccademico} -- Data Appello: \stile{\datadiscus}}};
+
+	\node at (4.5cm, 7cm) [anchor=180,align=left,text width=6.5cm] {\stile{\corsolaurea}};
+	\node at (4.5cm, 6cm) [anchor=180,align=left,text width=6.5cm] {\stile{\studente}};
+	\node at (4.5cm, 4.5cm) [anchor=180,align=left,text width=6.5cm] {\stile{\titolotesi}};
+	\node at (4.5cm, 3cm) [anchor=180,align=left,text width=6.5cm] {\stile{\relatori}};
+
+
+\end{tikzpicture}
+
+\end{document}

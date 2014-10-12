@@ -163,16 +163,16 @@ The proposed algorithm uses a two component algorithm.
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 \end{tikzpicture}
 \end{marginfigure}
-The first step is simply an adaptive filter, stolen from the evaluation of Round--Trip--Time in TCP networking, that tries to identify a direction in which the signal is maximized, given an adapted previous knowledge. The algorithm takes into consideration the presence of fluctuations due to noise and interference and changes orientation only when the change in signal is obvious. Scaling parameter regulate the velocity that will move the drone.
+The first step is simply an adaptive filter, stolen from the evaluation of Round--Trip--Time in TCP networking\citep{kurose2001computer}, that tries to identify a direction in which the signal is maximized, given an adapted previous knowledge. The algorithm takes into consideration the presence of fluctuations due to noise and interference and changes orientation only when the change in signal is obvious. Scaling parameter regulate the velocity that will move the drone.
 
 An adaptive filter for a variable $x$ is defined as:
 \[
-x_k = \alpha x_{k-1} + (1-\alpha) \hat{x}_k \qquad 0 \leq \alpha \leq 1
+x_k = \alpha x_{k-1} + (1-\alpha) \bar{x}_k \qquad 0 \leq \alpha \leq 1
 \]
 
 The first part is a mean sampler, that helps us to partially eliminate the white Gaussian noise:
 \begin{equation}
-	\hat{\hfield}_g = \dfrac{1}{N} \rotmat \sum\limits_{i=0}^{N} \hfield_{b,i}
+	\bar{\hfield}_g = \dfrac{1}{N} \rotmat \sum\limits_{i=0}^{N} \hfield_{b,i}
 \end{equation}
 Starting from the vector of received signal $\hfield$, the value measured is a vector in hexa--copter body reference frame, and should be reported in ground reference frame, using the state of the drone. From the projection of the H--field some information are extracted, like \textbf{intensity} and \textbf{direction on} $(\vrx\times\vry)$ \textbf{plane}:
 \begin{equation}
@@ -261,7 +261,7 @@ In parallel with the previous searching method, an emulation of the real field i
 						\end{array} \right. \\ 
 \end{array}
 \end{equation}
-The optimization problem is solved numerically, guessing as initial point the solution at the previous step. The unilateral constraint is transformed in a barrier function.
+It is solved numerically, guessing as initial point the solution at the previous step. The unilateral constraint is transformed in a barrier function.
 
 The solution of the optimization routine is saved in a persistent memory, as a vector:
 \[ \mathbf{P} = [ \mathbf{p}_{T,k} \,:\, k=1..N ] \]
@@ -274,7 +274,7 @@ At this point, with could notice a lot of fluctuation in the solution, due to th
 \[ \int\limits_{\mathbb{R}^n} \dfrac{\kernel}{V(h)}d\mathbf{p} = 1 \]
 \item $\gamma(\cdot)$ has maximum in the origin
 \item $\gamma(\cdot)$ is continuous
-\item $\gamma(\pmb{\mu}\leftarrow\infty)\leftarrow 0$
+\item $\gamma(\pmb{\mu}\rightarrow\infty)\leftarrow 0$
 \end{itemize}
 the approximation of the distribution of the solution of the optimization step is in the form:
 \begin{equation}
@@ -284,7 +284,7 @@ We have chosen as kernel a Gaussian function:
 \[ \int\limits_{-\infty}^{\infty} \dfrac{1}{\sqrt{2\pi} h} e^{-\dfrac{z^2}{2 h^2}} dz = 1 \]
 Such an estimator has the following drawbacks:
 \begin{itemize}
-\item with the exact knowledge of the distribution that we are trying to estimate, the expectation of the estimation shows us that such an estimation is a blurred version of the real one: \[{E\{\hat{p}(\mathbf{p})\} = p(\mathbf{p}) * \dfrac{1}{h} \gamma(\mathbf{p},h)}\]
+\item with the exact knowledge of the distribution that we are trying to estimate, the expectation shows us that such an estimation is a blurred version of the real one: \[{E\{\hat{p}(\mathbf{p})\} = p(\mathbf{p}) * \dfrac{1}{h} \gamma(\mathbf{p},h)}\]
 \item the estimation may suffer bias problem for samples $N<\infty$, that means \[{E\{\hat{p}(\mathbf{p})\}=E\{{p}(\mathbf{p})\} + \Delta}\]
 \end{itemize}
 

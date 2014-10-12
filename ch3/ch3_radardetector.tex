@@ -28,10 +28,10 @@
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 \end{tikzpicture}
 \end{marginfigure}
-We have two searching status for our agent. In one searching status, the VTOL tries to identify a signal, while in the second stage, once we have identified the presence of a signal, the drone has to find the transmission source point. The passage from a searching strategy to another is the\emph{supervised signal detection}.
+We have two searching status for our agent. In one searching status, the VTOL tries to identify a signal, while in the second stage, once it has identified the presence of a signal, the drone has to find the transmission source point. The passage from a searching strategy to another is the \emph{supervised signal detection}.
 
 \subsection{Supervised signal detection}
-What we are trying to define is a strategy that is able to detect a target signal from a background noise. This is not new to signal theory, if we look at radar research work.
+What we are trying to define is a strategy that is able to detect a target signal from a background noise. This is not new to signal theory, if we look at radar research work\citep{marcum1960statistical}.
 \begin{marginfigure}
 	\centering
 	%\includegraphics[scale=0.5]{ch3/img/signalsources.pdf}
@@ -87,7 +87,7 @@ This criterion is based upon the assumptions that posteriors probability ${P(\hy
 \end{margintable}
 In practice we have: ${c_{0,1} > c_{1,1}}$ and ${c_{1,0} > c_{0,0}}$.
 
-The main objective is to \emph{minimize the average cost incurred by erroneous decision}\TODO{citep libro pattrec}. This is done through a minimization of a risk function defined over observation space. This optimization allows us to define the decision regions $\decspacezero$ and $\decspaceone$ which are optimal in terminal of overall risk. We define the risk:
+The main objective is to \emph{minimize the average cost incurred by erroneous decision}\citep{duda2012pattern}. This is done through a minimization of a risk function defined over observation space. This optimization allows us to define the decision regions $\decspacezero$ and $\decspaceone$ which are optimal in terminal of overall risk. We define the risk:
 \begin{equation}
 R = c_{0,0} P(D_0, \hypzero) + c_{1,0} P(D_1, \hypzero) + c_{0,1} P(D_0, \hypone) + c_{1,1} P(D_1, \hypone)
 \end{equation}
@@ -100,7 +100,7 @@ and also:
 P(D_i|H_j) = \int\limits_{\decspace_i}P(\signal|H_j)d\signal
 \end{equation}
 The evaluation, for each conditional probability is:
-\begin{marginfigure}
+\begin{marginfigure} \label{fig:probdetection}
 	\centering
 	%\includegraphics[scale=0.55]{ch3/img/probcurves.pdf}
 	\pgfmathdeclarefunction{gauss}{2}{%

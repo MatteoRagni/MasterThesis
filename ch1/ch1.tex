@@ -61,7 +61,7 @@ One last important statistic is the number of hikers found with the ARTVA\margin
 
 As reported in \citep{Brugger2007}, within Europe and North America, avalanche airbags and avalanche transceiver reduce mortality, and companion rescue reduces incredibly the median duration of burial, remarking the extreme importance of those device for all mountaineers.
 
-It is also known that 95\% of complete burial are in the layer between \num{-3} and\num{0} \si{\meter} of the avalanche.
+It is also known that 95\% of complete burial are in the layer between \numrange{-3}{0} \si{\meter} of the avalanche.
 
 \section{Avalanche Beacons}
 
@@ -69,7 +69,7 @@ There are two main typologies of avalanche transceiver. Differences are mostly i
 
 \subsection{Transmission Mode}
 
-During transmission, beacons transmit a so-called \emph{wild-life tag}, or more simply, an intermittent signal at defined frequency, as stated in normative\cite{NormativaARVA}. From the normative, it is possible to extract more informations about the transmitted signal, that are listed in section \ref{sec:a1asegnale}.
+During transmission, beacons transmit a so-called \emph{wild-life tag}, or more simply, an intermittent signal at defined frequency, as stated in normative\cite{NormativaARVA}. From the technical document, it is possible to extract more informations about the transmitted signal, that are listed in section \ref{sec:a1asegnale}.
 
 \subsection{Receiving Mode}
 
@@ -92,10 +92,10 @@ Those beacons implements an user interface that indicates \emph{the field line d
 	\caption{Tracker DTS Avalanche Transceiver, a digital beacon}
 \end{marginfigure}
 
-Must be noted that the algorithm inside those transceivers runs on a very low power DPS, due to energy harvesting requirements, so often the rescuer must slow down his speed to gave time to the beacon to analyze received data. Also, it was pointed out from manufacturers that advanced techniques, like multi-buried identification and buried status (hearth-beat) make use of frequencies different from the one described in normative.
+Must be noted that the algorithm inside those transceivers runs on a very low power DSP, due to energy harvesting requirements; often rescuer has to slow down his speed to gave time to the beacon to analyze received data. Also, it was pointed out from manufacturers that advanced techniques, like multi-buried identification and buried status (hearth-beat) make use of frequencies different from the one described in normative.
 
 \subsection{Italian Mountain Rescue Intervention}
-What happens after an avalanche? We interviewed some of the professionals of the Mountain Rescue Team in province of Trento, and asked them to explain us the actual procedure.
+What happens after an avalanche? We interviewed some of the professionals of the Mountain Rescue Team in province of Trento (IT), and asked them to explain us the actual procedure.
 
 \myparagraph{Intervention on Avalanche}
 The intervention begin after a witness call. Usually the witness is one of the hikers that is on the accident location. In the best situation, the witness begins the companion rescue procedure, with his own avalanche beacon, and calls the emergency number.
@@ -108,9 +108,9 @@ During the emergency call, the operator tries to understand the location, alerts
 \end{itemize}
 If heli-ambulance is cleared to take off, those are the first rescuers on the avalanche. The clearance is related to weather and light conditions, because flight is performed by eye-sight. If heli-ambulance mission is aborted, Mountain Rescue team have to reach the avalanche with ground vehicle.
 
-Under certain strict condition, it is possible to perform an ARTVA search from the helicopter.
-
 Once arrived on the location, if residual risk make it possible, the rescue team is dropped from the heli-ambulance and starts the searching procedure, with canine unit and with personal ARTVAs. The rescuers with the beacons follow a scheme that allow them to cover the avalanche front. This scheme is called primary search. While a signal is identified, the rescuer start a fine search to pinpoint the buried position.
+
+Under certain condition, it is possible to perform an ARTVA search from the helicopter.
 
 \myparagraph{Equipment}
 There is a procedural and moral obligation in having the last generation device, even if does not exist a directive that defines a specific model for the equipment. Each rescuer has a VHF transmitter and cellphone, along with the personal beacon. 
@@ -133,7 +133,7 @@ There is no big evolution in transmitters; almost all devices implement a simple
 
 \subsection{Reception}
 
-Usually, an analog receiver has a little more bigger receiving radius with respect to a digital one. This difference is due to stronger filtration routines implemented in digital ARTVA, with respect to analog, and because of the dimension of the z--axis antenna.
+Usually, an analog receiver has a slightly bigger receiving radius with respect to a digital one. This difference is due to stronger filtration routines implemented in digital ARTVA, with respect to analog, and because of the dimension of the z--axis antenna.
 
 A digital ARTVA implements multiple antennas. Some typical configurations are:
 \begin{itemize}
@@ -222,7 +222,7 @@ This work is not the first attempt to bring an automatic drone on avalanches. So
 \end{itemize}
 
 \subsection{Why the use of a VTOL?}
-The use of a drone in the searching area depends on various factors. During design it is necessary to understand and think a system the fit entirely the actual search strategy.
+The use of a drone in the searching area depends on various factors. During design it is necessary to understand and think a system that fit entirely actual search strategy.
 
 One practical example of use could be a situation of high residual danger and an uncertainty about the presence of buried under the avalanche. In a case like that, the VTOL could be used to test the necessity of drop the rescue team on the avalanche.
 
@@ -248,7 +248,7 @@ We are now able to define a table \ref{tbl:customer_needs} in which at each cust
 In future, the automatic recognition of the avalanche dimensions could be a good starting point for some advanced research in the field of computer vision, or the improvements of user interface using voice recognition over radio.
 
 \myparagraph{Technical Specification}
-The next step in the definition of a good design is a list of technical specifications that will help us to identify the most challenging problems in and the gravity of those problems with respect to the costumer needs.
+The next step in the definition of a good design is a list of technical specifications that will help us to identify the most challenging problems and the gravity of those problems with respect to the costumer needs.
 
 For sure, one of the first and most challenging complication is the weight reduction, that guarantees a longer flying time. Also those elements are related to the number of  propulsion vector and the main dimension (the length of the arm). It is evident the correlation between the number of lift vectors with respect to the maximum wind interference.
 
@@ -265,7 +265,7 @@ In table \ref{tbl:need_vs_spec} all data are compared with a weighting method. T
 \myparagraph{Components selection}
 From the merged data it was possible to select the components that will be used in the prototype. All components are listed in table \ref{tbl:components_list}
 
-We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescue, that is different from our VTOL.
+We have also decide not to use a commercial ARTVA, but instead try to build a digital one from scratch. This will allow us to get a lighter model, and also extract exactly the information that we want from the received signal. Even if some device have a serial port, the output data are filtered with models that incorporate the possible speed of a rescuer, that is different from our VTOL.
 \input{ch1/components_tbl.tex}
 
 \input{ch1/complete_tbl.tex}
