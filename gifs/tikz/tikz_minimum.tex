@@ -49,29 +49,54 @@
 
 \begin{document}
 
-\pgfmathdeclarefunction{speed}{3}{%
-	\pgfmathparse{#3 * ( (1)/(1+exp(4*((#1/2)-x)*#2/#3)) - 1 )}%
-}
-\begin{tikzpicture}[>=latex]
-	\begin{axis}[
-		domain=0:11.5, samples=100,
-		enlargelimits=false,
-		xmin=0, xmax=12, ymin=-6, ymax=1,
-		height=6cm, width=6cm,
-		axis lines=middle,
-		xlabel=\scriptsize{$d_i$}, ylabel=\scriptsize{$v(d_i)$},
-		every axis y label/.style={at=(current axis.above origin),anchor=south },
-		every axis x label/.style={at=(current axis.right of origin),anchor=west},
-		xtick=\empty, ytick=\empty,
-		extra y ticks={-4.7}, extra y tick labels={$p_3$},
-		extra x ticks={10}, extra x tick labels={$p_1$}
-	]
-		\addplot[black,line width=1.5]{speed(7,1,5)};
-	\end{axis}
+\begin{tikzpicture}
+
+\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},
+xmin=10^3, xmax=10^8, ymin=-150, ymax=60, 
+height=5cm, width=6cm, 
+grid=both, grid style={color=gray!40, dotted}, 
+tick label style={font=\scriptsize},
+xminorticks=true, 
+scaled ticks=true,
+log basis x=10,
+enlargelimits=false]
+
+	\addplot[mark=none,line width=1.5] file {filter1.txt};
+\end{semilogxaxis}
 	
-	\draw (0.75,1.3) -- ++(240:1) -- ++(60:5) -- ++(240:0.75) -- ++(0.75,0) --++(-0.15,0) coordinate(arco);
-	\draw[<->] (arco) arc(0:60:0.6) node [xshift=15] {$p_2$};	
 \end{tikzpicture}
+
+\begin{tikzpicture}
+
+\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},xmin=10^0, xmax=10^4, ymin=-150, ymax=40, height=5cm, width=6cm,grid=both, xminorticks=true, scaled ticks=true,log basis x=10,enlargelimits=false,samples at={3,...,9}, grid style={help lines,dotted}]
+	\addplot[mark=none,line width=1.5] file {filter2.txt};
+\end{semilogxaxis}
+	
+\end{tikzpicture}
+
+%\pgfmathdeclarefunction{speed}{3}{%
+%	\pgfmathparse{#3 * ( (1)/(1+exp(4*((#1/2)-x)*#2/#3)) - 1 )}%
+%}
+%\begin{tikzpicture}[>=latex]
+%	\begin{axis}[
+%		domain=0:11.5, samples=100,
+%		enlargelimits=false,
+%		xmin=0, xmax=12, ymin=-6, ymax=1,
+%		height=6cm, width=6cm,
+%		axis lines=middle,
+%		xlabel=\scriptsize{$d_i$}, ylabel=\scriptsize{$v(d_i)$},
+%		every axis y label/.style={at=(current axis.above origin),anchor=south },
+%		every axis x label/.style={at=(current axis.right of origin),anchor=west},
+%		xtick=\empty, ytick=\empty,
+%		extra y ticks={-4.7}, extra y tick labels={$p_3$},
+%		extra x ticks={10}, extra x tick labels={$p_1$}
+%	]
+%		\addplot[black,line width=1.5]{speed(7,1,5)};
+%	\end{axis}
+%	
+%	\draw (0.75,1.3) -- ++(240:1) -- ++(60:5) -- ++(240:0.75) -- ++(0.75,0) --++(-0.15,0) coordinate(arco);
+%	\draw[<->] (arco) arc(0:60:0.6) node [xshift=15] {$p_2$};	
+%\end{tikzpicture}
 
 
 %\pgfmathdeclarefunction{gauss}{2}{%

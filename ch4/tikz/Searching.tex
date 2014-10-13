@@ -1,0 +1,42 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\usepackage{mathtools}
+\usepackage{pgfplots}
+
+\usetikzlibrary{shapes,arrows,matrix,fit,positioning,decorations.pathreplacing,3d,calc}
+\usepgfplotslibrary{groupplots}
+\usepackage{pgfplotstable}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.11}
+\usepackage{mathpazo} 
+
+\begin{document}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, horizontal sep=2cm,vertical sep=2cm}, width=15cm,height=7cm]
+	\nextgroupplot[
+		ylabel={Learned orientation}, xlabel={Time (s)},
+		enlargelimits=false, tick label style={font=\scriptsize},
+		grid=major, grid style={color=gray!40,dashed}, ymin=-1.2, ymax=1.2,
+		legend style={draw=none, legend columns=4, anchor=north,at={( xticklabel cs:0.5)}, yshift=-15}
+	]	
+	\addplot[color=blue, mark=none] table [x index=0, y index=1] {data/learner_data.txt}; \addlegendentry{$\cos(\theta)\quad$}
+	\addplot[color=blue!40, mark=none] table [x index=0, y index=2] {data/learner_data.txt}; \addlegendentry{$\cos(\theta)\mathrm{~real~}\quad$}
+	\addplot[color=red, mark=none] table [x index=0, y index=3] {data/learner_data.txt}; \addlegendentry{$\sin(\theta)\quad$}
+	\addplot[color=red!40, mark=none] table [x index=0, y index=4] {data/learner_data.txt}; \addlegendentry{$\sin(\theta)\mathrm{~real~}$}
+
+	\nextgroupplot[
+		ylabel={Learned intensity (A/m)}, xlabel={Time (s)},
+		enlargelimits=false, tick label style={font=\scriptsize},
+		grid=major, grid style={color=gray!40,dashed}, 
+		legend style={draw=none, legend columns=3, anchor=north,at={( xticklabel cs:0.5)}, yshift=-15},
+		ymode=log,ymin=1e-6,ymax=1e-3
+	]
+	\addplot[color=black, mark=none] table [x index=0, y index=5] {data/learner_data.txt}; \addlegendentry{$|\mathbf{H}|\quad$}
+	\addplot[color=black!40, mark=none] table [x index=0, y index=6] {data/learner_data.txt}; \addlegendentry{$|\mathbf{H}|\mathrm{~real}$}
+
+\end{groupplot}
+\end{tikzpicture}
+\end{document}

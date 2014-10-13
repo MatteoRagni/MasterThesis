@@ -47,13 +47,24 @@ The tuned tank is composed by a ferrite antenna, with a rod of \num{10}\si{\cent
 This block is composed by a first stage that acts as a separation between the tuned tank and the filter, also called voltage follower. To limit the number of components on the board this stage is obtained with an operational amplifier. To grant a longer receiving range, an high--gain selective active filter is in cascade to the buffer before the identification and acts as a pre--amplifier. It is important to select an operational amplifier with an high bandwidth--gain--product to grant the gain at \num{457}\si{\kilo\hertz}, at which the filter is centered. Also, this stage depends to the dual \num{\pm 5}\si{\volt} supply stage. 
 \begin{marginfigure}
 	\centering
-	\includegraphics[width=5cm]{ch2/img/filter1.pdf}
+	%\includegraphics[width=5cm]{ch2/img/filter1.pdf}
+	\begin{tikzpicture}
+
+	\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},
+	                     xmin=10^3, xmax=10^8, ymin=-150, ymax=60, tick label style={font=\scriptsize},
+	                     height=4cm, width=5cm, grid=both,, grid style={color=gray!50, dotted},
+	                     xminorticks=true, scaled ticks=true,log basis x=10,enlargelimits=false]
+		\addplot[mark=none,line width=1.5] file {ch2/img/filter1.txt};
+	\end{semilogxaxis}
+	
+	\end{tikzpicture}
 	\caption{Filter magnitude characteristic}
 \end{marginfigure}
 
 The op--amp chosen is \texttt{LF347N}, even if a faster amplifier may be selected, it is advised to stay below the \num{60}\si{\mega\hertz} BW, to avoid auto--resonance effects.
 
 \subsection{Identification}
+The central block is an identification circuit, obtained with the monolithic classical IC \texttt{TA7641}\sidenote{A.k.a.: \texttt{MK484} evolution of \texttt{ZN414}},  that acts as a one chip radio solution in AM. All receiver is derived from the modification of the basic circuit provided in schematics of this IC, extended with filtering and buffers, and the removal of the auto gain control resistance in the output feedback. Also, transistor amplification stage is removed.
 \begin{figure}[h]
 	\centering
 	\includegraphics*[viewport=1251 3 1580 595,scale=0.4]{ch2/img/receiver3.pdf}
@@ -67,7 +78,7 @@ The op--amp chosen is \texttt{LF347N}, even if a faster amplifier may be selecte
 	\caption{Logical function of an identifier}
 	\label{fig:identifier_log}
 \end{marginfigure}
-The central block is an identification circuit, obtained with the monolithic classical IC \texttt{TA7641}\sidenote{A.k.a.: \texttt{MK484} evolution of \texttt{ZN414}},  that acts as a one chip radio solution in AM. All receiver is derived from the modification of the basic circuit provided in schematics of this IC, extended with filtering and buffers, and the removal of the auto gain control resistance in the output feedback. Also, transistor amplification stage is removed. The output of this circuitry is in \numrange{40}{60}\si{\milli\volt}, with a very low current required. The input pin has a good impedance 
+ The output of this circuitry is in \numrange{40}{60}\si{\milli\volt}, with a very low current required. The input pin has a good impedance 
 
 To better understand the use of this stage, look at figure \ref{fig:identifier_log}, in which an extremely simplified version of the IC behavior is represented with common components that are drawn in figure \ref{fig:block_circuit}. The IC straightens the received signal and identifies the envelope of the modulated intelligence with a low pass filter that has a dynamic not too slow, to not loose some of the higher frequencies information modulated (also called missed peak). IC implements this function with an high quality envelope detector.
 \begin{figure*}[h]
@@ -83,7 +94,17 @@ To better understand the use of this stage, look at figure \ref{fig:identifier_l
 The identified signal is, again, amplified and filtered, to a lower frequency, to grant the isolation of the square wave, with respect to the residual carrier and other source of interference. A \num{10}\si{\decibel} gain filter, with 2 stages was implemented. After the filter, another buffer connects analog circuitry with digital micro--controller.
 \begin{marginfigure}[5cm]
 	\centering
-	\includegraphics[width=5cm]{ch2/img/filter2.pdf}
+	%\includegraphics[width=5cm]{ch2/img/filter2.pdf}
+	\begin{tikzpicture}
+
+	\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},
+	                     xmin=10^0, xmax=10^4, ymin=-150, ymax=40, tick label style={font=\scriptsize}, 
+	                     height=4cm, width=5cm, grid=both,, grid style={color=gray!50, dotted},
+	                     xminorticks=true, scaled ticks=true,log basis x=10,enlargelimits=false]
+		\addplot[mark=none,line width=1.5] file {ch2/img/filter2.txt};
+	\end{semilogxaxis}
+	
+	\end{tikzpicture}
 	\caption{Filter magnitude characteristic}
 \end{marginfigure}
 

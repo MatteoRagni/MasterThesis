@@ -1,0 +1,73 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\usepackage{mathtools}
+\usepackage{pgfplots}
+
+\usetikzlibrary{shapes,arrows,matrix,fit,positioning,decorations.pathreplacing,3d,calc}
+
+\usepackage{pgfplotstable}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.11}
+\usepackage{mathpazo} 
+
+\begin{document}
+
+\pgfplotstableread{data/position_data.txt}{\basereference}
+
+\begin{tikzpicture}[>=latex']
+	
+	\begin{axis}[width=15cm, height=13.5cm, view={60}{45},
+		xmin=0,xmax=24.9,ymin=-30,ymax=5, zmin=-4.2, zmax=10, 
+		xlabel=$x \mathrm{(m)}$, ylabel=$y \mathrm{(m)}$, zlabel=$z \mathrm{(m)}$,
+		tick label style={font=\scriptsize},
+		grid=major, grid style={color=gray!40, dashed}]
+		
+		\addplot3 [mark=none, color=gray, dashed] table[x index=0, y index=1, z index=2] {data/position_projection.txt};	
+		\addplot3[only marks, mark=otimes*,fill=red,color=red,mark size=4pt] table {data/transmitter_pos.txt};
+		\addplot3 [mark=none, color=black] table[x index=1, y index=2, z index=3] {data/state_data_1.txt};
+		\addplot3 [only marks, mark=+, color=blue] table {data/obstacle_pos.txt};
+		
+		\foreach \j in {0,...,15}{%
+    		\pgfplotstablegetelem{\j}{[index] 0}\of{\basereference}% 
+    		\let\xA\pgfplotsretval% 
+    		\pgfplotstablegetelem{\j}{[index] 1}\of{\basereference}% 
+    		\let\yA=\pgfplotsretval%
+    		\pgfplotstablegetelem{\j}{[index] 2}\of{\basereference}% 
+    		\let\zA=\pgfplotsretval%
+    		%
+    		\pgfplotstablegetelem{\j}{[index] 3}\of{\basereference}% 
+    		\let\xB\pgfplotsretval% 
+    		\pgfplotstablegetelem{\j}{[index] 4}\of{\basereference}% 
+    		\let\yB\pgfplotsretval% 
+    		\pgfplotstablegetelem{\j}{[index] 5}\of{\basereference}% 
+    		\let\zB\pgfplotsretval 
+    		%
+    		\pgfplotstablegetelem{\j}{[index] 6}\of{\basereference} 
+    		\let\xC\pgfplotsretval 
+    		\pgfplotstablegetelem{\j}{[index] 7}\of{\basereference} 
+    		\let\yC\pgfplotsretval 
+    		\pgfplotstablegetelem{\j}{[index] 8}\of{\basereference} 
+    		\let\zC\pgfplotsretval 
+    		%
+    		\pgfplotstablegetelem{\j}{[index] 9}\of{\basereference} 
+    		\let\xD\pgfplotsretval 
+    		\pgfplotstablegetelem{\j}{[index] 10}\of{\basereference} 
+    		\let\yD\pgfplotsretval 
+    		\pgfplotstablegetelem{\j}{[index] 11}\of{\basereference} 
+    		\let\zD\pgfplotsretval 
+    		%
+    		%\draw [->,color=green] (axis cs:\xA, \yA, \zA) -- (axis cs:\xB, \yB, \zB);
+    		\addplot3[mark=none,color=green,->,line width=.5] coordinates {(\xA,\yA,\zA) (\xB,\yB,\zB)};
+    		\addplot3[mark=none,color=red,->,line width=.5] coordinates {(\xA,\yA,\zA) (\xC,\yC,\zC)};
+    		\addplot3[mark=none,color=blue,->,line width=.5] coordinates {(\xA,\yA,\zA) (\xD,\yD,\zD)};
+    		%\draw [color=red,->] (axis cs:\xA,\yA,\zA) -- (axis cs:\xC,\yC,\zC);
+     		%\draw [color=blue,->] (axis cs:\xA,\yA,\zA) -- (axis cs:\xD,\yD,\zD);
+  		}
+	\end{axis}
+
+\end{tikzpicture}
+
+\end{document}
