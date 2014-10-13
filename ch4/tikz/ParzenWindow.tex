@@ -1,0 +1,56 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\usepackage{mathtools}
+\usepackage{pgfplots}
+
+\usetikzlibrary{shapes,arrows,matrix,fit,positioning,decorations.pathreplacing,3d,calc}
+\usepgfplotslibrary{groupplots}
+\usepackage{pgfplotstable}
+\usepackage{filecontents}
+
+\pgfplotsset{compat=1.11}
+\usepackage{mathpazo} 
+
+\begin{document}
+\begin{tikzpicture}
+	\begin{axis}[
+		name=plot1, height=12cm, width=12cm,
+		xmin=-30, xmax=60, ymin=-60, ymax=30,
+		grid style={color=gray!40, dotted}, grid=major,
+		xlabel=$x \mathrm{(m)}$, ylabel=$y \mathrm{(m)}$,
+		tick label style={font=\scriptsize}
+	]
+		\addplot [mark=none] table[x index=0, y index=1] {data/position_projection.txt};	
+		\addplot[only marks, mark=otimes*,fill=red,color=red,mark size=2pt] table [x index=0, y index=1] {data/transmitter_pos.txt};
+		\addplot[only marks, mark=x,color=gray!75,mark size=1pt] table {data/optimizer_data.txt};
+		\addplot[only marks, mark=*,color=blue,mark size=0.75pt] table {data/obstacle_pos.txt};
+	\end{axis}
+
+	\begin{axis}[
+		name=plot2, at={($(plot1.east)+(4.2cm,0)$)}, anchor=east, 
+		height=12cm, width=5cm,
+		ymin=-60, ymax=30, xmin=0, xmax=0.15,
+		grid style={color=gray!40, dotted}, grid=major,
+		tick label style={font=\scriptsize},
+		xlabel=$p(\mathbf{p}_{\mathrm{tx},y}|\mathbf{H})$,
+		xticklabel style={ /pgf/number format/precision=2,/pgf/number format/fixed,/pgf/number format/fixed zerofill }
+	]
+		\addplot [mark=none, fill=gray!40] table[x index=3, y index=2] {data/parzenWin_data.txt};
+	\end{axis}
+	
+	\begin{axis}[
+		name=plot3, at={($(plot1.north)+(0,4.2cm)$)}, anchor=north, 
+		height=5cm, width=12cm,
+		ymin=0, ymax=0.15, xmin=-30, xmax=60,
+		grid style={color=gray!40, dotted}, grid=major,
+		tick label style={font=\scriptsize},
+		ylabel=$p(\mathbf{p}_{\mathrm{tx},x}|\mathbf{H})$,
+		yticklabel style={ /pgf/number format/precision=2,/pgf/number format/fixed,/pgf/number format/fixed zerofill }
+	]
+		\addplot [mark=none, fill=gray!40] table[x index=0, y index=1] {data/parzenWin_data.txt};
+	\end{axis}
+
+\end{tikzpicture}
+\end{document}
