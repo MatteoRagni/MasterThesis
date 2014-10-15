@@ -28,10 +28,10 @@
 	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
 \end{tikzpicture}
 \end{marginfigure}
-We have two searching status for our agent. In one searching status, the VTOL tries to identify a signal, while in the second stage, once it has identified the presence of a signal, the drone has to find the transmission source point. The passage from a searching strategy to another is the \emph{supervised signal detection}.
+We have two searching status for our agent. In one searching status, the VTOL tries to identify a signal presence, while in the second stage, once it has identified the presence of a signal, the drone has to find the transmission source point. The passage from a searching strategy to another is the \emph{supervised signal detection}.
 
 \subsection{Supervised signal detection}
-What we are trying to define is a strategy that is able to detect a target signal from a background noise. This is not new to signal theory, if we look at radar research work\citep{marcum1960statistical}.
+What we are trying to define is a strategy that is able to detect a target signal presence from a background noise. This is not new to signal theory, if we look at radar research work\citep{marcum1960statistical}.
 \begin{marginfigure}
 	\centering
 	%\includegraphics[scale=0.5]{ch3/img/signalsources.pdf}

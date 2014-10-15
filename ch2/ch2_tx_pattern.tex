@@ -177,7 +177,7 @@ With null scalar potential we obtain the electric field and the magnetic field f
 \end{array}
 \end{equation}
 The application of differential operator $\nabla$:
-\marginnote{In polar coordinates: \newline $\nabla=\left[ \begin{array}{c} \dfrac{\partial}{\partial r} \\ \dfrac{1}{r}\;\dfrac{\partial}{\partial\theta} \\ \dfrac{1}{r \sin(\theta)}\;\dfrac{\partial}{\partial\phi} \end{array} \right]$}
+\marginnote{In spherical coordinates: \newline $\nabla=\left[ \begin{array}{c} \dfrac{\partial}{\partial r} \\ \dfrac{1}{r}\;\dfrac{\partial}{\partial\theta} \\ \dfrac{1}{r \sin(\theta)}\;\dfrac{\partial}{\partial\phi} \end{array} \right]$}
 \begin{equation}
 \efield = \left[ \begin{array}{c} 0 \\ 0 \\ \partialtarg{A_{\phi}} \end{array} \right]
 \qquad
@@ -231,7 +231,7 @@ B_{\theta} & = & \dfrac{1}{4} \dfrac{\magperm_0 m_0}{\pi r^3 c^2} \ssin{\theta} 
 \end{equation}
 The proof of those relations is in appendix.
 
-\myparagraph{From Polar to Cartesian coordinates}
+\myparagraph{From Spherical to Cartesian coordinates}
 \begin{marginfigure}
 	\centering
 	%\includegraphics[width=4cm]{ch2/img/coord_pol_cart.pdf}
@@ -253,7 +253,7 @@ The proof of those relations is in appendix.
 		\draw[tdplot_rotated_coords,<->] (2,0) arc (0:55:2) node[pos=0.5]{$\theta$};
 		\draw [<->] (2,0,0) arc (0:45:2) node[pos=0.5,below]{$\phi$};
 	\end{tikzpicture}
-	\caption{From Polar coordinates to Cartesian coordinates}
+	\caption{From Sherical coordinates to Cartesian coordinates}
 	\label{fig:polar2cartesian}
 \end{marginfigure}
 \begin{marginfigure}
