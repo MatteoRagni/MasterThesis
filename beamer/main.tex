@@ -1,0 +1,67 @@
+\documentclass{beamer}
+\input{settings.tex}
+
+\begin{document}
+
+\begin{frame}
+\centering
+.\includegraphics[width=7.5cm]{img/logo_uni_name.pdf}
+\titlepage
+\end{frame}
+
+\newslidenn{Outline}{
+	\tableofcontents
+}
+
+\section{Introduction to Mountain Rescue}
+
+\input{slide/slide1.tex}
+
+\newslide{State of the Art}{
+	\begin{block}{{\huge Projects}}
+		\begin{itemize}
+			\item SHERPA: Universit\'a di Bologna
+			\item Universit\'a di Torino
+			\item Project Alcedo Eidgen\"ossische Technische Hochschule Z\"urich
+		\end{itemize}
+	\end{block}
+	\begin{block}{{\huge Digital searching algorithms}}
+		\begin{itemize}
+			\item H--Field Lobe Following and pinpointing
+			\item Fast identification with SLAM and sum of Gaussian
+		\end{itemize}
+	\end{block}
+}
+
+\section{Design of a Digital ARTVA}
+
+\newslide{H--Field in Transmission}{
+	\begin{block}{Field Complexity}
+		\begin{figure}
+			\centering
+			\animategraphics[width=6.5cm,autoplay,loop]{15}{img/xz_40m/animation_}{0}{59}
+			\animategraphics[width=6.5cm,autoplay,loop]{15}{img/xz_2lambda/animation_}{0}{59}
+		\end{figure}
+	\end{block}
+	\begin{block}{Simplified Equations for H--field}
+		\[
+			\mathbf{B}(\mathbf{r},\mathbf{m}) = \dfrac{\mu_0}{4\pi r^5} \left[
+			\begin{array}{ccc}
+				2x^2-y^2-z^2 & 3 x y & 3 x z \\
+				3xy & 2y^2-x^2-z^2 & 3yz \\
+				3xz & 3yz & 2z^2-x^2-y^2
+			\end{array}
+			\right]
+		\]
+	\end{block}
+}
+
+\section{Drone Avionics}
+
+\section{Simulations}
+
+\section*{Q\&A}
+\newslidenn{Questions?}{
+\begin{block}{}{\vspace{1cm}\hspace{ \stretch{1} } \Huge Questions? \hspace{ \stretch{1} } \vspace{1cm}}\end{block}
+}
+\end{document}

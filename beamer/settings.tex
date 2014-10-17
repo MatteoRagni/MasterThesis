@@ -1,0 +1,48 @@
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{animate}
+
+% TikZ
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes,arrows,positioning,matrix,,decorations.pathreplacing,3d,calc}
+\pgfplotsset{compat=1.11}
+
+% Visualization geometry
+\geometry{a5paper,landscape}
+%\geometry{screen,centering}
+
+% Theme settings
+\usetheme{Frankfurt}
+\usecolortheme{seagull}
+\usefonttheme{serif}
+
+% Definition of the beamer numbered list style
+\setbeamertemplate{section in toc}[default]
+\setbeamertemplate{itemize items}[default]
+
+% User settings
+\title{Autonomous VTOL for Avalanche Buried Searching \\ {\Huge Avionics}}
+\author{Matteo Ragni}
+\date{Ingegneria Meccatronica Robotica}
+
+% Settings toc
+\setcounter{tocdepth}{1}
+
+% Fonts settings
+\usepackage{mathpazo}
+
+\newcommand{\newslide}[2]{%
+\subsection{#1}
+\begin{frame}{#1}
+#2
+\end{frame}%
+}
+
+\newcommand{\newslidenn}[2]{%
+\subsection*{#1}
+\begin{frame}{#1}
+#2
+\end{frame}%
+}
