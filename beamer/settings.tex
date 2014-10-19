@@ -1,13 +1,20 @@
 \usepackage{siunitx}
 \usepackage{array}
 \usepackage{animate}
+\usepackage{graphicx} 
+
+% Algorithms
+\usepackage[vlined]{algorithm2e}
+\newcommand{\commentstyle}[1]{\footnotesize\ttfamily\textcolor{gray}{#1}}
+\SetCommentSty{commentstyle}
+\usepackage{rotating}
 
 % TikZ
 \usepackage{tikz}
-\usepackage{pgfplots}
 \usepackage{tikz-3dplot}
-\usetikzlibrary{shapes,arrows,positioning,matrix,,decorations.pathreplacing,3d,calc}
-\pgfplotsset{compat=1.11}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes,arrows,positioning,matrix,decorations.pathreplacing,3d,calc}
+
 
 % Visualization geometry
 \geometry{a5paper,landscape}
@@ -33,16 +40,106 @@
 % Fonts settings
 \usepackage{mathpazo}
 
+\newcommand{\transitioneffectcommon}{\transfade[duration=0.25]}
+
 \newcommand{\newslide}[2]{%
 \subsection{#1}
-\begin{frame}{#1}
+\begin{frame}{\hspace{ \stretch{1} }\textbf{\huge#1}\hspace{ \stretch{1} }}
 #2
+\transitioneffectcommon
 \end{frame}%
 }
 
 \newcommand{\newslidenn}[2]{%
 \subsection*{#1}
-\begin{frame}{#1}
+\begin{frame}{\hspace{ \stretch{1} }\textbf{\huge#1}\hspace{ \stretch{1} }}
 #2
+\transitioneffectcommon
 \end{frame}%
 }
+
+\def\bfield{\mathbf{B}}
+\def\afield{\mathbf{A}}
+\def\efield{\mathbf{E}}
+\def\hfield{\mathbf{H}}
+\def\currdens{\mathbf{J}}
+\def\dielettrico{\varepsilon_0}
+\def\magperm{\mu_0}
+\def\partialt{\dfrac{\partial}{\partial t}}
+\def\chargedens{\rho}
+\renewcommand{\arraystretch}{1.85}
+
+\newcommand{\ccos}[1]{\cos\left(#1\right)}
+\newcommand{\ssin}[1]{\sin\left(#1\right)}
+%\newcommand{\braces}[1]{\left(#1\right)}
+
+% Diagrams styles
+\tikzstyle{block} = [draw=black, rectangle, minimum height=2.5em, minimum width=2em]
+\tikzstyle{sum} = [draw=black, circle]
+\tikzstyle{gain} = [draw=black, regular polygon, regular polygon sides=3, regular polygon rotate=90, minimum height=2.5em, minimum width=2em]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\newcommand{\drawcube}[9]{%
+	\coordinate (#7_A) at (#1,#2,#3);%
+	\coordinate (#7_B) at (#1+#4,#2,#3);%
+	\coordinate (#7_C) at (#1+#4,#2+#5,#3);%
+	\coordinate (#7_D) at (#1,#2+#5,#3);%
+	\coordinate (#7_E) at (#1+#4,#2,0);%
+	\coordinate (#7_F) at (#1+#4,#2+#5,0);%
+	\coordinate (#7_G) at (#1,#2+#5,0);%
+	%
+	\filldraw [draw=black, fill=#6] (#7_A) -- (#7_B) -- (#7_C) -- (#7_D) -- cycle;%
+	\filldraw [draw=black, fill=#6] (#7_B) -- (#7_C) -- (#7_F) -- (#7_E) -- cycle;%
+	\filldraw [draw=black, fill=#6] (#7_D) -- (#7_C) -- (#7_F) -- (#7_G) -- cycle;%
+	\node [#9] at (0.5*#4+#1,0.5*#5+#2,#3) {#8};%
+}
+
+\newcommand{\drawplanezy}[8]{%
+	\coordinate (#5_A) at (#1,#2,#3);%
+	\coordinate (#5_B) at (#1,#2,0);%
+	\coordinate (#5_C) at (#1,#2+#4,0);%
+	\coordinate (#5_D) at (#1,#2+#4,#3);%
+	\draw [#6] (#5_A) -- (#5_B) -- (#5_C) -- (#5_D) -- cycle;%
+	\node [#8] at (#1,#2+#4-0.4,0.5*#3) {#7};%
+}
+
+\newcommand{\drawplanexy}[7]{%
+	\coordinate (#7_A) at (#1,#2,#3);%
+	\coordinate (#7_B) at (#1+#4,#2,#3);%
+	\coordinate (#7_C) at (#1+#4,#2+#5,#3);%
+	\coordinate (#7_D) at (#1,#2+#5,#3);%
+	\draw [#6] (#7_A) -- (#7_B) -- (#7_C) -- (#7_D) -- cycle;%
+}
+
+\newcommand{\fromworkspace}[3]{%
+	\node [block, draw=white,#3, minimum height=1.5em] (#1) {#2};%
+	\coordinate [at=(#1.east), xshift=5] (#1_out);%
+	\draw (#1.north west) -- (#1.north east) -- (#1_out) -- (#1.south east) -- (#1.south west) -- cycle;%
+}
+\newcommand{\toworkspace}[3]{%
+	\node [block, draw=white,#3] (#1) {#2};%
+	\coordinate [at=(#1.west), xshift=-5] (#1_in);%
+	\draw (#1.north west) -- (#1.north east) --  (#1.south east) -- (#1.south west) -- (#1_in) -- cycle;%
+}
+\newcommand{\inputpin}[3]{%
+	\node [circle, draw, text width=0.5cm,align=center,#3] (#1) {#2};%
+	\coordinate [at=(#1.center), xshift=0.75cm] (#1_out);%
+	\draw (#1.north east) -- (#1_out) -- (#1.south east);%
+}
+\newcommand{\outputpin}[3]{%
+	\node [circle, draw, text width=0.5cm,align=center,#3] (#1) {#2};%
+	\coordinate [at=(#1.center), xshift=-0.75cm] (#1_in);%
+	\draw (#1.north west) -- (#1_in) -- (#1.south west);%
+}
+
+\newcommand{\riferimento}{%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (2,0,0) node[anchor=east]{$x’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,2,0) node[anchor=north]{$y’$};%
+\draw[tdplot_rotated_coords,color=blue,thick,->] (0,0,0) -- (0,0,2) node[anchor=west]{$z’$};%
+}
+
+\newcommand{\braces}[1]{\left( #1 \right)}
+
+\newcommand{\hcenter}[1]{ \hspace{\stretch{1}} \tectbf{#1} \hspace{\stretch{1}} }

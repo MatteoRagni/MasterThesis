@@ -1,0 +1,60 @@
+\newslide{Simulink Implementations (1)}{
+	\centering
+	\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex',scale=0.5]
+
+		\node [block, fill=gray!40] (hexamodel) {Hexacopter Model};
+		\fromworkspace{parameter}{\scriptsize{Parameters}}{at=(hexamodel),xshift=-50,yshift=30}
+		\node [sum, left=of hexamodel] (sumA) {$+$};
+		\node [block, left=of sumA] (force) {$F_i = \dfrac{mg}{6}$};
+		
+		%\node [ellipse, draw, minimum width=1.3cm, above=of force] {\scriptsize{Time}};
+		\node [block,below=of hexamodel] (controller) {LQR Controller};
+		\node [block, right=of controller] (integrator) {$\dfrac{1}{s}$};
+		\fromworkspace{zattitude}{\scriptsize{$\hat{\mathbf{z}}$ attitude}}{at=(controller),yshift=-30,xshift=-50}
+		\node [sum, right=of integrator] (sumB) {$+$};
+		\node [block, right=of sumB, text width=2cm,align=center] (searching) {Searching Algorithm};
+		\node [block, below=of searching, text width=2cm,align=center] (obstacle) {Obstacle Avoiding};
+		\coordinate[at=(hexamodel),xshift=220] (intersection);
+		\toworkspace{results}{$\mathbf{x}$}{right=of intersection};
+
+		\draw [->] (force) -- (sumA);
+		\draw [->] (sumA) -- (hexamodel);
+		\draw [->] (hexamodel) -- (results_in);
+		\draw [->] (searching) -- (sumB);
+		\draw [->] (sumB) -- (integrator);
+		\draw [->] (integrator) -- (controller);
+
+		\draw [->] (controller) -| (sumA);
+		\draw [->] (zattitude_out) -| (controller);
+		\draw [->] (parameter_out) -| (hexamodel);
+		\draw [->] (obstacle) -| (sumB);
+		\draw [->] (intersection) |- (searching);
+		\draw [->] (intersection) |- (obstacle);
+
+	\end{tikzpicture}
+
+\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex,scale=0.5]
+	\inputpin{stato}{$\mathbf{x}$}{}
+	\coordinate [right=of stato_out] (intersectionA);
+	\node [block, right=of intersectionA,fill=gray!40] (range_finder) {Range Finder Model ${d_i}$};
+	\fromworkspace{punti}{\scriptsize{${\Psi = [\mathbf{x}_i:i=1..M]}$}}{at=(range_finder),xshift=-60,yshift=30,text width=2cm}
+	\fromworkspace{parametri}{\scriptsize{$[h,\,\rho]$}}{at=(range_finder),xshift=-60,yshift=50,text width=2cm}
+	\node [block, below=of range_finder] (rotmat) {${\mathcal{R}^T(\phi,\theta,\psi)}$};
+	\node [block, right=of range_finder] (velocita) {${\mathbf{v}_b = \sum\limits_{i=1}^{6} v(d_i) \hat{\mathbf{u}}_i}$};
+	\node [sum, right=of velocita] (prod) {$\times$};
+	\outputpin{velout}{$\mathbf{v}$}{right=of prod}
+	\fromworkspace{paramV}{\scriptsize{$[p_1,\,p_2,\,p_3]$}}{at=(velocita),xshift=-45,yshift=30}
+
+	\draw [->] (stato_out) -- (range_finder);
+	\draw [->] (range_finder) -- (velocita);
+	\draw [->] (velocita) -- (prod);
+	\draw [->] (prod) -- (velout_in);
+	\draw [->] (intersectionA) |- (rotmat);
+	\draw [->] (rotmat) -| (prod);
+	\draw [->] (punti_out) -| (range_finder);
+	\draw [->] (parametri_out) -| (range_finder);
+	\draw [->] (paramV_out) -| (velocita);
+
+\end{tikzpicture}
+	
+}

@@ -1,0 +1,67 @@
+\newslide{Simulink Implementations (2)}{
+\centering
+
+\begin{tikzpicture}[auto,node distance=10mm and 7mm, >=latex]
+	\inputpin{stato}{$\mathbf{x}$}{}
+	\coordinate [right=of stato_out] (intersectionA);
+	\node [block, right=of intersectionA] (Hfield) {$\mathbf{H}$ sensor};
+	\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
+	\fromworkspace{tpos}{\scriptsize{TX position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
+	\coordinate [right=of Hfield] (intersectionB);
+	\node [block, right=of intersectionB] (direction){$\begin{array}{l} |\mathbf{H}| \\ \cos(\theta) \\ \sin(\theta) \end{array}$};
+	\node [block, right=of direction] (filtering) {$\dfrac{\alpha_1 s + 1}{\beta_1 s^2 + \beta_2 s +1}$};
+	\node [block,right=of filtering,text width=2cm,align=center] (velocity) {Exploration direction};
+	\outputpin{velout}{$\mathbf{v}$}{right=of velocity}
+	\node [block,below=of filtering,fill=gray!40,text width=3cm,align=center, minimum height=2cm] (emulation) {Emulation ${(\mathbf{H} - \hat{\mathbf{H}})^2 = \mathbf{0}}$};
+	\coordinate [at=(emulation.east), yshift=15] (emulation_out1);
+	\coordinate [at=(emulation.east), yshift=-15] (emulation_out2);
+	\coordinate [at=(emulation.west), yshift=15] (emulation_in1);
+	\coordinate [at=(emulation.west), yshift=-15] (emulation_in2);
+
+	\toworkspace{posopt}{Optimized $\mathbf{p}_T$}{right=of emulation_out1}
+	\toworkspace{mopt}{Optimized $\hat{\mathbf{m}}$}{right=of emulation_out2}
+	\fromworkspace{paramV}{\scriptsize{Parameters}}{at=(velocity),xshift=-45,yshift=30}
+
+	\draw [->] (mvector_out) -| (Hfield);
+	\draw [->] (tpos_out) -| (Hfield);
+	\draw [->] (stato_out) -- (Hfield);
+	\draw [->] (Hfield) -- (direction);
+	\draw [->] (direction) -- (filtering);
+	\draw [->] (filtering) -- (velocity);
+	\draw [->] (velocity) -- (velout_in);
+	\draw [->] (intersectionA) |- (emulation_in2);
+	\draw [->] (intersectionB) |- (emulation_in1);
+	\draw [->] (emulation_out1) -- (posopt_in);
+	\draw [->] (emulation_out2) -- (mopt_in);
+	\draw [->] (paramV_out) -| (velocity);
+\end{tikzpicture}
+
+\begin{tikzpicture}[auto,node distance=10mm and 10mm, >=latex,scale=0.5]
+		
+		\inputpin{stato}{$\mathbf{x}$}{yshift=0.5cm}
+		\node [block, right=of stato_out,fill=gray!40] (Hfield) {$\mathbf{H}\left( \mathbf{x}, \mathbf{p}_T, \hat{\mathbf{m}} \right)$};
+		\fromworkspace{mvector}{\scriptsize{Magnetic Dipole $\hat{\mathbf{m}}$}}{at=(Hfield),xshift=-60,yshift=30,text width=2.7cm}
+		\fromworkspace{tpos}{\scriptsize{TX position $\mathbf{p}_T$}}{at=(Hfield),xshift=-60,yshift=50,text width=2.7cm}
+
+		\coordinate [right=of Hfield] (intersection);
+		\node [block, below=of intersection,text width=1cm, align=center] (absolute) {$|\mathbf{H}|$};
+		\node [sum, below=of absolute] (prod) {$\times$};
+		\node [block, left=of prod] (noise) {$\mathcal{N}(\mathbf{0},\Sigma)$};
+		\node [gain, right=of prod, regular polygon rotate=-90, text width=0.3cm] (gain) {\scriptsize{SNR}};
+		\node [sum, at=(intersection), xshift=100] (somma) {$+$};
+		\outputpin{hvalue}{$\mathbf{H}$}{right=of somma}
+
+		\draw[->] (stato_out) -- (Hfield);
+		\draw[->] (Hfield) -- (somma);
+		\draw[->] (somma) -- (hvalue_in);
+		\draw[->] (intersection) -- (absolute);
+		\draw[->] (absolute) -- (prod);
+		\draw[->] (noise) -- (prod);
+		\draw[->] (prod) -- (gain);
+		\draw[->] (gain) -| (somma);
+		\draw[->] (mvector_out) -| (Hfield);
+		\draw[->] (tpos_out) -| (Hfield);
+
+	\end{tikzpicture}
+	
+}

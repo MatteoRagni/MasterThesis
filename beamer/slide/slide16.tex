@@ -1,0 +1,113 @@
+\pgfmathdeclarefunction{gauss}{2}{%
+	\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+
+\newslide{Radar Detection Problem for Signal Presence}{
+	\begin{columns}[c]
+	\column{0.2\textwidth}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=gray!40,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+	\end{tikzpicture}
+	\vspace{6.5cm}
+	\column{0.8\textwidth}
+	
+	\begin{block}{}
+		\centering
+		\begin{tikzpicture}
+		
+		\node (sorgenti) {
+			\begin{tikzpicture}[>=latex']
+				\node [rectangle,inner sep=5pt,draw,xshift=-30] (src) {Signal Source};
+				\draw [rotate=30](-2cm,-4cm) ellipse (2.5 and 1.5) node[xshift=45]{$\mathbb{Z}_0$};
+				\draw [rotate=30,fill=gray!40](-2.5cm,-4cm) ellipse (1.2 and 0.75)node[xshift=15]{$\mathbb{Z}_1$};
+				\node [yshift=-190] {$\mathbb{Z}$};
+				\coordinate (z1) at (-0.75cm,-4.75cm);
+				\coordinate (z0) at (1.7cm,-3.2cm);
+
+				\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (-2cm,-3cm) .. (z1) node[pos=0.5,left]{$p(\mathbf{s}|H_1)$};
+				\draw [smooth,->] (src.east) .. controls (2cm,0cm) and (2cm, -1.5cm) .. (z0) node[pos=0.6,left]{$p(\mathbf{s}|H_0)$};
+			\end{tikzpicture}};
+
+		\node [at=(sorgenti.north east), anchor=north west, yshift=0.5cm] (grafico1) {
+			\begin{tikzpicture}[>=latex']
+			\begin{axis}[ 
+				domain=0:12, samples=100,
+			  	height=4cm, width=6cm,
+				enlargelimits=false,
+				axis lines=middle, 
+				xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+				every axis y label/.style={at=(current axis.above origin),anchor=south east},
+			  	every axis x label/.style={at=(current axis.right of origin),anchor=west},
+			  	xtick=\empty, ytick=\empty,
+			  	extra x ticks={2.25,4.5,8.25},
+			 	extra x tick labels={$\mathbb{Z}_0$,,$\mathbb{Z}_1$},
+			  ]
+			\addplot [fill=gray!40, draw=none, domain=0:4.5] {gauss(6.5,1.5)} \closedcycle;
+			\addplot [fill=gray!75, draw=none, domain=4.5:12] {gauss(6.5,1.5)} \closedcycle;
+			\addplot [black,line width=1.5] {gauss(4,1.3)};
+			\addplot [black,line width=1.5] {gauss(6.5,1.5)};
+			\end{axis}
+
+			\node[xshift=70,yshift=75]{$p(\mathbf{s}|H_1)$};
+			\node[xshift=5,yshift=85]{$p(\mathbf{s}|H_0)$};
+			\draw  (1.665,0) -- ++(0,3.25) node[yshift=12, xshift=-20]{$\leftarrow\mathbf{s}\rightarrow$};
+			\draw (0.2,1)  -- node[above,pos=0.5]{$P_M$} ++(0.5,0) -- ++(-45:1.1);
+			\draw (3,0.5) -- ++(45:1.1) -- ++(0.5,0) node[above,pos=0.5]{$P_D$};
+			\end{tikzpicture}};
+		
+		\node [below=of grafico1, yshift=1.3cm] (grafico2) {
+			\begin{tikzpicture}[>=latex']
+			\begin{axis}[ 
+				domain=0:12, samples=100,
+			  	height=4cm, width=6cm,
+				enlargelimits=false,
+				axis lines=middle, xlabel=\scriptsize{$\mathbf{s}$}, ylabel=\scriptsize{$p(\mathbf{s})$},
+				every axis y label/.style={at=(current axis.above origin),anchor=south east},
+			  	every axis x label/.style={at=(current axis.right of origin),anchor=west},
+			  	xtick=\empty, ytick=\empty,
+			  	extra x ticks={2.25,4.5,8.25},
+			  	extra x tick labels={$\mathbb{Z}_0$,,$\mathbb{Z}_1$},
+			  ]
+			\addplot [fill=gray!40, draw=none, domain=4.5:12] {gauss(4,1.3)} \closedcycle;
+			\addplot [fill=gray!75, draw=none, domain=0:4.5] {gauss(4,1.3)} \closedcycle;
+			\addplot [black,line width=1.5] {gauss(4,1.3)};
+			\addplot [black,line width=1.5] {gauss(6.5,1.5)};
+
+			\end{axis}
+			\node[xshift=85,yshift=80]{$p(\mathbf{s}|H_1)$};
+			\node[xshift=27,yshift=87]{$p(\mathbf{s}|H_0)$};
+			%\draw  (1.665,0) -- ++(0,3.25) node[yshift=13]{$\leftarrow\mathbf{s}\rightarrow$};
+			\draw  (1.665,0) -- ++(0,2.5);
+			\draw (0.2,1)  -- node[above,pos=0.5]{$P_C$} ++(0.5,0) -- ++(-45:0.5);
+			\draw (2,0.5) -- ++(25:1.5) -- ++(0.5,0) node[above,pos=0.5]{$P_F$};
+			\end{tikzpicture}};
+
+		\draw [line width=1.3, decorate,decoration={brace,amplitude=12pt}] (9cm,-4cm) -- node[pos=0.5,below, yshift=-0.5cm](minimize){Minimize the risk incurred due to \textbf{erroneous decisions}} (-3cm,-4cm);
+		\node [below=of minimize, yshift=1cm] {$\mathrm{min}\,R = R(c_{i,j},P_{X}) \qquad \rightarrow \qquad \begin{array}{c} \mathbb{Z}_0 = \{ \mathbf{s} \in \mathbb{Z} \, : \, \Delta(\mathbf{s}) < \eta \} \\ \mathbb{Z}_1 = \{ \mathbf{s} \in \mathbb{Z} \, : \, \Delta(\mathbf{s}) > \eta \}  \end{array}$};
+
+		\end{tikzpicture}
+	\end{block}
+	\end{columns}
+}

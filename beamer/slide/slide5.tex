@@ -1,0 +1,44 @@
+\newslide{Maxwell Formulation}{
+	\begin{block}{Application of potential vectors and recalibration map to Maxwell's eq.}
+		\centering
+		\begin{tikzpicture}[>=latex']
+			\node [inner sep=3pt] (eqmaxstd) {$\left\{
+			\begin{array}{lcl}
+				\nabla\cdot\bfield &=& 0 \\
+				\nabla\times\efield &=& -\partialt \bfield \\
+				\nabla\cdot\efield &=& \dfrac{\chargedens}{\dielettrico} \\
+				\nabla\times\bfield &=& {\magperm} \left( \currdens + {\dielettrico} \partialt \efield \right)
+			\end{array}\right.
+			$};
+
+			\node [inner sep=3pt, right=of eqmaxstd, anchor=west, xshift=5cm] (eqpotvec) {$\left\{
+			\begin{array}{rcl}
+			\nabla^2\phi - \dfrac{1}{c^2} \dfrac{\partial^2 \phi}{\partial t^2} &=& - \dfrac{\rho}{\varepsilon_0} \\
+			\nabla^2\afield - \dfrac{1}{c^2} \dfrac{\partial^2 \afield}{\partial t^2} &=& - \magperm \currdens
+			\end{array}\right.
+			$};
+
+			\draw [line width=1.5,->] (eqmaxstd.east) -- 
+			node[pos=0.5, above]{
+			${\scriptscriptstyle \left\{\begin{array}{rcl}
+				\bfield &=& \nabla \times \afield \\
+				\efield &=& - \nabla\phi - \dfrac{\partial \afield}{\partial t}
+			\end{array} \right.}$} 
+			node[pos=0.5, below]{
+			${\scriptscriptstyle \left\{\begin{array}{rcl}
+				\afield' & \mapsto & \afield + \nabla \psi \\
+				\phi' & \mapsto & \phi - \dfrac{\partial \psi}{\partial t} \\
+				\nabla \cdot \afield' & = & - \dfrac{1}{c^2} \dfrac{\partial^2 \psi'}{\partial t^2}
+			\end{array} \right.}$} 
+			(eqpotvec.west);
+		\end{tikzpicture}
+	\end{block}
+	\begin{block}{Application to our problem: integral formulation}
+	\begin{equation*}
+	\begin{array}{rcl}
+		\phi(\mathbf{r},t) &=& \dfrac{1}{4\pi\varepsilon_0} \displaystyle\int\limits_{\Omega} \dfrac{1}{|\mathbf{r}-\mathbf{r}'|} \chargedens \left( \mathbf{r}',t-\dfrac{|\mathbf{r}-\mathbf{r}'|}{c} \right) d\mathbf{r} \\
+		\afield(\mathbf{r},t) &=& \dfrac{\mu_0}{4\pi} \displaystyle\int\limits_{\Omega} \dfrac{1}{|\mathbf{r}-\mathbf{r}'|} \currdens \left( \mathbf{r}',t-\dfrac{|\mathbf{r}-\mathbf{r}'|}{c} \right) d\mathbf{r}
+	\end{array}
+	\end{equation*}
+	\end{block}
+}

@@ -1,0 +1,59 @@
+\newslide{Simulating a Range Finder}{
+	\begin{columns}[c]
+	\column{0.2\textwidth}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed,fill=gray!40}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{gray!40}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+	\end{tikzpicture}
+	\vspace{6.5cm}
+	\column{0.8\textwidth}
+		\begin{block}{}
+			\centering
+			\begin{tikzpicture}[>=latex']
+				\draw[dashed,gray] (0,0) .. controls (6cm,3cm) ..  (8.5cm,3.5cm) to[bend left,out=45] (11cm,0cm) to [bend left,in=125] (8.5cm,-3.5cm) .. controls (6cm,-3cm) .. cycle;
+			   \draw [fill=gray!40,opacity=40](5cm,0cm) ellipse (0.75cm and 2.05cm);
+				\draw (8.5cm,0cm) ellipse (1.25cm and 3.5cm);
+				\draw (8.2cm,-3.4cm) -- (0,0) -- (8.2cm,3.4cm);
+				\draw[dashed] (0,0) -- (9cm,0);
+
+				\node [circle,inner sep=1pt,fill=black] at (5cm,4cm) {};
+				\draw [<->] (5cm,0cm) -- node[pos=0.9,right]{$\sqrt{d_i^2-u^2}$} (5cm,3.9cm);
+				\draw [->,line width=1.5] (0cm,0cm) -- (2.5cm,0cm);
+				\draw [->,line width=1.5] (0cm,0cm) -- node[above,rotate=38.53]{$d_i = | \mathbf{x}_i^{\Psi} - \mathbf{x}_d|$} (4.9cm,3.9cm);
+				\draw [->] (5cm,0cm) -- ++(-70:1.4) node[anchor=west,xshift=3,yshift=-3] {$\dfrac{\rho}{h}u$};
+				\node at(4cm,4.3cm) {$(\mathbf{x}_i^{\Psi} - \mathbf{x}_d)$};
+				\node at(2.5cm,-0.35cm) {$\hat{\mathbf{u}}_{i}$};
+
+				\draw [->] (8.5cm,0cm) -- ++(-70:2.5) node[anchor=west,xshift=3,yshift=-3] {$\rho$ (maximum radius)};
+
+				\draw (0cm,-0.1cm) -- (0cm,-5cm);
+				\draw (4.9cm,-2.2cm) -- (4.9cm,-4cm);
+				\draw (8.5cm,-0.1cm) -- (8.5cm,-5cm);
+				\draw [<->](0cm,-3.9cm) -- node[pos=0.5,above]{$u=(\mathbf{x}_i^{\Psi} - \mathbf{x}_d) \cdot \hat{\mathbf{u}}_i$} (4.9cm,-3.9cm);
+				\draw [<->](0cm,-4.9cm) -- node[pos=0.5,above]{$h$ (maximum range)} (8.5cm,-4.9cm);
+				\draw [<-] (9cm,3.5cm) -- ++(45:0.5cm) -- node[pos=0.5,above]{Characteristic lobe} ++(3cm,0); 
+			\end{tikzpicture}
+		\end{block}
+	\end{columns}
+}

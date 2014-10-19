@@ -1,0 +1,79 @@
+\newslide{Pinpointing Signal Source}{
+	\begin{columns}[c]
+	\column{0.2\textwidth}
+	\begin{tikzpicture}[>=latex',scale=0.4]
+	\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+	
+	\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{}{};
+	\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{}{};
+	
+	\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{}{};
+	\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{}{};
+	
+	\drawcube{0}{4.8}{5}{3}{1.5}{gray!40}{source}{}{};
+	\drawcube{0}{6.5}{5}{3}{1.5}{gray!40}{emulatore}{}{};
+
+	\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{}{};
+
+	\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{}{};
+	\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+	
+
+	\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+	\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+	\coordinate [at=(radar_det_D), yshift=-5] (arrows_point);
+	\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+	\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+	\end{tikzpicture}
+	\vspace{6.5cm}
+	\column{0.4\textwidth}
+	\begin{block}{Searching the Maximum H--field}
+	
+	\vspace{0.75cm}
+	\begin{algorithm}[H]
+		\KwData{$|\hfield|_{k-1},\,\psi_{k-1},\,\mathbf{v}_{k-1},\,w_1,\,w_2,\,\Delta,\,\delta$}
+		
+		\tcc{Steer in direction of greater intensity}
+		\If{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \leq \Delta$}{
+			$\psi_k = (1-w_1)\psi_{k-1} + w_1 \delta$\;
+		}
+		\ElseIf{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \geq \Delta$}{
+			$\psi_k = (1-w_1)\psi_{k-1} - w_1 \delta$\;
+		}
+
+		\tcc{Set speed magnitude}
+		$|\mathbf{v}_{k}| = (1-w_2) |\mathbf{v}_{k-1}| + w_2 v(|\hfield_k|)$\;
+
+		\tcc{Steer in direction of flux lines}
+		$\ccos{\psi}_k = (1-w_1) \ccos{\theta} + w_1 \ccos{\psi}_{k-1} $\;
+		$\ssin{\psi}_k = (1-w_1) \ssin{\theta} + w_1 \ssin{\psi}_{k-1} $\;
+
+		\tcc{Defines speed}
+		$\mathbf{v}_k = \left[ |\mathbf{v}_k| \ccos{\psi}_k, |\mathbf{v}_k| \ssin{\psi}_k, 0 \right]$ \;
+			
+		\Return{$\mathbf{v}_k$}
+	\end{algorithm}
+	\vspace{0.75cm}
+
+	\end{block}
+	\column{0.35\textwidth}
+	\begin{block}{Emulation of an H--field}
+		\vspace{0.75cm}
+		The stimated position is given by the solution of the \textbf{optimization problem}:
+		\vspace{0.5cm}
+		
+		$\left\{\begin{array}{l}\mathrm{min}\, \delta = \left( \hat{\hfield} - \hfield(\mathbf{p}_t, \mathbf{m}, \mathbf{x}) \right)^2 \\ (\mathbf{p}_T-\mathbf{x})^2 \leq \mathbf{r}_{\mathrm{max}}\end{array}\right.$
+		\vspace{0.5cm}
+		
+		and treated as a \textbf{stochastic variable}
+		\vspace{1cm}
+		
+		$\hat{p}(\mathbf{p}) = \dfrac{1}{N}\sum\limits_{k=1}^{N} \dfrac{\gamma(\mathbf{p}-\mathbf{p}_k,h)}{V(h)}$
+
+		\vspace{1cm}
+		from $\hat{p}(\mathbf{p})$ we extract \textbf{mean} and \textbf{covariance}!
+		\vspace{0.90cm}
+	\end{block}
+	\end{columns}
+}

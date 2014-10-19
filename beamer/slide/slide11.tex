@@ -1,0 +1,91 @@
+\newslide{Perception--Action Map}{
+	\begin{columns}[c]
+		\column{.45\textwidth}
+		\begin{block}{Litterature overview...}
+		
+		\centering
+			\begin{tikzpicture}[auto, node distance=2.7cm,>=latex']
+				% EMULATION
+				\matrix[draw=black, row sep=0.1cm, column sep=0.2cm,fill=white] (emulator) {
+				 \node {\scriptsize{Model}}; \\ 
+				 \node {\scriptsize{Hypothesis}};  \\
+				};
+				\node[above of=emulator] at ++(0,-1.8cm) {Emulator};
+
+				% GROUNDING
+				\matrix [draw=black,minimum width=4cm, minimum height=2.5cm, row sep=0.1cm, column sep=1cm, above of=emulator,ampersand replacement=\&,fill=white] (grounding) at ++(0,0cm) {	
+					\& \node [block, right,anchor=west, minimum width=1cm ,minimum height=0.5cm] (levelC) {}; \& \\
+				 	\& \node [block, right,anchor=west, minimum width=1.25cm ,minimum height=0.5cm] (levelB) {}; \& \\
+					\node [input,right] (input) {}; \& \node [block,anchor=west, right, minimum width=1.5cm, minimum height=0.5cm] (levelA) {}; \& \node[output](output){} ; \\
+			 	};
+				\node[above of=grounding] at ++(0,1.5cm) {Grounding};
+
+				% EMULATOR
+				\node[block,below of=emulator,fill=white] (environment) at ++(0,1.2cm) {\textbf{Environment}};
+
+
+				\draw [->] (input) -- node[below](mid) {} (levelA);
+				\draw [->] (mid) |- node (midK) {} (levelB);
+				\draw [->] (mid) |- node(midU) {} (levelC);
+				
+				\draw [->] (levelA) -- node[below] (midA) {} (output);
+				\draw [->] (levelB) -| node[pos=0.3] (midB) {} (midA);
+				\draw [->] (levelC) -| node[pos=0.3] (midC) {} (midB.south);
+
+
+				\draw [->,dashed] (mid) -- node  {} ++(0,1.8);
+				\draw [<-,dashed] (midC.south) -- node {} ++(0,0.5);
+
+				\node[right of=grounding] (gr) {};
+				\node[left of=grounding] (gl) {};
+
+				\draw [->] (emulator.west) -|  (gl.south) |- (grounding);
+				\draw [<-] (emulator.east) -|  (gr.south) |- (grounding);
+
+				\node[block,minimum width=6cm, minimum height=5.25cm,dashed] (agent) at ++(0,1.9cm) {};
+				\node[above of=agent] at ++(0,2cm) {\textbf{Agent}};
+
+				\draw [<-] (environment.east) -- ++(2.5cm,0) |- (grounding);
+				\draw  (environment.west) -- ++(-2.5cm,0) |- (grounding);
+
+			\end{tikzpicture}
+			\vspace{1.1cm}
+			\begin{itemize}
+				\item Subsumption and grounding
+				\item Emulation
+			\end{itemize}
+			\vspace{1.05cm}
+		\end{block}
+		\column{.55\textwidth}
+		\begin{block}{... applied to our agent}
+		
+		\centering
+			\begin{tikzpicture}[scale=0.85, every node/.style={scale=0.85}, >=latex']
+				\drawplanexy{-0.3}{-0.3}{-0.3}{6.7}{10}{dashed}{perception}
+				\node [at=(perception_D),xshift=30,yshift=-10] {\textbf{Perception}};
+				\drawcube{0}{0}{5}{6.4}{1}{white}{dinamica}{Dynamics and control}{};
+				\drawcube{0}{1.2}{5}{6.4}{1}{white}{tracking}{Tracking Problem}{};
+				
+				\drawcube{0}{2.4}{5}{6.4}{1}{white}{ostacoli}{Obstacle Avoidance}{};
+				\drawcube{0}{3.6}{5}{6.4}{1}{white}{altitude}{Altitude Keeping}{};
+				
+				\drawcube{0}{4.8}{5}{3}{1.5}{white}{source}{Source searching}{text width=2cm,align=center};
+				\drawcube{0}{6.5}{5}{3}{1.5}{white}{emulatore}{Emulation}{text width=2cm,align=center};
+
+				\drawplanezy{3.2}{4.8}{5}{4.5}{radar_det}{fill=white,opacity=0.90}{Radar detect}{rotate=45,xslant=1};
+
+				\drawcube{3.4}{4.8}{5}{3}{3.2}{white}{alpha}{Exploration routines}{text width=2cm,align=center};
+				\drawplanexy{-0.3}{-0.3}{5.3}{6.7}{10}{dashed}{action}
+				\node [at=(action_D),xshift=20,yshift=-10] {\textbf{Action}};
+
+				\draw [->,line width=1.5] (action_D) -- ++(0,0,2);
+				\draw [->,line width=1.5] (perception_D) -- ++(0,0,2);
+
+				\coordinate [at=(radar_det_D), yshift=-20] (arrows_point);
+				\draw [->,dashed]  (arrows_point) -- ++(1.5,0,0); 
+				\draw [->,dashed]  (arrows_point) -- ++(-1.5,0,0); 
+			\end{tikzpicture}
+			
+		\end{block}
+	\end{columns}
+}

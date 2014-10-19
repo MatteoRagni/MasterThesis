@@ -3,65 +3,41 @@
 
 \begin{document}
 
-\begin{frame}
-\centering
-.\includegraphics[width=7.5cm]{img/logo_uni_name.pdf}
-\titlepage
-\end{frame}
-
-\newslidenn{Outline}{
-	\tableofcontents
-}
-
-\section{Introduction to Mountain Rescue}
 
 \input{slide/slide1.tex}
 
-\newslide{State of the Art}{
-	\begin{block}{{\huge Projects}}
-		\begin{itemize}
-			\item SHERPA: Universit\'a di Bologna
-			\item Universit\'a di Torino
-			\item Project Alcedo Eidgen\"ossische Technische Hochschule Z\"urich
-		\end{itemize}
-	\end{block}
-	\begin{block}{{\huge Digital searching algorithms}}
-		\begin{itemize}
-			\item H--Field Lobe Following and pinpointing
-			\item Fast identification with SLAM and sum of Gaussian
-		\end{itemize}
-	\end{block}
-}
+\section{Introduction to Mountain Rescue}
+	\input{slide/slide2.tex}
+	\input{slide/slide3.tex}
+	\input{slide/slide4.tex}
 
 \section{Design of a Digital ARTVA}
-
-\newslide{H--Field in Transmission}{
-	\begin{block}{Field Complexity}
-		\begin{figure}
-			\centering
-			\animategraphics[width=6.5cm,autoplay,loop]{15}{img/xz_40m/animation_}{0}{59}
-			\animategraphics[width=6.5cm,autoplay,loop]{15}{img/xz_2lambda/animation_}{0}{59}
-		\end{figure}
-	\end{block}
-	\begin{block}{Simplified Equations for H--field}
-		\[
-			\mathbf{B}(\mathbf{r},\mathbf{m}) = \dfrac{\mu_0}{4\pi r^5} \left[
-			\begin{array}{ccc}
-				2x^2-y^2-z^2 & 3 x y & 3 x z \\
-				3xy & 2y^2-x^2-z^2 & 3yz \\
-				3xz & 3yz & 2z^2-x^2-y^2
-			\end{array}
-			\right]
-		\]
-	\end{block}
-}
+	\input{slide/slide5.tex}
+	\input{slide/slide6.tex}
+	\input{slide/slide7.tex}
+	\input{slide/slide8.tex}
+	\input{slide/slide9.tex}
+	\input{slide/slide10.tex}
 
 \section{Drone Avionics}
-
+	\input{slide/slide11.tex}
+	\input{slide/slide12.tex}
+	\input{slide/slide13.tex}
+	\input{slide/slide14.tex}
+	\input{slide/slide15.tex}
+	\input{slide/slide17.tex}
+	\input{slide/slide16.tex}
+	\input{slide/slide18.tex}
+	
 \section{Simulations}
+	\input{slide/slide19.tex}
+	\input{slide/slide20.tex}
+	\input{slide/slide21.tex}
+	\input{slide/slide22.tex}
+
 
 \section*{Q\&A}
-\newslidenn{Questions?}{
-\begin{block}{}{\vspace{1cm}\hspace{ \stretch{1} } \Huge Questions? \hspace{ \stretch{1} } \vspace{1cm}}\end{block}
-}
+	\newslidenn{}{
+	\begin{block}{}{\vspace{1cm}\hspace{ \stretch{1} } \Huge Questions? \hspace{ \stretch{1} } \vspace{1cm}}\end{block}
+	}
 \end{document}

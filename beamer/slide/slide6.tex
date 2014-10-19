@@ -1,0 +1,59 @@
+\newslide{Magnetic dipole problem}{
+	\begin{block}{}
+		\centering
+		For a \textbf{magnetic dipole} problem: $\phi = 0$!
+	\end{block}
+	\begin{block}{Solution for boundary condition problem}
+		\begin{tikzpicture}
+		\node [inner sep=2pt] (immagine) {
+		\tdplotsetmaincoords{60}{130}
+		\begin{tikzpicture}[auto,>=latex,tdplot_main_coords]
+			\coordinate (origin) at (0,0,0);
+			
+			% Axis
+			\draw [->] (origin) -- (4,0,0) node[anchor=north east]{\scriptsize{$x$}}; \draw (origin) -- (-0.2,0,0);
+			\draw [->] (origin) -- (0,4,0) node[anchor=north west]{\scriptsize{$y$}}; \draw (origin) -- (0,-0.2,0);
+			\draw [->] (origin) -- (0,0,2) node[anchor=south]{\scriptsize{$z$}}; \draw (origin) -- (0,0,-0.2);
+
+			\tdplotdrawarc[->,line width=3]{(0,0,0)}{2.7}{90}{360+80}{}{}
+			\tdplotdrawarc[line width=6]{(0,0,0)}{2.7}{25}{35}{}{}
+			\tdplotdrawarc[<->]{(0,0,0)}{3.5}{0}{30}{anchor=north west,xshift=-10}{$\varphi'$}
+			\coordinate (drpoint) at (30:2.7);
+			\node at (-2.3,2.3,0) {$\mathbf{J}$};
+			\node [at=(drpoint),xshift=5,yshift=-10] {$d\mathbf{r}$};
+
+			\node [circle,draw,inner sep=1pt, fill=black] at (7.5,0,6) (rpoint) {};
+			\draw[->] (origin) -- node[pos=0.8,above]{$\mathbf{r}$} (rpoint);
+			\draw [dashed] (rpoint) -- (7.5,0,0) -- ++(-2.5,0,0);
+			\coordinate [at=(drpoint),yshift=3] (drpoint2);
+			\draw [<->] (rpoint) -- node[pos=0.425,below,xshift=-22]{$\kappa=|\mathbf{r}-\mathbf{r}'|$} (drpoint2);
+			\draw [->] (origin) -- node[right]{$\mathbf{r}'$} (drpoint2);
+
+			\tdplotsetrotatedcoords{90}{90}{180}
+			\tdplotsetrotatedcoordsorigin{(origin)}
+			\draw[tdplot_rotated_coords,<->] (0.5,0) arc (0:52.5:0.5) node[left,xshift=5,yshift=10]{$\theta$};
+
+			\tdplotsetrotatedcoords{29.5+270}{-23.75}{0}
+			\tdplotsetrotatedcoordsorigin{(origin)}
+			\draw[tdplot_rotated_coords,<->] (0.75,0) arc (0:90:0.75) node[left,xshift=-15,yshift=10]{$\psi$};			
+		\end{tikzpicture}
+		};
+		\node [right=of immagine, anchor=west] (equazioni) {
+		$\begin{array}{r}
+		\afield = \dfrac{\mu_0 m_0}{4 \pi r} \sin(\theta) \left( \dfrac{1}{r} \sin \left( \omega_0 (t-r/c) \right) - \right. \\ 
+		+ \left. \dfrac{\omega_0}{r}\cos\left( \omega_0 (t-r/c) \right) \right) \hat{\phi}
+		\end{array}$ \newline
+		}; 	
+		\node[below=of equazioni] {Under the hypothesis: $r' \ll r$ and $r' \ll \lambda$};
+		\end{tikzpicture}
+	\end{block}
+	\begin{block}{B--Field solution}
+	\begin{equation*}
+	\begin{array}{rcl}
+	\tau &=&  t - \dfrac{r}{c} \\
+	B_r & = & \dfrac{\mu_0 m_0}{2 \pi r^2} \cos(\theta) \left( \dfrac{1}{r} \cos(\omega_0 \tau)  -  \dfrac{\omega_0}{c}\sin( \omega_0 \tau) \right) \\
+	B_r & = & \dfrac{\mu_0 m_0}{4 \pi r^3 c} \sin(\theta) \left( (c^2-\omega_0^2 r^2) \cos(\omega_0 \tau)  -  \omega_0 r c \sin( \omega_0 \tau) \right)
+	\end{array}
+	\end{equation*}
+	\end{block}
+}
