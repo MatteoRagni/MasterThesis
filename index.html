@@ -19,6 +19,7 @@
 				height: 100%;
 				width: 100%;
 			}
+			#embedder2 {}
 			body {
 				background-color: #333;
 			}
@@ -63,11 +64,30 @@
 		</div>
 		</div>
 
+		<div class="modal fade" id="beamerModal" tabindex="-1" role="dialog" aria-labelledby="beamerModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="beamerModalLabel">Presentation</h4>
+				</div>
+					<div class="modal-body">
+					<embed src="https://dl.dropboxusercontent.com/u/67901134/MasterThesis_beamer.pdf" alt="pdf" type="application/pdf" id="embedder2">
+  			</div>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		</div>
+
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   			<div class="container">
   				<a class="navbar-brand" href="https://github.com/MatteoRagni/MasterThesis">Matteo Ragni - Master Thesis</a> 
     			<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" data-toggle="modal" data-target="#myModal">Abstract</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#beamerModal">Presentation</a></li>
 					<li><a href="https://github.com/MatteoRagni/MasterThesis/blob/master/main.pdf?raw=true" class="btn btn">Download</a></li>
 					<li><a href="mailto:matteo.ragni.it@gmail.com?subject=%5BMaster%20Thesis%5D">Contact</a></li>
 					<li><a href="https://github.com/MatteoRagni/MasterThesis/issues/new"><span class="label label-danger issue">New Issue</span></a></li>
