@@ -48,31 +48,49 @@
 }
 
 \begin{document}
-
 \begin{tikzpicture}
+\begin{axis} [xlabel={Time (min)}, ylabel={Chances of survival (\%)},
+ enlargelimits=false, width=12cm,height=6cm]
 
-\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},
-xmin=10^3, xmax=10^8, ymin=-150, ymax=60, 
-height=5cm, width=6cm, 
-grid=both, grid style={color=gray!40, dotted}, 
-tick label style={font=\scriptsize},
-xminorticks=true, 
-scaled ticks=true,
-log basis x=10,
-enlargelimits=false]
+	\addplot [mark=none,line width=1.5] coordinates {
+		(0,100)
+		(15,90)
+		(20,60)
+		(30,50)
+		(40,25)
+		(120,15)
+		(180,3)
+	};
+\end{axis}
 
-	\addplot[mark=none,line width=1.5] file {filter1.txt};
-\end{semilogxaxis}
-	
 \end{tikzpicture}
 
-\begin{tikzpicture}
 
-\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},xmin=10^0, xmax=10^4, ymin=-150, ymax=40, height=5cm, width=6cm,grid=both, xminorticks=true, scaled ticks=true,log basis x=10,enlargelimits=false,samples at={3,...,9}, grid style={help lines,dotted}]
-	\addplot[mark=none,line width=1.5] file {filter2.txt};
-\end{semilogxaxis}
-	
-\end{tikzpicture}
+%
+%\begin{tikzpicture}
+%
+%\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},
+%xmin=10^3, xmax=10^8, ymin=-150, ymax=60, 
+%height=5cm, width=6cm, 
+%grid=both, grid style={color=gray!40, dotted}, 
+%tick label style={font=\scriptsize},
+%xminorticks=true, 
+%scaled ticks=true,
+%log basis x=10,
+%enlargelimits=false]
+%
+%	\addplot[mark=none,line width=1.5] file {filter1.txt};
+%\end{semilogxaxis}
+%	
+%\end{tikzpicture}
+%
+%\begin{tikzpicture}
+%
+%\begin{semilogxaxis}[xlabel={Frequency (Hz)}, ylabel={Magnitude (dB)},xmin=10^0, xmax=10^4, ymin=-150, ymax=40, height=5cm, width=6cm,grid=both, xminorticks=true, scaled ticks=true,log basis x=10,enlargelimits=false,samples at={3,...,9}, grid style={help lines,dotted}]
+%	\addplot[mark=none,line width=1.5] file {filter2.txt};
+%\end{semilogxaxis}
+%	
+%\end{tikzpicture}
 
 %\pgfmathdeclarefunction{speed}{3}{%
 %	\pgfmathparse{#3 * ( (1)/(1+exp(4*((#1/2)-x)*#2/#3)) - 1 )}%

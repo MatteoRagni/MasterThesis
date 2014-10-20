@@ -10,43 +10,9 @@
  		\node [rectangle, inner sep=4pt] (digitalartva) {\includegraphics[width=4cm]{img/digital_baecon.png}}; % i know i know... mistype...
  	\end{scope}
 
- 	%% 
- 	% Grafico di funzionamento di un artva digitale
- 	%\begin{scope}[local bounding box=receiver, auto,node distance=1cm,>=latex', shift={($(artva.north east)+(5cm,0)$)},inner sep=2pt]	
- 	\node [rectangle, inner sep=4pt,name=receiver, at=(artva.east), anchor=west, xshift=3cm] { 
- 		\begin{tikzpicture}[auto,node distance=1cm,>=latex']
-	 		\node[regular polygon, regular polygon sides=3, regular polygon rotate=180, draw, minimum height=1cm] (ant) {};
-			\draw (ant.north) -- (ant.south);
-			
-			\node[below of=ant] (input) {};
-			\begin{scope}[node distance=4mm and 6mm]
-				\node[rectangle, draw, right=of input, minimum width=2.3cm, text width=2cm, align=center] (b1) {\scriptsize{Triple Antennas}};
-				\node[rectangle, draw, right=of b1, minimum width=2.3cm, text width=2cm, align=center] (b2) {\scriptsize{Frequency shift \\ Anti--alias filter}};
-				\node[rectangle, draw, below=of b2, minimum width=2.3cm, text width=2cm, align=center] (b3) {\scriptsize{A--D \\ Conversion}};
-				\node[rectangle, draw, below=of b3, minimum width=2.3cm, text width=2cm, align=center] (b4) {\scriptsize{Digital Filter}};
-				\node[rectangle, draw, left=of b4, minimum width=2.3cm, text width=2cm, align=center] (b5) {\scriptsize{Signal \\ Detection}};
-				\node[rectangle, draw, left=of b5, minimum width=2.3cm, text width=2cm, align=center] (b6) {\scriptsize{H--field \\ Estimation}};
-			\end{scope}
-
-			\draw[->] (ant.south) |- (b1) {};
-			\draw[->] (b1) -- (b2) {};
-			\draw[->] (b2) -- (b3) {};
-			\draw[->] (b3) -- (b4) {};
-			\draw[->] (b4) -- (b5) {};
-			\draw[->] (b5) -- (b6) {};
-			\node [at=(b3.0), anchor=(180), shift=(0:3mm)] (n1) {};
-			\node [at=(b3.0), anchor=(180), shift=(180:88mm)] (n2) {};
-			\draw [dashed] (n2) -- (b3) {};
-			\draw [dashed] (n1) -- (b3) {};
-
-			\node [at=(n2.0), anchor=(180), shift=(25:7mm)] (n1) {Analog};
-			\node [at=(n2.0), anchor=(180), shift=(-25:7mm)] (n1) {Digital};
-		\end{tikzpicture}
-	};	
-
-	%%
+ 	%%
 	% Rappresentazione di un segnale ARTVA 
-	\node  [rectangle, inner sep=4pt,name=transmission, at=(receiver.south east), anchor=north east, yshift=-5mm] {
+	\node  [rectangle, inner sep=4pt,name=transmission, at=(artva.east), anchor=west, xshift=3cm ] {
 		\begin{tikzpicture}
 			\node [text width=5cm] (listitem) {
 				{\small
@@ -92,8 +58,44 @@
 		\end{tikzpicture}
 	};
 
-	\draw [line width=1.5,->] (digitalartva.east) -- node[above] {RX MODE} (receiver.west);
-	\draw [line width=1.5,->] (digitalartva.south) |- node[below, pos=0.7] {TX MODE} (transmission.west);
+ 	%% 
+ 	% Grafico di funzionamento di un artva digitale
+ 	%\begin{scope}[local bounding box=receiver, auto,node distance=1cm,>=latex', shift={($(artva.north east)+(5cm,0)$)},inner sep=2pt]	
+ 	\node [rectangle, inner sep=4pt,name=receiver,at=(transmission.south east), anchor=north east, yshift=-5mm] { 
+ 		\begin{tikzpicture}[auto,node distance=1cm,>=latex']
+	 		\node[regular polygon, regular polygon sides=3, regular polygon rotate=180, draw, minimum height=1cm] (ant) {};
+			\draw (ant.north) -- (ant.south);
+			
+			\node[below of=ant] (input) {};
+			\begin{scope}[node distance=4mm and 6mm]
+				\node[rectangle, draw, right=of input, minimum width=2.3cm, text width=2cm, align=center] (b1) {\scriptsize{Triple Antennas}};
+				\node[rectangle, draw, right=of b1, minimum width=2.3cm, text width=2cm, align=center] (b2) {\scriptsize{Frequency shift \\ Anti--alias filter}};
+				\node[rectangle, draw, below=of b2, minimum width=2.3cm, text width=2cm, align=center] (b3) {\scriptsize{A--D \\ Conversion}};
+				\node[rectangle, draw, below=of b3, minimum width=2.3cm, text width=2cm, align=center] (b4) {\scriptsize{Digital Filter}};
+				\node[rectangle, draw, left=of b4, minimum width=2.3cm, text width=2cm, align=center] (b5) {\scriptsize{Signal \\ Detection}};
+				\node[rectangle, draw, left=of b5, minimum width=2.3cm, text width=2cm, align=center] (b6) {\scriptsize{H--field \\ Estimation}};
+			\end{scope}
+
+			\draw[->] (ant.south) |- (b1) {};
+			\draw[->] (b1) -- (b2) {};
+			\draw[->] (b2) -- (b3) {};
+			\draw[->] (b3) -- (b4) {};
+			\draw[->] (b4) -- (b5) {};
+			\draw[->] (b5) -- (b6) {};
+			\node [at=(b3.0), anchor=(180), shift=(0:3mm)] (n1) {};
+			\node [at=(b3.0), anchor=(180), shift=(180:88mm)] (n2) {};
+			\draw [dashed] (n2) -- (b3) {};
+			\draw [dashed] (n1) -- (b3) {};
+
+			\node [at=(n2.0), anchor=(180), shift=(25:7mm)] (n1) {Analog};
+			\node [at=(n2.0), anchor=(180), shift=(-25:7mm)] (n1) {Digital};
+		\end{tikzpicture}
+	};	
+
+	
+
+	\draw [line width=1.5,->] (digitalartva.east) -- node[above] {TX MODE} (transmission.west);
+	\draw [line width=1.5,->] (digitalartva.south) |- node[below, pos=0.7] {RX MODE} (receiver.west);
 \end{tikzpicture}
 \end{block}
 }
