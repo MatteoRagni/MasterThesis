@@ -48,22 +48,66 @@
 }
 
 \begin{document}
-\begin{tikzpicture}
-\begin{axis} [xlabel={Time (min)}, ylabel={Chances of survival (\%)},
- enlargelimits=false, width=12cm,height=6cm]
 
-	\addplot [mark=none,line width=1.5] coordinates {
-		(0,100)
-		(15,90)
-		(20,60)
-		(30,50)
-		(40,25)
-		(120,15)
-		(180,3)
-	};
-\end{axis}
+
+\begin{tikzpicture}[>=latex']
+
+	\draw [->,color=blue] (0,0) -- ++(35:4cm) node [anchor=south west]{$\mathbf{H}$};
+	\draw [->,color=red] (0,0) -- ++(125:3.5cm) node [anchor=south east]{$\nabla\mathbf{H}$};
+
+	\draw [->,color=red](0,0) -- ++(${cos(35)}*(4,0)$) node [anchor=west]{$|\mathbf{H}|\cos\theta$}; 
+	\draw [->,color=red](0,0) -- ++(${sin(35)}*(0,4)$)  node [anchor=south]{$|\mathbf{H}|\sin\theta$}; ; 
+
+	\draw (1,0) arc (0:35:1) node[pos=0.5, anchor=west]{$\theta$};
+
+	\coordinate (origin) at (0,-4cm);
+	\node [circle, draw, at=(origin)] (velocita) {$\mathbf{v}$};
+
+	\node [rectangle,draw, text width=2cm, at=(velocita), xshift=2cm] (conoscenza) {Previous knowledge};
+	\node [circle, draw, at=(velocita), shift=(90:1.3cm), color=red] (angolo) {$\psi$};
+
+	\node [circle, draw, at=(velocita), shift=(270:1.3cm), color=blue] (magnitude) {$|\mathbf{v}|$};
+
+	\node [circle, draw, at=(angolo), anchor=south east, shift=(135:1cm), color=red] (cos) {$\cos\theta$};
+	\node [circle, draw, at=(angolo), anchor=south,shift=(90:1cm), color=red] (nabla) {$\nabla\mathbf{H}$};
+	\node [circle, draw, at=(angolo), anchor=south west,shift=(45:1cm), color=red] (sin) {$\sin\theta$};
+
+	\node [circle, draw, at=(magnitude), anchor=north,shift=(270:1cm), color=blue] (maggg) {$|\mathbf{H}|$};
+
+	\draw [->] (cos) -- (angolo);
+	\draw [->] (sin) -- (angolo);
+	\draw [->] (nabla) -- (angolo);
+
+	\draw [->] (angolo) -- (velocita);
+	\draw [->] (magnitude) -- (velocita);
+	\draw [->] (maggg) -- (magnitude);
+
+	\draw [->,rounded corners=0.75cm] (conoscenza.north) |- (angolo);
+	\draw [->,rounded corners=0.75cm] (conoscenza.south) |- (magnitude);
+
 
 \end{tikzpicture}
+
+
+
+
+
+%\begin{tikzpicture}
+%\begin{axis} [xlabel={Time (min)}, ylabel={Chances of survival (\%)},
+% enlargelimits=false, width=12cm,height=6cm]
+%
+%	\addplot [mark=none,line width=1.5] coordinates {
+%		(0,100)
+%		(15,90)
+%		(20,60)
+%		(30,50)
+%		(40,25)
+%		(120,15)
+%		(180,3)
+%	};
+%\end{axis}
+%
+%\end{tikzpicture}
 
 
 %

@@ -30,36 +30,74 @@
 	\column{0.4\textwidth}
 	\begin{block}{\hcenter{Searching the Maximum H--field}}
 	
-	\vspace{0.75cm}
-	\begin{algorithm}[H]
-		\KwData{$|\hfield|_{k-1},\,\psi_{k-1},\,\mathbf{v}_{k-1},\,w_1,\,w_2,\,\Delta,\,\delta$}
+	%\vspace{0.75cm}
+	% \begin{algorithm}[H]
+	% 	\KwData{$|\hfield|_{k-1},\,\psi_{k-1},\,\mathbf{v}_{k-1},\,w_1,\,w_2,\,\Delta,\,\delta$}
 		
-		\tcc{Steer in direction of greater intensity}
-		\If{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \leq \Delta$}{
-			$\psi_k = (1-w_1)\psi_{k-1} + w_1 \delta$\;
-		}
-		\ElseIf{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \geq \Delta$}{
-			$\psi_k = (1-w_1)\psi_{k-1} - w_1 \delta$\;
-		}
+	% 	\tcc{Steer in direction of greater intensity}
+	% 	\If{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \leq \Delta$}{
+	% 		$\psi_k = (1-w_1)\psi_{k-1} + w_1 \delta$\;
+	% 	}
+	% 	\ElseIf{$\braces{\dfrac{|\hfield|_k}{|\hfield|_{k-1}} - 1 } \geq \Delta$}{
+	% 		$\psi_k = (1-w_1)\psi_{k-1} - w_1 \delta$\;
+	% 	}
 
-		\tcc{Set speed magnitude}
-		$|\mathbf{v}_{k}| = (1-w_2) |\mathbf{v}_{k-1}| + w_2 v(|\hfield_k|)$\;
+	% 	\tcc{Set speed magnitude}
+	% 	$|\mathbf{v}_{k}| = (1-w_2) |\mathbf{v}_{k-1}| + w_2 v(|\hfield_k|)$\;
 
-		\tcc{Steer in direction of flux lines}
-		$\ccos{\psi}_k = (1-w_1) \ccos{\theta} + w_1 \ccos{\psi}_{k-1} $\;
-		$\ssin{\psi}_k = (1-w_1) \ssin{\theta} + w_1 \ssin{\psi}_{k-1} $\;
+	% 	\tcc{Steer in direction of flux lines}
+	% 	$\ccos{\psi}_k = (1-w_1) \ccos{\theta} + w_1 \ccos{\psi}_{k-1} $\;
+	% 	$\ssin{\psi}_k = (1-w_1) \ssin{\theta} + w_1 \ssin{\psi}_{k-1} $\;
 
-		\tcc{Defines speed}
-		$\mathbf{v}_k = \left[ |\mathbf{v}_k| \ccos{\psi}_k, |\mathbf{v}_k| \ssin{\psi}_k, 0 \right]$ \;
+	% 	\tcc{Defines speed}
+	% 	$\mathbf{v}_k = \left[ |\mathbf{v}_k| \ccos{\psi}_k, |\mathbf{v}_k| \ssin{\psi}_k, 0 \right]$ \;
 			
-		\Return{$\mathbf{v}_k$}
-	\end{algorithm}
-	\vspace{0.75cm}
+	% 	\Return{$\mathbf{v}_k$}
+	% \end{algorithm}
+	\centering 
+	\begin{tikzpicture}[>=latex',scale=0.8]
+
+		\draw [->,color=blue] (0,0) -- ++(35:4cm) node [anchor=south west]{$\mathbf{H}$};
+		\draw [->,color=red] (0,0) -- ++(125:3.5cm) node [anchor=south east]{$\nabla\mathbf{H}$};
+
+		\draw [->,color=red](0,0) -- ++(${cos(35)}*(4,0)$) node [anchor=west]{$|\mathbf{H}|\cos\theta$}; 
+		\draw [->,color=red](0,0) -- ++(${sin(35)}*(0,4)$)  node [anchor=south]{$|\mathbf{H}|\sin\theta$}; ; 
+
+		\draw (1,0) arc (0:35:1) node[pos=0.5, anchor=west]{$\theta$};
+
+		\coordinate (origin) at (0,-5cm);
+		\node [circle, draw, at=(origin)] (velocita) {$\mathbf{v}$};
+
+		\node [rectangle,draw, text width=2cm, at=(velocita), xshift=2cm] (conoscenza) {\scriptsize Previous knowledge};
+		\node [circle, draw, at=(velocita), shift=(90:1.3cm), color=red] (angolo) {\scriptsize $\psi$};
+
+		\node [circle, draw, at=(velocita), shift=(270:1.3cm), color=blue] (magnitude) {\scriptsize $|\mathbf{v}|$};
+
+		\node [circle, draw, at=(angolo), anchor=south east, shift=(135:1cm), color=red] (cos) {\scriptsize $\cos\theta$};
+		\node [circle, draw, at=(angolo), anchor=south,shift=(90:1cm), color=red] (nabla) {\scriptsize $\nabla\mathbf{H}$};
+		\node [circle, draw, at=(angolo), anchor=south west,shift=(45:1cm), color=red] (sin) {\scriptsize $\sin\theta$};
+
+		\node [circle, draw, at=(magnitude), anchor=north,shift=(270:1cm), color=blue] (maggg) {\scriptsize $|\mathbf{H}|$};
+
+		\draw [->] (cos) -- (angolo);
+		\draw [->] (sin) -- (angolo);
+		\draw [->] (nabla) -- (angolo);
+
+		\draw [->] (angolo) -- (velocita);
+		\draw [->] (magnitude) -- (velocita);
+		\draw [->] (maggg) -- (magnitude);
+
+		\draw [->,rounded corners=0.75cm] (conoscenza.north) |- (angolo);
+		\draw [->,rounded corners=0.75cm] (conoscenza.south) |- (magnitude);
+
+
+	\end{tikzpicture}
+	%\vspace{0.75cm}
 
 	\end{block}
 	\column{0.35\textwidth}
 	\begin{block}{\hcenter{Emulation of an H--field}}
-		\vspace{0.75cm}
+		\vspace{1cm}
 		The stimated position is given by the solution of the \textbf{optimization problem}:
 		\vspace{0.5cm}
 		
@@ -73,7 +111,7 @@
 
 		\vspace{1cm}
 		from $\hat{p}(\mathbf{p})$ we extract \textbf{mean} and \textbf{covariance}!
-		\vspace{0.90cm}
+		\vspace{1.175cm}
 	\end{block}
 	\end{columns}
 }
