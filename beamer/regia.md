@@ -1,274 +1,103 @@
-# Slides Master Thesis
-<style>
-.separa {
-	height: 100px;
-	display:block;
-}
-.appuntata {
-	list-style-type: circle;
-	line-height: 5px;
-}
-.appuntata li {
-	font-size: 40px;
-	margin-top: 10px;
-}
-.appuntata li p {
-	font-size: 14px;
-	margin-top:10px;
-	position:absolute;
-}
-</style>
-## Slides Accessorie
+# Slides
 
-### Titolo (1)
-### Domande (2)
+## Mountain rescue intervention
 
-## Capitolo 1: Introduction to Mountain Rescue
+Il problema fondamentale del soccorso in valanga é il tempo.
+Come possiamo vedere dal grafico in basso, la curva di sopravvivenza 
+decade ad una velocitá vertiginosa pochi minuti dopo il seppellimento.
 
-### Slide (3): Intervento in valanga
-#### Stile
-Intervento in valanga. Nulla di particolare in questa slide, direi che potrei semplicemente mettere del testo che mi dice di che cosa sto per parlare.
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+In questo arco di tempo i soccorritori devono arrivare in zona e identificare
+la posizione del sepolto nel minor arco di tempo possibile muovendosi su un
+terreno impervio e con un elevato rischio residuo.
 
+## ARTVA Beacon Overview
 
-### Slide (4): ARTVA
-#### Stile
-Immagine di un ARTA e schema a blocchi di un sistema di ricezione di un artva digitale. Descrizione del segnale emesso da un ARTVA secondo la normativa.
-#### Appunti
- * Distinzione tra ARTVA in stato di ricezione e artva in stato di trasmissione. 
- * Differenze tra un ARTVA analogico e digitale
- * (Opzionale: approfittare la slide per spiegare l'intervento in valanga)
+Per aumentare l'efficienza della ricerca é stata definita l'obbligatorietá del
+dispositivo di ricetrasmissione ARTVA, una piccola radio personale in grado di
+emettere un segnale radio a 457kHz.
 
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Lo stesso dispositivo puó essere utilizzato per la trasmissione oppure per la
+ricezione del segnale al fine di effettuare la ricerca di una persona sepolta.
+Le caratteristiche di questi dispositivi sono definite da una normativa europea.
 
+## H-Field in Transmission
 
+Ua frequenza cosi bassa da un lato presenta il vantaggio della robustezza nei confonti
+della interferenza di corpi vicini, dall'altro ci pone nella difficile condizione di
+dover effettuare una ricerca in condizioni di near-field, condizione nella quale la forma del campo diviene estremamente complessa e non é facile identificare la sorgente.
 
-### Slide (5): Stato dell'arte
-#### Stile
-Elenco puntato di altri progetti che operano nello stesso campo, e descrizioni di articoli.
-#### Appunti
-I progetti che devono essere presi in considerazione sono:
- 
- * SHERPA: progetto europeo dell'Universitá di Bologna
- * Progetto appena nato a Torino
- * Progetto Alcedo di Zurigo
+Nella animazione a destra é presente una rappresentazione di un campo entro un limite near-field, mentre a sinistra un campo nel limite di ricezione di un dispositivo ARTVA. Un campo cosi complesso non ci consente di identificare la sorgente per mezzo di triangolazione o altri algoritmi di direzione di arrivo.
 
-Gli algoritmi che possono essere presi in considerazione sono il normale algoritmo di identificazione del lobo del segnale magnetico e inseguimento del segnale magnetico. ALgoritmo SLAM applicato alla ricerca del sepolto. 
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+## Perception-Action Map
 
+Per velocizzare la ricerca la nostra ipotesi é quella di utilizzare un drone che sorvoli la superficie e in grado di muoversi con una dinamica elevata rispetto ad un soccorritore umano, o per essere utilizzato alternativamente alla squadra quando il rischio residuo é troppo elevato.
 
+Utilizzando il principio di mappa di percezione azione, evoluto nei paradigmi di grounding e emulazione, possiamo vedere sulla destra una rappresentazione concettuale di quella che é la mappa di percezione azione complessiva del drone, completa di ricerca, rilevamento ostacoli e mantenimento della quota. Queste routine di livello superiore poggiano sulle routine di livello inferiore di tracking e di controllo per la stabilizzazione.
 
-## Capitolo 2: ARTVA Digitale
+Il grande vantaggio di questa architettura é la possibilitá di espandere in futuro la mappa, mantenendo gli obbietti ottenuti dalla formulazione corrente.
 
-### Slide (6): Equazioni di Maxwell
-#### Stile
-Esposizione delle equazioni di Maxwell nella versione classica ed esposizione delle equazioni di Maxwell nella versione modificata dalla recalibration map. Scrivere la ricalibration map e i potenziali vettoriali in una freccia che trasforma da una formulazione all'altra. Definire la versione integrale del problema in basso al centro.
-#### Appunti
-L'integrazione di un algoritmo di ricerca, ma la conoscenza in generale del problema si basa sulla necessitá di conoscere una formulazione computazionalmente efficiente del near field. Questo argomento é stato spesso tralasciato dalla ricerca, ed esistono pochissimi riferimenti in materia. Tralasciamo le dimostrazioni per motivi di tempo.
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+## Dynamics, control and tracking
 
+A fini simulativi un modello di un hexacopter, controllato con un LQR é stato implementato. Il sistema simulato é in grado di eseguire il tracking di un punto, mantenendo il sistema stabile. 
 
-### Slide (7): Equazioni del campo EM
-#### Stile
-Immagine del problema del dipolo magnetico, in alto risoluzione della equazione del potenziale magnetico, nel mezzo la formulazione  di equazione 2.18, in basso la formulazione complessa. 
-#### Appunti
-Risolviamo l'integrale presentato per un problema di dipolo ideale, che risulta essere un esempio molto vicino al nostro sistema di trasmissione.
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Per risolvere le equazioni del controllore si é linearizzato il sistema (a 12 gradi di libertá) attorno le condizioni di volo in hoovering.
 
+## Obstacle Avoidance
 
-### Slide (8): Rappresentazione Campo
-#### Stile
-Immagini che rappresentano nello spazio il nostro campo elettromagnetico. In basso la equazione che definisce il campo elettromagnetico semplificato in forma  computazionalmente vantaggioso.
-#### Appunti
-Far notare la forma particolare del campo elettromagnetico e definire i punti di semplificazione utilizzati per poter ottenere 
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+La routine di obstacle avoidance é fondamentale ai fini della sopravvivenza del drone. Per diminuire il carico computazionale, si é deciso di usare un approccio basato sulla lettura di range finder posti agli estremi dei bracci del drone, al fine di generare una velocitá di allontanamento dall'ostacolo. 
 
+Vantaggi e svantaggi si bilanciano con questa formulazione, se dan un lato abbiamo una minore richiesta computazionale e un migliore fit delle caratteristiche della nostra mappa di percezione azione, dall'altro costringiamo il drone a viaggiare su percorsi non ottimi e con il rischio di finire in vicoli ciechi. C'é da prendere in considerazione che comunque la energia cinetica di una valanga tende a spazzare via ostacoli che non abbiamo una sezione molto limitata.
 
-### Slide (9): Definizione della antenna
-#### Stile
-Inserire figura 2.7 e figura 2.8 e inserire la equazione della antenna. Inserire elemento puntato contenenti le sorgenti di rumore.
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Non si prendono in considerazione ostacoli mobili.
 
+## Altitude Keeping
 
-### Slide (10): Struttura dell'ARTVA digitale
-#### Stile
-Inserire la figura 2.22 e la figura 2.21
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Il mantenimento della altitudine é necessario per evitare di impattare catastroficamente contro i soccorrittori che si potrebbero muovere sul fronte di valanga. Una possibilitá, in realtá da esplorare nel dettaglio, potrebbe essere la formulazione di un problema SLAM per identificare la normale media al piano di valanga.
 
+Nota la normale media **m**, un semplice loopback ci mantiene alla altitudine di sicurezza.
 
-### Slide (11): Antenna e preamplificatore
-#### Stile
-Inserire parte della figura 2.11 e 2.12, e caratteristiche del filtro di figura 2.13
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+## Exploring and searching signal presence
 
+Entriamo nel vivo delle routine di ricerca. La prima routine che incontriamo é la esplorazione alla ricerca di un segnale, processo del tutto simile a quello visto nella slide 1. Il drone sorvola tutta l'area alla ricerca di un segnale. La dimensione e la direzione di ricerca é definita per mezzo di input utente, uno dei pochissimi input richiesti. La traiettoria di esplorazione puó essere generata autonomamente.
 
-### Slide (12): Identificazione, amplificazione
-#### Stile
-Inserire parte della figura 2.14 e 2.16, e caratteristiche del filtro di figura 2.17
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Ad ogni punto della traiettoria si assegna un certo intervallo di confidenza, raggiunto il quale si é certi che il sistema possa passare al successivo con l'intera area di interesse scansionata.
 
+## Radar Detection Problem for Signal Presence
 
-## Capitolo 3: Costruzione avionica
+Il nostro problema diviene a questo punto identificare la presenza di un segnale. L'idea é quella di risolvere il problema con un classificatore binario. L'insieme delle possibili soluzioni del problema si divide in PRESENZA e ASSENZA del segnale. 
 
-### Slide (13): Mappa percezione-azione
-#### Stile
-Inserire figura 3.1, figura 3.2, figura 3.4 su un lato e figura 3.5 dall'altro
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+Per identificare la suddivisione di questo insieme si attua una strategia di minimizzazione del rischio. Il rischio é definito come somma delle 4 possibili probabilitá cumulate di 
 
+ * Mancato
+ * Detection
+ * Reiezione
+ * Falso allarme
 
-### Slide (14): Dinamica
-#### Stile
-Dopo aver inserito il punto di riferimento della mamppa dei primi due blocchi, in Inserire figura 3.6 per il sistema di riferimento del drone e la figura 3.7 per il controllo e il tracking problem
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+mediate secondo secondo delle costanti che formano la cosidetta matrice di rischio. La minimizzazione di tale funzione ci porta alla discriminazione che vedete in basso a destra.
 
+## Pinpointing a Signal Source
 
-### Slide (15): Obstacle Avoidance
-#### Stile
-Dopo aver inserito il riferimento 3 della mappa, inserire da un lato le equazioni 3.22 e 3.24, sul lato destro inserire figura 3.9 e sotto figura 3.8
+Una volta nota la presenza di un segnale il nostro sistema cambia il proprio obbiettivo da esplorazione al raggiungere la sorgente al fine di rilasciare un marcatore fisico per i soccorritori.
 
-### Slide (FANTASMA1): Modello range finder
-#### Stile
-Sul lato sinistro inserire la figura 3.10, mentre sulla destra inserire l'algoritmo 1
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+L'algoritmo si suddivide in due parti: la parte a sinistra intigra la percezione del campo e del suo gradiente al fine di estrapolare una velocitá in direzione del massimo segnale possibile. Questo algoritmo peró non é in grado di identificare la posizione della sorgente.
 
+In parallelo emuliamo il campo in un problema di ottimizzazione. La soluzione della ottimizzazione dovrebbe indicarci la posizione della trasmittente. La soluzione di successivi problemi di ottimizzazione sono trattati come una variabile stocastica da cui si ottiene una distribuzione di probabilitá sulla posizione.
 
-### Slide (16): Identificazione del normale al piano
-#### Stile
-Inserire sulla sinistra immagine di riferimento del  immagini 3.11, con le equationi dello stato di riferimento e della identificazione della normale.
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+La distribuzione di probabilitá puó aiutarci a definire una media ed una covarianza, informazioni sulla quale definire la posizione di sgancio del dardo.
 
+## Design of a Digital ARTVA
 
-### Slide (17): Radio detection problem
-####Stile
-Inserire le tre immagini del signal detection problem, la definizione del rischio, la matrice dei costi e la funzione di threshold.
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+A noi serve un dispositivo di sola ricezione di buona fattura. Qu c'é un design preliminare che ha dimostrato di ricevere un seganle ARTVA, ma la qualitá del segnale ricevuto e le caratteristiche del design non sono buone ai fini della nostra applicazione.
 
+Il dispositivo é formato da tre elementi riceventi gemelli ortogonali tra loro al fine di misurare il campo.
 
-### Slide (18): ricerca della presenza del segnale
-#### Stile
-Inserire immagine di riferimento e figura 3.15
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+## Schematics – Antenna and PreAmplifier
 
+Nella prima parte abbiamo la preamplificazione. Il preamplificatore agisce da filtro estremamente selettivo e qui abbiamo i due punti deboli del design:
 
-### Slide (19): ricerca dela sorgente
-#### Stile
-Inserire algoritmo di ricerca della sorgente a sinistra e inserire ottimizzazione (eq 3.45) e parzen window estimator (eq 3.46) a destra
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
+ * l'antenna in ferrite é estremamente difficile da produrre ed risulta essere troppo rumorosa
+ * in un ambiente estremo come il fronte valanga, la deriva termica rovinerebbe le caratteristiche dinamiche del preamplificatore sicuramente.
 
+## Schematics – Identification and Amplifier
 
-
-## Capitolo 4: Implementazioni
-### Slide (20): Simulink
-#### Stile
-Inserire la implementazione di simulink (tranne LQR) sulla pagina
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
-
-
-### Slide (21): Risultati 1
-#### Stile
-Grafico 4.6, grafico 4.7, grafico 4.10
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
-
-
-### Slide (22): Risultati 2
-#### Stile
-Grafico 4.8, grafico 4.9
-#### Appunti
-<div class="separa"></div>
-<ul class="appuntata">
-  <li><p>Disegnata<p></li>
-  <li><p>Corretta<p></li>
-</ul>
-
-
-
+Qui abbiamo identificazione e amplificazione prima della conversione analogico digitale.

@@ -20,12 +20,15 @@
 		xmin=-30, xmax=60, ymin=-60, ymax=30,
 		grid style={color=gray!40, dotted}, grid=major,
 		xlabel=$x \mathrm{(m)}$, ylabel=$y \mathrm{(m)}$,
-		tick label style={font=\scriptsize}
+		tick label style={font=\scriptsize},
+		legend style={draw=none}, legend cell align=left
 	]
 		\addplot [mark=none] table[x index=0, y index=1] {data/position_projection.txt};	
 		\addplot[only marks, mark=otimes*,fill=red,color=red,mark size=2pt] table [x index=0, y index=1] {data/transmitter_pos.txt};
 		\addplot[only marks, mark=x,color=gray!75,mark size=1pt] table {data/optimizer_data.txt};
+		\addplot[only marks, mark=x,color=green!75,mark size=1pt] table {data/optimizer_data_latest.txt};
 		\addplot[only marks, mark=*,color=blue,mark size=0.75pt] table {data/obstacle_pos.txt};
+		\legend{{\scriptsize Drone position}, {\scriptsize Transmitter position}, {\scriptsize Optimization results},{\scriptsize Latest optimization results}, {\scriptsize Obstacle}};
 	\end{axis}
 
 	\begin{axis}[
@@ -37,7 +40,10 @@
 		xlabel=$p(\mathbf{p}_{\mathrm{tx},y}|\mathbf{H})$,
 		xticklabel style={ /pgf/number format/precision=2,/pgf/number format/fixed,/pgf/number format/fixed zerofill }
 	]
-		\addplot [mark=none, fill=gray!40] table[x index=3, y index=2] {data/parzenWin_data.txt};
+		%\addplot [mark=none, fill=gray!40] table[x index=3, y index=2] {data/parzenWin_data.txt};
+		\addplot [mark=none, fill=gray!40,opacity=0.5] table[x index=4, y index=3] {data/parzenWin_data.txt};
+		\addplot [mark=none,color=green, fill=green!40,opacity=0.5] table[x index=5, y index=3] {data/parzenWin_data.txt};
+
 	\end{axis}
 	
 	\begin{axis}[
@@ -49,8 +55,16 @@
 		ylabel=$p(\mathbf{p}_{\mathrm{tx},x}|\mathbf{H})$,
 		yticklabel style={ /pgf/number format/precision=2,/pgf/number format/fixed,/pgf/number format/fixed zerofill }
 	]
-		\addplot [mark=none, fill=gray!40] table[x index=0, y index=1] {data/parzenWin_data.txt};
+		\addplot [mark=none, fill=gray!40,opacity=0.5] table[x index=0, y index=1] {data/parzenWin_data.txt};
+		\addplot [mark=none,color=green, fill=green!40,opacity=0.5] table[x index=0, y index=2] {data/parzenWin_data.txt};
 	\end{axis}
+
+	% \node [at=(plot2.east), anchor=west]{
+	% 	\begin{tikzpicture}
+	% 		\draw [color=gray](0,0.5cm) -- ++(1cm,0) node[pos=end] {All history};
+	% 		\draw [color=green](0,-0.5cm) -- ++(1cm,0) node[pos=end] {Recent history};
+	% 	\end{tikzpicture}
+	% };
 
 \end{tikzpicture}
 \end{document}
